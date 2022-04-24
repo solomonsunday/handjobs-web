@@ -1,0 +1,16 @@
+.green-color{
+  color: var(--app-secondary-color);
+}
+
+.green-back{
+  background: var(--app-secondary-color) !important;
+}
+
+.job-category .single-cat i {
+  background:  var(--app-primary-color);
+  color: #f8f9fa;
+}
+
+.navbar-brand img {
+  width: 200px;
+}

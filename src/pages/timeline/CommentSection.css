@@ -1,0 +1,55 @@
+.commentForm {
+  width: 100%;
+  height: auto;
+  background-color: #b89fae25;
+  border-radius: 10px;
+  padding-bottom: 3rem;
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.timeline-commentInputContainer {
+  width: 100%;
+  position: relative;
+}
+
+.timeline-commentButton {
+  font-size: 0.7rem;
+}
+
+.timeline-commentButtons-container {
+  position: absolute;
+  height: 45px;
+  bottom: 1rem;
+  right: 0;
+  font-size: small !important;
+}
+
+.timeline-commentListTitle {
+  background-color: white !important;
+  color: #5A2846 !important;
+  font-weight: 500;
+  border: none;
+}
+
+.timeline-commentListTitle:hover {
+  text-decoration: underline;
+  background-color: white;
+  color: #5A2846;
+  cursor: pointer;
+}
+
+.timeline-commentContainer {
+  border-bottom: 1px rgba(128, 128, 128, 0.432) solid;
+}
+
+.reply-button {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: none;
+}
+
+.reply-button:hover {
+  color: #6FCF97;
+}

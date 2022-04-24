@@ -1,0 +1,9 @@
+.brown-color{
+    background: var(--app-primary-color) !important;
+    color: #fff;
+}
+
+.btn.brown-color:hover{
+    background: var(--app-primary-color)d8 !important;
+    color: #fff;
+}

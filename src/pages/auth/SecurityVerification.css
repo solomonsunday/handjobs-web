@@ -1,0 +1,29 @@
+.card-size {
+    width: 36vw;
+    margin: auto;
+}
+
+.header-color {
+    background-color: rgb(44, 165, 94);
+}
+
+.appcolor {
+    background-color: var(--app-primary-color);
+}
+
+.text-color {
+    color: var(--app-primary-color);
+}
+
+@media screen and (max-width: 767px) {
+    .message {
+        margin-bottom: 6vh;
+        color: var(--app-primary-color);
+        ;
+    }
+    .card-size {
+        width: 90%;
+        margin: auto;
+        margin-top: 6vh;
+    }
+}

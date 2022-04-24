@@ -1,0 +1,22 @@
+.header-anonymous, .header-anonymous .navbar-area {
+  background-color:var(--app-primary-color);
+  position: sticky;
+  top: 0;
+}
+
+.header-anonymous .button .login {
+  color: white;
+}
+
+.header-anonymous .button .login:hover {
+  color: white;
+}
+
+.header-anonymous .button .btn {
+  background-color: white;
+  color: var(--app-primary-color);
+}
+
+.header-anonymous a {
+  width: auto;
+}

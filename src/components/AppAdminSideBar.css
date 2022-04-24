@@ -1,0 +1,76 @@
+.adminSidebar .point {
+    cursor: pointer;
+}
+
+.adminSidebar .sideBar-button {
+    position: fixed;
+    top: 140px;
+    z-index: 1;
+}
+
+.adminSidebar a {
+    width: 100%;
+}
+
+.adminSidebar.p-sidebar, 
+.adminSidebar .p-toggleable-content, 
+.adminSidebar .p-panelmenu-content {
+    background-color: var(--app-primary-color) !important;
+    background: var(--app-primary-color) !important;
+    border: none !important;
+}
+
+.adminSidebar .heading {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.adminSidebar .li-border, 
+.adminSidebar .p-panelmenu-header-link {
+    border: 2px solid #f5f5f50a;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.adminSidebar .li-icon, li > .pi, .pi-fw, 
+.adminSidebar .p-panelmenu-header-link > .pi,
+.adminSidebar .p-sidebar-icon {
+    color: #6FCF97 !important;
+    margin-right: 10px;
+}
+
+.adminSidebar .li-icon, li > .pi, 
+.adminSidebar .pi-fw, 
+.adminSidebar .p-panelmenu-header-link > .pi {
+    color: #6FCF97 !important;
+}
+
+.adminSidebar .li-title, 
+.adminSidebar .p-menuitem-text {
+    font-size: 13px;
+    color: white !important;
+}
+
+.adminSidebar .p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:not(.p-disabled):hover, 
+.adminSidebar .li-border:hover, 
+.adminSidebar .p-panelmenu-header:hover, 
+.adminSidebar .p-panelmenu-header:focus-within {
+    background: #ffffff33;
+}
+
+ /* li with submenu */
+ .adminSidebar .p-panelmenu-header-link {
+    background-color: inherit !important;
+    border: 2px solid #f5f5f50a !important;
+}
+/* li with submenu .*/
+.adminSidebar .request-instant-job{
+    width: 30rem;
+}
+
+@media screen and (max-width: 991px) {
+    .adminSidebar .request-instant-job{
+       width: 11rem;
+   }
+}
