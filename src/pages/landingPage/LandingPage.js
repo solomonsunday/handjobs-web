@@ -14,7 +14,7 @@ const LandingPage = () => {
                                 <nav className="navbar navbar-expand-lg py-2">
                                     <Link className="navbar-brand logo" to="index.html">
                                         {/* <img className="logo1" src="assets/images/logo/applogo.jpeg" height="40px" alt="Logo" /> */}
-                                        <h3 className='app-pri-text-color' style={{ fontFamily: "cursive" }}>Hand-Job</h3>
+                                        <h3 className='app-pri-text-color' style={{ fontFamily: "cursive" }}>HandJobs</h3>
                                     </Link>
                                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                         <span className="toggler-icon"></span>
@@ -214,7 +214,7 @@ const LandingPage = () => {
                                     <span className="wow fadeInDown" data-wow-delay=".2s">GETTING STARTED TO WORK</span>
                                     <h2 className="wow fadeInUp" data-wow-delay=".4s">Don’t just find. Be found. Sign up and update your portfolio with your works</h2>
                                     <p className="wow fadeInUp" data-wow-delay=".6s">It helps you to increase your chances of
-                                        getting a suitable hand-job and let instant service seeker contact you
+                                        getting a suitable HandJobs and let instant service seeker contact you
                                         for your service.</p>
                                     <div className="button wow fadeInUp" data-wow-delay=".8s">
                                         <Link to="/register" className="btn">
@@ -406,7 +406,7 @@ const LandingPage = () => {
                         <div className="row align-items-center justify-content-center">
                             <div className="col-lg-6 col-12">
                                 <div className="download-text text-white">
-                                    <h3 className="text-white">Download Hand-Job Now</h3>
+                                    <h3 className="text-white">Download HandJobs Now</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do<br />
                                         eiusmod tempor
                                         incididunt ut labore et dolore</p>
@@ -437,7 +437,7 @@ const LandingPage = () => {
                                     <div className="logo">
                                         <Link className="navbar-brand logo" to="index.html">
                                             {/* <img className="logo1" src="assets/images/logo/applogo.jpeg" height="40px" alt="Logo" /> */}
-                                            <h2 className='app-pri-text-color' style={{ fontFamily: "cursive" }}>Hand-Job</h2>
+                                            <h2 className='app-pri-text-color' style={{ fontFamily: "cursive" }}>HandJobs</h2>
 
                                         </Link>
                                     </div>

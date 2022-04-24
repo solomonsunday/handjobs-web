@@ -74,7 +74,7 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                         <Navbar.Brand href="#home">
                             <Link className="navbar-brand logo" to="/dashboard">
                                 {/* <img className="logo1" src="/assets/images/logo/applogo.jpeg" alt="Logo" height="35" /> */}
-                                <h3 className='text-white' style={{ fontFamily: "cursive" }}>Hand-Job</h3>
+                                <h3 className='text-white' style={{ fontFamily: "cursive" }}>HandJobs</h3>
                             </Link>
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" className="bg-white" />
