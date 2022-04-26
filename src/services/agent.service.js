@@ -366,6 +366,7 @@ const Service = {
         search: search,
       }).toString()}`
     ),
+  get: () => requests.get("/service"),
   view: (id) => requests.get(`/service/${id}`),
   edit: (id, data) => requests.put(`/service/${id}`, data),
   delete: (id) => requests.del(`/service/${id}`),
