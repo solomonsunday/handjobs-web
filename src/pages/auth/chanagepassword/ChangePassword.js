@@ -38,7 +38,6 @@ const ChangePassword = () => {
                                                 <Password
                                                     toggleMask
                                                     name="password"
-                                                    placeholder="New Password"
                                                     feedback={false}
                                                     {...register("password", { required: "Please enter your password." })}
 
@@ -56,7 +55,6 @@ const ChangePassword = () => {
                                                 <Password
                                                     toggleMask
                                                     name="password"
-                                                    placeholder="Confirm New Password"
                                                     feedback={false}
                                                     {...register("password", { required: "Please enter your password." })}
 

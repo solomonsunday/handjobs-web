@@ -188,10 +188,10 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                                 </Link>
                             </li>
                             <li className="dropdown-item profile-dropdownItem-appNavbar">
-                                <link to="/changepassword">
+                                <Link to="/changepassword">
                                     <i className="li-icon lni lni-lock"></i>
                                     <span className="li-title">Change Password</span>
-                                </link>
+                                </Link>
                             </li>
                             <li className='dropdown-item profile-dropdownItem-appNavbar' onClick={LogOut}>
                                 <Link to="/howtostart">
