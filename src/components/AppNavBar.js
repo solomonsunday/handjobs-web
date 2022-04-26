@@ -67,10 +67,10 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
         setShowNotification(!showNotification)
     }
 
-    const handleChangePassword = () => {
-        dispatch(push("/changepassword"));
-        dispatch(forgotPassword(userDetails.email))
-    }
+    // const handleChangePassword = () => {
+    //     // dispatch(push("/changepassword"));
+    //     // dispatch(forgotPassword(userDetails.email))
+    // }
 
     return (
         <div className="container-appNavbar">
@@ -188,10 +188,10 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                                 </Link>
                             </li>
                             <li className="dropdown-item profile-dropdownItem-appNavbar">
-                                <div onClick={() => handleChangePassword()}>
+                                <link to="/changepassword">
                                     <i className="li-icon lni lni-lock"></i>
                                     <span className="li-title">Change Password</span>
-                                </div>
+                                </link>
                             </li>
                             <li className='dropdown-item profile-dropdownItem-appNavbar' onClick={LogOut}>
                                 <Link to="/howtostart">
