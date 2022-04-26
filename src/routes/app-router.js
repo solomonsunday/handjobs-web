@@ -66,6 +66,7 @@ const ListJobDetail = React.lazy(() => import('pages/job/ListJobDetail'));
 const Accounts = React.lazy(() => import('pages//admin/dashboard/Accounts'));
 
 const VideoChat = React.lazy(() => import('../pages/VideoChat/VideoIndex'));
+const ChangePassword = React.lazy(() => import('../pages/auth/chanagepassword/ChangePassword'));
 
 
 
@@ -125,7 +126,7 @@ const AppRouter = () => {
         {/* NOTIFICATION */}
         <ProtectedRoute path="/notifications" component={Notification} />
 
-
+        <ProtectedRoute path="/changepassword" component={ChangePassword} />
 
         <AnonymousRouteOrProtectedRoute path="/posts" exact component={Timeline} />
         <AnonymousRouteOrProtectedRoute path="/post/:id" exact component={ViewPost} />
