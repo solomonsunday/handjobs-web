@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import agentService, { isArtisanApp } from 'services/agent.service';
 import { loadProfileInfo } from './../store/modules/account';
-import { OnLogout } from '../store/modules/auth';
+import { forgotPassword, OnLogout } from '../store/modules/auth';
 
 import './AppNavBar.css';
 import { ACCOUNT_TYPE } from 'constants/accountType';
@@ -13,6 +13,7 @@ import useWindowSize from 'hooks/use-window-size';
 import { toggleChatModal } from 'store/modules/chat';
 import NotificationDropdown from './notification/NotificationDropdown';
 import { updateNotification, UserNotifications } from 'store/modules/appNotification';
+import { push } from 'connected-react-router';
 
 const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
     const profileInfo = useSelector((state) => state.account.profileInfo);
@@ -32,6 +33,7 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
 
     const userId = agentService.Auth.current().id;
     const userDetails = agentService.Auth.current();
+    console.log(userDetails, "UserDetails");
 
 
     useEffect(() => {
@@ -63,6 +65,11 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
 
     const handleToggleNotification = () => {
         setShowNotification(!showNotification)
+    }
+
+    const handleChangePassword = () => {
+        dispatch(push("/changepassword"));
+        dispatch(forgotPassword(userDetails.email))
     }
 
     return (
@@ -181,10 +188,10 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                                 </Link>
                             </li>
                             <li className="dropdown-item profile-dropdownItem-appNavbar">
-                                <Link to="/change-password">
+                                <div onClick={() => handleChangePassword()}>
                                     <i className="li-icon lni lni-lock"></i>
                                     <span className="li-title">Change Password</span>
-                                </Link>
+                                </div>
                             </li>
                             <li className='dropdown-item profile-dropdownItem-appNavbar' onClick={LogOut}>
                                 <Link to="/howtostart">
