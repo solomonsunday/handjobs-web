@@ -160,6 +160,7 @@ const Account = {
     requests.put("/accounts/job-experience", experience),
   updateContactInfo: (contactInfo) =>
     requests.put("/accounts/contact-info", contactInfo),
+  updateServices: (services) => requests.put("/accounts/services", services),
   updateLOI: (loi) => requests.put("/accounts/location", loi),
   updateHobies: (hobbies) => requests.put("/accounts/hobbies", { hobbies }),
   updateProfessionOfInterest: (interests) =>
@@ -366,6 +367,7 @@ const Service = {
         search: search,
       }).toString()}`
     ),
+  get: () => requests.get(`/service`),
   view: (id) => requests.get(`/service/${id}`),
   edit: (id, data) => requests.put(`/service/${id}`, data),
   delete: (id) => requests.del(`/service/${id}`),
