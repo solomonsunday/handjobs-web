@@ -8,6 +8,7 @@ import "./JobSidePanel.css";
 
 
 const JobSidePanel = ({ data }) => {
+  console.log(data, "data to display")
   return (
     <>
       <div className="p-col-12 p-md-3 p-pr-0 p-py-md-2 p-pl-md-2 p-pl-0 p-pt-0">
@@ -22,16 +23,16 @@ const JobSidePanel = ({ data }) => {
                   <div className="p-card-title cardbody-JobPanelComponent">
                     <div className="d-flex justify-content-between">
                       <div className="cardsubtitle-JobPanelComponent">{job.title}</div>
-                      <Tag className="p-mr-2" severity="success" value={job.contactType}></Tag>
+                      <Tag className="p-mr-2" severity="success" value={job.contractType}></Tag>
                     </div>
-                    {
-                      !job.hideCompanyName &&
-                      <div>
-                        <i className="align-text-bottom pi  pi-briefcase p-mr-1" />
-                        <b className="p-pr-1">Company:</b>
-                        <span className="jobdetails-JobPanelComponent">{job.companyName}</span>
-                      </div>
-                    }
+
+                    {/* // !job.hideCompanyName && */}
+                    <div>
+                      <i className="align-text-bottom pi  pi-briefcase p-mr-1" />
+                      <b className="p-pr-1">Company:</b>
+                      <span className="jobdetails-JobPanelComponent">{job.companyName}</span>
+                    </div>
+
                     <div>
                       <i className="align-text-bottom pi pi-map-marker p-mr-1" />
                       <b className="p-pr-1">Location:</b>

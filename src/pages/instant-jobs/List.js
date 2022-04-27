@@ -235,9 +235,12 @@ const InstantJobs = () => {
                       <hr />
                     </div>
                   ))}
+                {
+                  allInstantJobs && allInstantJobs < 1 && allInstantJobs && <div className="font-weight-bold"> No Jobs created yet</div>
+                }
               </div>
             </div>
-            <RecentInstantJobs />
+            {/* <RecentInstantJobs /> */}
           </div>
         </div>
       </div>

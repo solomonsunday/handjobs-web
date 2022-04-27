@@ -1,6 +1,8 @@
 import AccountTypesOptions from 'components/AccountTypeOptions/AccountTypesOptions';
 import { ACCOUNT_TYPE } from 'constants/accountType';
+import { Button } from 'primereact/button';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { isArtisanApp } from 'services/agent.service';
 
 import './Register.css'
@@ -11,6 +13,8 @@ const VerificationStep = ({ goto, accountType, setAccountType }) => {
     const [artisanCard, setArtisanCard] = useState(false);
     const [companyCard, setCompanyCard] = useState(false);
     const [instantHireCard, setInstantHireCard] = useState(false);
+
+    const history = useHistory()
 
     const setSelectedAccountType = (type, e) => {
         if (type) {
@@ -55,7 +59,10 @@ const VerificationStep = ({ goto, accountType, setAccountType }) => {
         <>
             <div className="p-fluid">
                 <div className="verificationContainer">
-                    <h5>Select Account Type</h5>
+                    <div className='d-flex'>
+
+                        <i className="pi pi-arrow-left font-weight-bold px-4 finger" onClick={() => history.goBack()}></i> <h5>Select Account Type</h5>
+                    </div>
                     <div className="verificationStep">
                         {isArtisanApp && <>
                             <AccountTypesOptions

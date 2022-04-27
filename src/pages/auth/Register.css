@@ -109,7 +109,8 @@
 }
 
 .artisanService {
-    background-color: var(--app-sec-color);
+    background-color: var( --app-secondary-color);
+
 }
 
 .artisan {
@@ -145,7 +146,7 @@ figure {
 
 .active-card {
     color: rgb(47, 114, 75);
-    border: 4px solid rgb(47, 114, 75);
+    border: 4px solid rgb(206, 200, 36);
 }
 
 @media screen and (max-width: 767px) {

@@ -362,10 +362,12 @@ const New = ({ mode }) => {
                                                         setStartDate(value);
                                                         setValue(inputName, value, { shouldValidate: true });
                                                     }}
-                                                    name="startDate"
-                                                    {...register("startDate", {
-                                                        required: `Start date is required`,
-                                                    })}
+                                                // min={new Date().toISOString().split('T')[0]}
+
+                                                // name="startDate"
+                                                // {...register("startDate", {
+                                                //     required: `Start date is required`,
+                                                // })}
                                                 />
                                                 {errors.startDate && <span className="text-danger font-weight-bold "> <p>{errors.startDate.message}</p>
                                                 </span>}
