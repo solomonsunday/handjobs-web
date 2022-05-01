@@ -25,7 +25,7 @@ const getAuthToken = () => {
 
 export const tokenPlugin = (req) => {
   req.set("Accept", "application/json");
-  req.set('platform', 'web');
+  req.set('platform', process.env.REACT_APP_PLATFORM);
 
 
   accessToken = getAuthToken();
