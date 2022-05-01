@@ -25,6 +25,8 @@ const getAuthToken = () => {
 
 export const tokenPlugin = (req) => {
   req.set("Accept", "application/json");
+  req.set('platform', 'web');
+
 
   accessToken = getAuthToken();
   if (accessToken) {
@@ -38,7 +40,7 @@ export const tokenPlugin = (req) => {
       // console.log("onResponse: This is called when Authorization is hit")
       localStorage.removeItem("auth");
       if (process.env.NODE_ENV === "development")
-        return (window.location.href = "http://localhost:8080/login");
+        return (window.location.href = process.env.REACT_APP_LOCAL_DEV_URL);
       else return (window.location.href = process.env.API_ROOT_PROD + "/login");
     }
   });
