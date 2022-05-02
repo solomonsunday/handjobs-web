@@ -10,7 +10,7 @@ import "./ChatContent.css";
 import moment from "moment";
 import { useHistory } from "react-router";
 import agent from "../../services/agent.service";
-
+import agentService from "../../services/agent.service";
 
 const ownerStyle = {
   borderRadius: "4px",
@@ -54,22 +54,35 @@ const dayStyle = {
   boxShadow: "2px 1px 2px #eee",
   backgroundColor: "#dee2e6",
   color: "black",
-}
+};
 
 const ChatContentItem = ({ conversation, partner, owner }) => {
-  console.log("realConveration ", conversation);
+  console.log(
+    "realConveration ",
+    conversation,
+    "partner",
+    partner,
+    "owner",
+    owner,
+    "profile user",
+    agentService.Auth.current().id
+  );
   if (partner?.id === conversation.senderId) {
     return (
       <div style={partnerStyle}>
         <p>{conversation.message}</p>
-        <time style={{ float: 'right', fontStyle: 'italic' }}>{moment(conversation.createdAt).format("h:mm a")}</time>
+        <time style={{ float: "right", fontStyle: "italic" }}>
+          {moment(conversation.createdAt).format("h:mm a")}
+        </time>
       </div>
     );
   } else if (owner?.id === conversation.senderId) {
     return (
       <div style={ownerStyle}>
         <p>{conversation.message}</p>
-        <time style={{ float: 'right', fontStyle: 'italic' }}>{moment(conversation.createdAt).format("h:mm a")}</time>
+        <time style={{ float: "right", fontStyle: "italic" }}>
+          {moment(conversation.createdAt).format("h:mm a")}
+        </time>
       </div>
     );
   }
@@ -79,11 +92,12 @@ const ChatContentItem = ({ conversation, partner, owner }) => {
 const sameDay = (d1, d2) => {
   const firstDate = new Date(d1);
   const secondDate = new Date(d2);
-  const same = firstDate.getFullYear() === secondDate.getFullYear() &&
+  const same =
+    firstDate.getFullYear() === secondDate.getFullYear() &&
     firstDate.getMonth() === secondDate.getMonth() &&
     firstDate.getDate() === secondDate.getDate();
   return same;
-}
+};
 
 const isToday = (currDate) => {
   if (!currDate) {
@@ -94,7 +108,7 @@ const isToday = (currDate) => {
 
   // call setHours to take the time out of the comparison
   return currentDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0);
-}
+};
 
 const showDate = (currDate, previousDate) => {
   if (!currDate && !previousDate) {
@@ -107,19 +121,16 @@ const showDate = (currDate, previousDate) => {
 
   if (previousDate && isSameDay) {
     result = "";
-  }
-  else if (!previousDate && !today) {
+  } else if (!previousDate && !today) {
     result = moment(currDate).format("LL");
-  }
-  else if (!isSameDay && today) {
-    result = "Today"
-  }
-  else if (!isSameDay) {
+  } else if (!isSameDay && today) {
+    result = "Today";
+  } else if (!isSameDay) {
     result = moment(currDate).format("LL");
   }
 
   return result;
-}
+};
 
 const ChatContent = () => {
   const history = useHistory();
@@ -132,33 +143,54 @@ const ChatContent = () => {
   const getName = (contact) => {
     console.log("contact me", contact);
     return `${contact.firstName} ${contact.lastName}`;
-  }
+  };
 
-  const [message, setMessage] = React.useState("");
   //   const [conversations, setConversations] = React.useState([]);
   const conversations = useSelector((state) => state.chat.conversations);
-  // console.log("con=", conversations);
-
+  // console.log("conversations", conversations);
 
   useEffect(() => {
     dispatch(getConversationWithPartnerId(contact.id));
   }, [contact.id]);
 
-
-
   const handleRefreshConversation = () => {
     // console.log("refresh");
     dispatch(getConversationWithPartnerId(contact.id));
   };
-  const handleSendChat = () => {
+
+  // console.log("contact to mess", contact);
+
+  React.useEffect(() => {
+    chatMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [contact]);
+  React.useEffect(() => {
+    if (conversations?.conversation) {
+      const hasUnreadMessges = conversations?.conversation?.some(
+        (x) => x.read == false
+      );
+      if (hasUnreadMessges) {
+        dispatch(markAsRead(conversations?.partner.id));
+      }
+      chatMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [conversations]);
+
+  const handleSendChat = (message) => {
+    const partner = conversations?.partner;
+    const owner = conversations?.owner;
     const newConversation = {
-      title: getName + "-" + (new Date()).toISOString(),
-      recieverId: contact.id,
-      message,
-      imageUrl: "",
-      audioUrl: "",
-      videoUrl: "",
-      createdAt: new Date().toISOString(),
+      conversation: {
+        title: getName + "-" + new Date().toISOString(),
+        recieverId: contact.id,
+        senderId: agentService.Auth.current().id,
+        message,
+        imageUrl: "",
+        audioUrl: "",
+        videoUrl: "",
+        createdAt: new Date().toISOString(),
+      },
+      partner,
+      owner,
     };
     // const reply = {
     //   title: "Chat",
@@ -171,25 +203,8 @@ const ChatContent = () => {
     dispatch(createChat(newConversation));
     // setConversations([...conversations, newConversation, reply]);
     chatMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-    setMessage("");
   };
-
-  // console.log("contact to mess", contact);
-
-  React.useEffect(() => {
-    chatMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [contact]);
-  React.useEffect(() => {
-    if (conversations?.conversation) {
-      // console.log(conversations);
-      const hasUnreadMessges = conversations?.conversation?.some(x => x.read == false);
-      if (hasUnreadMessges) {
-        dispatch(markAsRead(conversations?.partner.id));
-      }
-      chatMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [conversations]);
-
+  console.log("conversations to view", conversations);
   return (
     <div className={`chat-content-container`}>
       <div className="chat-content-header">
@@ -215,34 +230,63 @@ const ChatContent = () => {
       </div>
       <div className="chat-content-body">
         <div className="chat-content-messages" style={{ display: "flex" }}>
-          {conversations?.conversation?.map((conversation, index) => (
-            <>
-              {showDate(conversation.createdAt, conversations?.conversation[index - 1]?.createdAt)
-                ? <div style={{ ...dayStyle }}>{showDate(conversation.createdAt, conversations?.conversation[index - 1]?.createdAt)}</div>
-                : <></>
-              }
-
-              <ChatContentItem
-                key={index}
-                conversation={conversation}
-                partner={conversations?.partner}
-                owner={conversations?.owner}
-              />
-              <div ref={chatMessageRef}></div>            </>
-          ))}
+          {conversations?.conversation?.map((conversation, index) => {
+            console.log("conversation object", conversation);
+            // return <p>{conversation.message}</p>;
+            return (
+              <>
+                {showDate(
+                  conversation.createdAt,
+                  conversations.conversation[index - 1]?.createdAt
+                ) ? (
+                  <div style={{ ...dayStyle }}>
+                    {showDate(
+                      conversation.createdAt,
+                      conversations.conversation[index - 1]?.createdAt
+                    )}
+                  </div>
+                ) : (
+                  <></>
+                )}
+                <ChatContentItem
+                  key={index}
+                  conversation={conversation}
+                  partner={conversations?.partner}
+                  owner={conversations?.owner}
+                />
+                <div ref={chatMessageRef}></div>
+              </>
+            );
+          })}
         </div>
       </div>
-      <div className="chat-content-input">
-        <input
-          type="text"
-          placeholder="type your message"
-          onChange={(e) => setMessage(e.target.value)}
-          value={message}
-        />
-        <button disabled={!message} className="btn-primary" onClick={handleSendChat}>
-          Send
-        </button>
-      </div>
+
+      <ChatContentInput handleSendChat={handleSendChat} />
+    </div>
+  );
+};
+
+const ChatContentInput = ({ handleSendChat }) => {
+  const [message, setMessage] = React.useState("");
+
+  return (
+    <div className="chat-content-input">
+      <input
+        type="text"
+        placeholder="type your message"
+        onChange={(e) => setMessage(e.target.value)}
+        value={message}
+      />
+      <button
+        disabled={!message}
+        className="btn-primary"
+        onClick={() => {
+          handleSendChat(message);
+          setMessage("");
+        }}
+      >
+        Send
+      </button>
     </div>
   );
 };
