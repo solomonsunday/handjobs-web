@@ -26,8 +26,9 @@ const InstantJobs = () => {
     (state) => state.instantJob.allCurrentInstantJobs.meta
   );
   const applicants = useSelector((state) => state.instantJob.applicants);
+  const err = useSelector((state) => state.instantJob.error);
 
-  console.log(meta, "all the meta job");
+  console.log(err, "err");
   const requestedId = agent.Auth.current().id;
 
   useEffect(() => {
@@ -223,10 +224,10 @@ const InstantJobs = () => {
                                 id={`${i}`}
                                 hidden={true}
                               >
-                                <Tag>
+                                {!err && <Tag>
                                   {" "}
                                   <span>Waiting to be accepted...</span>
-                                </Tag>
+                                </Tag>}
                               </div>
                             </small>
                           </div>

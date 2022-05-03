@@ -12,6 +12,7 @@ const Initial_State = {
   appliedJobs: [],
   applicantProfile: null,
   loading: false,
+  error: false,
 };
 
 // Action types
@@ -23,10 +24,16 @@ const LOAD_INSTANT_APPLICANTS = "app/instantJob/LOAD_INSTANT_APPLICANT";
 const LOAD_APPLICANT_INFO = "app/instantJob/LOAD_APPLICANT_INFO";
 const LOAD_APPLIED_JOBS = "LOAD_APPLIED_JOBS";
 const LOADING = "LOADING";
+const ERROR = "ERROR";
 
 // Reducer
 export default function reducer(state = Initial_State, action = {}) {
   switch (action.type) {
+    case ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
     case CREATE_INSTANT_JOB:
       return {
         ...state,
@@ -126,6 +133,13 @@ export function onLoadApplicantProfile(data) {
 export function isRequestLoading(data) {
   return {
     type: LOADING,
+    payload: data,
+  };
+}
+
+export function isError(data) {
+  return {
+    type: ERROR,
     payload: data,
   };
 }
@@ -309,6 +323,7 @@ export function applyInstantJob(data) {
             title: "Failed to load Instant jobs",
           })
         );
+        dispatch(isError(error));
       }
     );
   };

@@ -8,6 +8,7 @@ import JobplicantAvatar from "./jobplicant-avatar";
 import { Card } from 'primereact/card';
 import PersonalInfoSkeleton from "components/skeletons/PersonalInfoSkeleton";
 import BackgroundImage from '../../../src/assets/bg.png'
+import ArtisanBG from '../../../src/assets/artisan_color.png'
 
 
 const PersonalInfo = ({ openCreate, openEdit, data, isViewApplicant }) => {
@@ -21,9 +22,6 @@ const PersonalInfo = ({ openCreate, openEdit, data, isViewApplicant }) => {
   const loading = useSelector((state) => state.account.loading);
   const accountType = agentService.Auth.current().accountType;
   const userId = agentService.Auth.current().id;
-
-  console.log(userId, "the user id of the log n user");
-
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -56,7 +54,6 @@ const PersonalInfo = ({ openCreate, openEdit, data, isViewApplicant }) => {
       );
 
       if (confirmation) {
-        console.log(selectedFile);
         var formData = new FormData();
         // var extension = selectedFile.type.replace(/(.*)\//g, "");
         // let filename = `${profileInfo.id}.${extension}`;
@@ -108,7 +105,7 @@ const PersonalInfo = ({ openCreate, openEdit, data, isViewApplicant }) => {
 
       />
       <div className=" p-d-flex p-jc-center flex-column text-center">
-        <h3 className="username p-mr-2">
+        <h3 className="username p-mr-2 text-white">
           {profileInfo?.firstName || 'John'} {profileInfo?.lastName || 'Doe'}
         </h3>
         {/* {!isViewApplicant && <span> <i
@@ -130,8 +127,9 @@ const PersonalInfo = ({ openCreate, openEdit, data, isViewApplicant }) => {
 
 const styles = {
   container: {
-    backgroundImage: `url(${BackgroundImage})`,
+    backgroundImage: `url(${ArtisanBG})`,
     // backgroundColor: "#357C3C",
+    // color: "white",
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     width: "100%",

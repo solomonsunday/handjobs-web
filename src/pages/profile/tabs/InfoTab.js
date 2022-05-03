@@ -148,7 +148,7 @@ const InfoTab = () => {
           </div>
           <div className="p-col-12 content-rightPanel p-md-4">
             {/* contact information */}
-            {/* {loading ? (
+            {loading ? (
               <ContactInfoSkeleton />
             ) : (
               <ContactInformation
@@ -156,7 +156,7 @@ const InfoTab = () => {
                 openEdit={openEdit}
                 profileInfo={profileInfo}
               />
-            )} */}
+            )}
 
             {/* skills */}
             {/* {loading ? <SkillSkeleton /> : <Skills
