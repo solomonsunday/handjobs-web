@@ -6,7 +6,7 @@ const initialState = {
   selectedContact: null,
   conversations: [],
   conversationList: [],
-  totalUnread : 0,
+  totalUnread: 0,
 };
 
 const TOGGLE_CHAT_MODAL = "TOGGLE_CHAT_MODAL";
@@ -33,7 +33,16 @@ export default function reducer(state = initialState, action) {
     case CREATE_CHAT:
       return {
         ...state,
-        conversations: [...state.conversations?.conversation, action.payload],
+        // conversations: [...state.conversations, action.payload],
+        conversations: {
+          ...state.conversations,
+          conversation: [
+            ...state.conversations.conversation,
+            action.payload.conversation
+          ],
+          partner: action.payload.partner,
+          owner: action.payload.owner
+        }
       };
     case CONVERSATION_WITH_PARTNER_ID:
       return {
@@ -46,11 +55,11 @@ export default function reducer(state = initialState, action) {
         conversationList: action.payload,
       };
 
-      case TOTAL_UNREAD:
-        return {
-          ...state,
-          totalUnread: action.payload,
-        };
+    case TOTAL_UNREAD:
+      return {
+        ...state,
+        totalUnread: action.payload,
+      };
     default:
       return state;
   }
@@ -75,22 +84,24 @@ export const actionCreateChat = (conversation) => ({
   payload: conversation,
 });
 
-export const actionGetConversationWithPartnerId = ({data}) => ({
+export const actionGetConversationWithPartnerId = ({ data }) => ({
   type: CONVERSATION_WITH_PARTNER_ID,
   payload: data,
 });
 
-export const actionGetConversationList = ({data}) => ({
+export const actionGetConversationList = ({ data }) => ({
   type: CONVERSATION_LIST,
   payload: data,
 });
 
-export const createChat = (conversation) => async (dispatch) => {
-  dispatch(actionCreateChat(conversation));
-  return agent.Chat.createChat(conversation).then(
+export const createChat = (data) => async (dispatch) => {
+  console.log('add chat object', data)
+  dispatch(actionCreateChat(data));
+  return agent.Chat.createChat(data.conversation).then(
     (response) => {
-      dispatch(getConversationWithPartnerId(conversation.recieverId));
-      //console.log("create chat response", response);
+      // dispatch(getConversationWithPartnerId(conversation.recieverId));
+      console.log("create chat response", response);
+
     },
     (error) => {
       dispatch(showMessage({ type: "error", message: error }));
@@ -101,7 +112,7 @@ export const createChat = (conversation) => async (dispatch) => {
 export const getConversationWithPartnerId = (partnerId) => async (dispatch) => {
   return agent.Chat.getConversationsWithPartnerId(partnerId).then(
     (response) => {
-      //console.log("get conversation chat response", response);
+      // console.log("get conversation chat response", response);
       dispatch(actionGetConversationWithPartnerId(response));
       dispatch(getConversationList());
     },
@@ -125,7 +136,7 @@ export const getConversationList = () => async (dispatch) => {
 export const markAsRead = (partnerId) => async (dispatch) => {
   return agent.Chat.markAsRead(partnerId).then(
     (response) => {
-     dispatch(getConversationList());
+      dispatch(getConversationList());
     },
     (error) => {
     }

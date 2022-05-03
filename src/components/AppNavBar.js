@@ -122,12 +122,13 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                                 </Nav.Link>)}
 
 
-                                <Nav.Link
+                              
+                                <span
                                     className="text-white"
                                     onClick={handleToggleNotification}
                                     // onMouseEnter={() => setShowNotification(true)}
                                     // onMouseLeave={() => setShowNotification(false)}
-                                    style={{ position: 'relative' }}>
+                                    style={{ position: 'relative', paddingTop: '.6rem', cursor: 'pointer' }}>
                                     <div className="position-relative">
                                         {notifications && notifications.length > 0 && <small className="badge bg-danger position-absolute alert-badge" >{notifications.length}</small>}
                                         <i className="pi pi-bell itemIcon-appNavbar" style={{ 'fontSize': '1.5em' }} />
@@ -136,14 +137,7 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                                         Notifications
                                     </div>
                                     <NotificationDropdown showNotification={showNotification} />
-                                </Nav.Link>
-                                <Nav.Link className="text-white d-lg-none" href="/create-instant-hire">Request Instant Job</Nav.Link>
-                                {width <= 800 && (<Nav.Link className='text-white' onClick={LogOut}>
-                                    <i className="pi pi-sign-out itemIcon-appNavbar" style={{ 'fontSize': '1.5em' }} />
-                                    <div className="itemTitle-appNavbar mx-2">
-                                        Sign Out
-                                    </div>
-                                </Nav.Link>)}
+                                </span>
 
                             </Nav>
                         </Navbar.Collapse>

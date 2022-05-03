@@ -23,7 +23,7 @@ const Post = ({ profileInfo, post, isAuthenticated, expandProfileImage, onShow, 
   const [copyAlert, setCopyAlert] = useState(null);
   const [currentPostId, setCurrentPostId] = useState(null);
   const isCorporate = post?.author?.accountType === ACCOUNT_TYPE.CORPORATE ? true : false;
-  const postId = post.id;
+  const postId = post?.id;
 
   const expandPostImage = (e) => {
     setImageToDisplay(e.target.src);
