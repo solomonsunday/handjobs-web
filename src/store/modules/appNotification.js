@@ -139,6 +139,8 @@ export function updateNotification(id) {
         return agent.Notification.updateNoti(id).then(
             response => {
                 dispatch(NotificationUpdated(response));
+                // dispatch(UserNotifications(agent.Auth.current.id));
+
             },
             error => {
                 dispatch(showErrorMessage(error));

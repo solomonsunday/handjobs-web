@@ -11,8 +11,8 @@ export const currentApp = process.env.REACT_APP_CURRENT_APP;
 export const isArtisanApp = process.env.REACT_APP_CURRENT_APP === "artisan";
 
 // export const API_ROOT = "https://jobplicant-api.herokuapp.com";
-export const API_ROOT = process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_ROOT_LOCAL : process.env.REACT_APP_API_ROOT_PROD;
-// export const API_ROOT = "http://localhost:8080";
+// export const API_ROOT = process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_ROOT_LOCAL : process.env.REACT_APP_API_ROOT_PROD;
+export const API_ROOT = "http://localhost:8080";
 
 let accessToken = null;
 const responseBody = (res) => res.body;

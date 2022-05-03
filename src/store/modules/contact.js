@@ -32,7 +32,7 @@ export default function reducer(state = contact, action = {}) {
     case LOADING_CONTACT:
       return {
         ...state,
-        loadingContact: action.payload.data,
+        loadingContact: action?.payload?.data,
       };
     case LOAD_FREE_USERS:
       const data = action.payload.data
