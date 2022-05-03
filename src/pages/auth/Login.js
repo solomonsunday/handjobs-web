@@ -35,7 +35,6 @@ const Login = ({ props }) => {
     const onSubmit = (user) => {
 
         user.type = 'artisan'; // Not required but needed to login successfully
-        console.log(user)
         user.app = currentApp;
         dispatch(loginUser(user));
     }

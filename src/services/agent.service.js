@@ -119,8 +119,8 @@ const Auth = {
     );
     // console.log("testing", test);
   },
-  resetPassword: (email, password) =>
-    requests.post(`/ account / password / reset`, { email, password }),
+  changePassword: (oldPassword, newPassword, confirmPassword) =>
+    requests.put(`/auth/change-password`, { oldPassword, newPassword, confirmPassword }),
   sendResetToken: (email) =>
     requests.post(`/ account / password / email`, { email }),
   verifyResetToken: (email, token) =>
@@ -285,7 +285,7 @@ const Company = {
 
 const InstantJob = {
   save: (instantjob) => requests.post("/instant-job", instantjob),
-  apply: (jobid) => requests.post(`/instant-job/${jobid}/apply`, null),
+  apply: (jobid) => requests.post(`/instant-job/apply`, jobid),
   load: () => requests.get(`/instant-job`),
   loadApplicants: (jobId) => requests.get(`/instant-job/${jobId}/applicants`),
   loadAllInstantJobs: (page, take) =>
