@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ProgressTrackerBar from './ProgressTrackerBar';
 import './Dashboard.css'
 import agentService from 'services/agent.service';
-import { UserPostCount, UserContact, InstantService, UserJob, UserActivities } from 'store/modules/dashboard';
+import { UserPostCount, UserContact, InstantService, UserJob, UserActivities, UserAccountStatus } from 'store/modules/dashboard';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -16,19 +16,82 @@ const EmployeeDashboard = () => {
   const instantService = useSelector(state => state.dashboard.instantService);
   const userJob = useSelector(state => state.dashboard.userJob);
   const activities = useSelector(state => state.dashboard.userActivities);
-  const userActivities = activities.data
+  const userActivities = activities.data;
+  const accountStatus = useSelector(state => state.dashboard.userAccountStatus);
+  const userAccountStatus = accountStatus?.data;
+  const [value, setValue] = useState();
+  const [profileValue, setProfileValue] = useState();
 
-  console.log("id", id)
-  console.log("postiii", userPost.data)
   useEffect(() => {
     dispatch(UserPostCount(id));
     dispatch(UserContact());
     dispatch(InstantService());
     dispatch(UserJob());
     dispatch(UserActivities());
+    dispatch(UserAccountStatus());
   }, [])
 
-  console.log("activity", userActivities)
+  useEffect(() => {
+    (profileInfo())
+  }, [userAccountStatus]);
+
+  const profileInfo = () => {
+    let addressCompleted;
+    let namesCompleted;
+    let professionCompleted;
+    let profileImageUploaded;
+    if (userAccountStatus?.profileInfo.addressCompleted === false) {
+      addressCompleted = 0
+    } else {
+      addressCompleted = 25
+    }
+    if (userAccountStatus?.profileInfo.namesCompleted === false) {
+      namesCompleted = 0
+    } else {
+      namesCompleted = 25
+    }
+    if (userAccountStatus?.profileInfo.professionCompleted === false) {
+      professionCompleted = 0
+    } else {
+      professionCompleted = 25
+    }
+    if (userAccountStatus?.profileInfo.profileImageUploaded === false) {
+      profileImageUploaded = 0
+    } else {
+      profileImageUploaded = 25
+    }
+    const profileInfoValue = addressCompleted + namesCompleted + professionCompleted + profileImageUploaded
+    setValue(profileInfoValue);
+
+    let experienceCompleted;
+    let locationCompleted;
+    let portfolioUploadCompleted;
+    let profileInfoCompleted;
+    let servicesCompleted;
+    if (userAccountStatus?.experienceCompleted === false) {
+      experienceCompleted = 0
+    } else {
+      experienceCompleted = 20
+    }
+    if (userAccountStatus?.locationCompleted === false) {
+      locationCompleted = 0
+    } else {
+      locationCompleted = 20
+    }
+    if (userAccountStatus?.portfolioUploadCompleted === false) {
+      portfolioUploadCompleted = 0
+    } else {
+      portfolioUploadCompleted = 20
+    }
+    if (userAccountStatus?.servicesCompleted === false) {
+      servicesCompleted = 0
+    } else {
+      servicesCompleted = 20
+    }
+    profileInfoCompleted = (profileInfoValue / 100) * 20;
+    const profileValue = experienceCompleted + locationCompleted + portfolioUploadCompleted + profileInfoCompleted + servicesCompleted;
+    setProfileValue(profileValue)
+  }
 
   return (
     <div className="dashboard-container">
@@ -102,49 +165,58 @@ const EmployeeDashboard = () => {
             <div className="p-card-body p-pt-0">
               <div className="progressBar-title">
                 <span>
-                  Profile Completion
+                  Experience Completion
                 </span>
                 <span>
-                  20%
+                  {userAccountStatus?.experienceCompleted === false ? "0%" : "100%"}
                 </span>
               </div>
-              <ProgressTrackerBar value={20} className="progressBar progressBar1" />
+              <ProgressTrackerBar value={userAccountStatus?.experienceCompleted === false ? 0 : 100} className="progressBar progressBar1" />
+              <div className="progressBar-title">
+                <span>
+                  Location Completion
+                </span>
+                <span>
+                  {userAccountStatus?.locationCompleted === false ? "0%" : "100%"}
+                </span>
+              </div>
+              <ProgressTrackerBar value={userAccountStatus?.locationCompleted === false ? 0 : 100} className="progressBar progressBar2" />
+              <div className="progressBar-title">
+                <span>
+                  Portfolio Upload Completion
+                </span>
+                <span>
+                  {userAccountStatus?.portfolioUploadCompleted === false ? "0%" : "100%"}
+                </span>
+              </div>
+              <ProgressTrackerBar value={userAccountStatus?.portfolioUploadCompleted === false ? 0 : 100} className="progressBar progressBar3" />
+              <div className="progressBar-title">
+                <span>
+                  Profile Information Completion
+                </span>
+                <span>
+                  {`${value}%`}
+                </span>
+              </div>
+              <ProgressTrackerBar value={value} className="progressBar progressBar6" />
+              <div className="progressBar-title">
+                <span>
+                  Services Completion
+                </span>
+                <span>
+                  {userAccountStatus?.servicesCompleted === false ? "0%" : "100%"}
+                </span>
+              </div>
+              <ProgressTrackerBar value={userAccountStatus?.servicesCompleted === false ? 0 : 100} className="progressBar progressBar4" />
               <div className="progressBar-title">
                 <span>
                   Profile Completion
                 </span>
                 <span>
-                  40%
+                  {profileValue === 100 ? "Complete!" : `${profileValue}%`}
                 </span>
               </div>
-              <ProgressTrackerBar value={40} className="progressBar progressBar2" />
-              <div className="progressBar-title">
-                <span>
-                  Profile Completion
-                </span>
-                <span>
-                  60%
-                </span>
-              </div>
-              <ProgressTrackerBar value={60} className="progressBar progressBar3" />
-              <div className="progressBar-title">
-                <span>
-                  Profile Completion
-                </span>
-                <span>
-                  80%
-                </span>
-              </div>
-              <ProgressTrackerBar value={80} className="progressBar progressBar4" />
-              <div className="progressBar-title">
-                <span>
-                  Profile Completion
-                </span>
-                <span>
-                  Complete!
-                </span>
-              </div>
-              <ProgressTrackerBar value={100} className="progressBar progressBar5" />
+              <ProgressTrackerBar value={profileValue} className="progressBar progressBar5" />
             </div>
           </div>
         </div>

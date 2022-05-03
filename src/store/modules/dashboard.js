@@ -9,7 +9,8 @@ const dashboard = {
     userContact: {},
     instantService: {},
     userJob: {},
-    userActivities: []
+    userActivities: [],
+    userAccountStatus: {}
 }
 
 // Action types
@@ -21,6 +22,7 @@ const USER_CONTACT = "USER_CONTACT";
 const INSTANT_SERVICE = "INSTANT_SERVICE";
 const USER_JOB = "USER_JOB";
 const USER_ACTIVITIES = "USER_ACTIVITIES";
+const USER_ACCOUNT_STATUS = "USER_ACCOUNT_STATUS";
 
 // Reducer
 export default function reducer(state = dashboard, action = {}) {
@@ -65,6 +67,11 @@ export default function reducer(state = dashboard, action = {}) {
                 ...state,
                 userActivities: action.payload,
             }
+        case USER_ACCOUNT_STATUS:
+            return {
+                ...state,
+                userAccountStatus: action.payload,
+            }
         default:
             return state;
     }
@@ -99,6 +106,10 @@ export function getUserJob(data) {
 }
 export function getUserActivities(data) {
     return { type: USER_ACTIVITIES, payload: data };
+}
+
+export function getUserAccountStatus(data) {
+    return { type: USER_ACCOUNT_STATUS, payload: data };
 }
 
 //Action
@@ -142,7 +153,6 @@ export const AdminJobCount = () => (dispatch) => {
 export const UserPostCount = (userId) => async (dispatch) => {
     return agent.Dashboard.getUserPostCount(userId).then(
         (response) => {
-            console.log("post", response);
             dispatch(getUserPosts(response));
         },
         (error) => {
@@ -154,7 +164,6 @@ export const UserPostCount = (userId) => async (dispatch) => {
 export const UserContact = () => async (dispatch) => {
     return agent.Dashboard.loadUserContact().then(
         (response) => {
-            console.log("contact", response);
             dispatch(getUserContacts(response));
         },
         (error) => {
@@ -166,7 +175,6 @@ export const UserContact = () => async (dispatch) => {
 export const InstantService = () => async (dispatch) => {
     return agent.Dashboard.loadInstantService().then(
         (response) => {
-            console.log("service", response);
             dispatch(getInstantService(response));
         },
         (error) => {
@@ -178,7 +186,6 @@ export const InstantService = () => async (dispatch) => {
 export const UserJob = () => async (dispatch) => {
     return agent.Dashboard.loadJobs().then(
         (response) => {
-            console.log("job", response);
             dispatch(getUserJob(response));
         },
         (error) => {
@@ -190,8 +197,18 @@ export const UserJob = () => async (dispatch) => {
 export const UserActivities = () => async (dispatch) => {
     return agent.Dashboard.loadUserActivities().then(
         (response) => {
-            console.log("acti", response);
             dispatch(getUserActivities(response));
+        },
+        (error) => {
+            dispatch(showMessage({ type: "error", message: error }));
+        }
+    );
+};
+
+export const UserAccountStatus = () => async (dispatch) => {
+    return agent.Dashboard.loadUserAccountStatus().then(
+        (response) => {
+            dispatch(getUserAccountStatus(response));
         },
         (error) => {
             dispatch(showMessage({ type: "error", message: error }));

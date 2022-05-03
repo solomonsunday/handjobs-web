@@ -492,6 +492,8 @@ const Dashboard = {
     requests.get(`/job/applications/m/count`),
   loadUserActivities: () =>
     requests.get(`/accounts/user-activities`),
+  loadUserAccountStatus: () =>
+    requests.get(`/accounts/account-completion-status`),
 }
 
 export default {
