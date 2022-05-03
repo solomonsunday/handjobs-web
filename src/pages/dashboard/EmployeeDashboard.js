@@ -33,67 +33,51 @@ const EmployeeDashboard = () => {
   }, [])
 
   useEffect(() => {
-    (profileInfo())
+    if (userAccountStatus) {
+      console.log("status", userAccountStatus);
+    }
   }, [userAccountStatus]);
 
-  const profileInfo = () => {
-    let addressCompleted;
-    let namesCompleted;
-    let professionCompleted;
-    let profileImageUploaded;
-    if (userAccountStatus?.profileInfo.addressCompleted === false) {
-      addressCompleted = 0
-    } else {
-      addressCompleted = 25
+  const getCompletionStatusPercent = (profileItem) => {
+    let completionPercent = 0;
+    if (!profileItem) {
+      return 0;
     }
-    if (userAccountStatus?.profileInfo.namesCompleted === false) {
-      namesCompleted = 0
-    } else {
-      namesCompleted = 25
-    }
-    if (userAccountStatus?.profileInfo.professionCompleted === false) {
-      professionCompleted = 0
-    } else {
-      professionCompleted = 25
-    }
-    if (userAccountStatus?.profileInfo.profileImageUploaded === false) {
-      profileImageUploaded = 0
-    } else {
-      profileImageUploaded = 25
-    }
-    const profileInfoValue = addressCompleted + namesCompleted + professionCompleted + profileImageUploaded
-    setValue(profileInfoValue);
 
-    let experienceCompleted;
-    let locationCompleted;
-    let portfolioUploadCompleted;
-    let profileInfoCompleted;
-    let servicesCompleted;
-    if (userAccountStatus?.experienceCompleted === false) {
-      experienceCompleted = 0
-    } else {
-      experienceCompleted = 20
+    if (typeof profileItem === 'boolean') {
+      completionPercent = profileItem === true ? 100 : 0;
+    } else if (typeof profileItem === 'object' && profileItem !== null) {
+      const propertValues = Object.values(profileItem);
+      if (propertValues.length > 0) {
+        const trueValues = propertValues.filter(x => x === true).length;
+        completionPercent = (trueValues / propertValues.length) * 100;
+      }
     }
-    if (userAccountStatus?.locationCompleted === false) {
-      locationCompleted = 0
-    } else {
-      locationCompleted = 20
-    }
-    if (userAccountStatus?.portfolioUploadCompleted === false) {
-      portfolioUploadCompleted = 0
-    } else {
-      portfolioUploadCompleted = 20
-    }
-    if (userAccountStatus?.servicesCompleted === false) {
-      servicesCompleted = 0
-    } else {
-      servicesCompleted = 20
-    }
-    profileInfoCompleted = (profileInfoValue / 100) * 20;
-    const profileValue = experienceCompleted + locationCompleted + portfolioUploadCompleted + profileInfoCompleted + servicesCompleted;
-    setProfileValue(profileValue)
+    return completionPercent.toFixed(0);
   }
 
+  const getTotalCompletionStatusPercent = (profileData) => {
+    let completionPercent = 0;
+    if (!profileData) {
+      return 0;
+    }
+
+    for (const [key, value] of Object.entries(profileData)) {
+      let itemPercent = 0;
+      if (typeof value === 'boolean') {
+       itemPercent = value === true ? 100 : 0;
+      } else if (typeof value === 'object' && value !== null) {
+        const propertValues = Object.values(value);
+        if (propertValues.length > 0) {
+          const trueValues = propertValues.filter(x => x === true).length;
+          itemPercent = (trueValues / propertValues.length) * 100;
+        }
+      }
+      completionPercent  = completionPercent + itemPercent;
+    }
+   
+    return completionPercent.toFixed(0);
+  }
 
   return (
     <div className="dashboard-container">
@@ -170,62 +154,64 @@ const EmployeeDashboard = () => {
         <div className="p-col-12 p-lg-6 p-p-lg-1">
           <div className="p-card h-100 p-mt-2 p-rounded-lg">
             <div className="p-card-title cardtitle h6">Progress Tracker</div>
-            <div className="p-card-body p-pt-0">
+            {userAccountStatus && <div className="p-card-body p-pt-0">
               <div className="progressBar-title">
                 <span>
-                  Experience Completion
+                  Experience Updated
                 </span>
                 <span>
-                  {userAccountStatus?.experienceCompleted === false ? "0%" : "100%"}
+                  {getCompletionStatusPercent(userAccountStatus?.experienceCompleted)} {`%`}
                 </span>
               </div>
-              <ProgressTrackerBar value={userAccountStatus?.experienceCompleted === false ? 0 : 100} className="progressBar progressBar1" />
+              <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.experienceCompleted)} className="progressBar progressBar1" />
               <div className="progressBar-title">
                 <span>
-                  Location Completion
+                  Location Updated
                 </span>
                 <span>
-                  {userAccountStatus?.locationCompleted === false ? "0%" : "100%"}
+                  {getCompletionStatusPercent(userAccountStatus?.locationCompleted)} {`%`}
                 </span>
               </div>
-              <ProgressTrackerBar value={userAccountStatus?.locationCompleted === false ? 0 : 100} className="progressBar progressBar2" />
+              <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.locationCompleted)} className="progressBar progressBar2" />
               <div className="progressBar-title">
                 <span>
-                  Portfolio Upload Completion
+                  Portfolios Uploaded
                 </span>
                 <span>
-                  {userAccountStatus?.portfolioUploadCompleted === false ? "0%" : "100%"}
+                  {getCompletionStatusPercent(userAccountStatus?.portfolioUploadCompleted)} {`%`}
                 </span>
               </div>
-              <ProgressTrackerBar value={userAccountStatus?.portfolioUploadCompleted === false ? 0 : 100} className="progressBar progressBar3" />
+              <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.portfolioUploadCompleted)} className="progressBar progressBar3" />
               <div className="progressBar-title">
                 <span>
-                  Profile Information Completion
+                  Profile Information Completed
                 </span>
                 <span>
-                  {`${value}%`}
+                  {getCompletionStatusPercent(userAccountStatus?.profileInfo)} {`%`}
                 </span>
               </div>
-              <ProgressTrackerBar value={value} className="progressBar progressBar6" />
+              <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.profileInfo)} className="progressBar progressBar6" />
               <div className="progressBar-title">
                 <span>
-                  Services Completion
+                  Services Updated
                 </span>
                 <span>
-                  {userAccountStatus?.servicesCompleted === false ? "0%" : "100%"}
+                  {getCompletionStatusPercent(userAccountStatus?.servicesCompleted)} {`%`}
                 </span>
               </div>
-              <ProgressTrackerBar value={userAccountStatus?.servicesCompleted === false ? 0 : 100} className="progressBar progressBar4" />
+              <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.servicesCompleted)} className="progressBar progressBar4" />
+              
+              {/* <hr className='my-3' />
               <div className="progressBar-title">
-                <span>
-                  Profile Completion
+                <span className='text-green'>
+                  Completion total:
                 </span>
-                <span>
-                  {profileValue === 100 ? "Complete!" : `${profileValue}%`}
-                </span>
+                <strong className='text-green'>
+                  {getTotalCompletionStatusPercent(userAccountStatus)} {`%`}
+                </strong>
               </div>
-              <ProgressTrackerBar value={profileValue} className="progressBar progressBar5" />
-            </div>
+              <ProgressTrackerBar value={getTotalCompletionStatusPercent(userAccountStatus)} className="progressBar progressBar5" /> */}
+            </div>}
           </div>
         </div>
       </div>
