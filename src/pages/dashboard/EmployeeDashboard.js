@@ -94,10 +94,11 @@ const EmployeeDashboard = () => {
     setProfileValue(profileValue)
   }
 
+
   return (
     <div className="dashboard-container">
       <h3 className="p-pb-2"><i className="pi pi-chart-line p-pr-2"></i>Dashboard</h3>
-      <h6 className="p-mb-4">Welcome <strong  className='text-green'>{name}</strong></h6>
+      <h6 className="p-mb-4">Welcome <strong className='text-green'>{name}</strong></h6>
       <div className="row">
         <div className="col-xl-4 col-md-6 p-mb-2">
           <div className="card mini-stat">
@@ -153,8 +154,8 @@ const EmployeeDashboard = () => {
             <main style={{ overflowY: 'auto' }}>
               {userActivities && userActivities.length > 0 && userActivities.map(activity =>
                 <div className="p-card-body p-card-body-Activity p-px-3">
-                  <i className='pi pi-paperclip pr-3  text-warning'></i><span className=' text-green'>{activity.message}</span>  
-                  <span className='px-3' style={{fontWeight: 'bold'}}>
+                  <i className='pi pi-paperclip pr-3  text-warning'></i><span className=' text-green'>{activity.message}</span>
+                  <span className='px-3' style={{ fontWeight: 'bold' }}>
                     {/* {moment(activity.createdAt).fromNow('MMMM Do YYYY')} ago */}
                     [{moment(activity.createdAt).format("D MMMM YYYY, h:mm a")}]
                   </span>
