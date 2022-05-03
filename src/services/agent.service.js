@@ -11,8 +11,8 @@ export const currentApp = process.env.REACT_APP_CURRENT_APP;
 export const isArtisanApp = process.env.REACT_APP_CURRENT_APP === "artisan";
 
 // export const API_ROOT = "https://jobplicant-api.herokuapp.com";
-// export const API_ROOT = process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_ROOT_LOCAL : process.env.REACT_APP_API_ROOT_PROD;
-export const API_ROOT = "http://localhost:8080";
+export const API_ROOT = process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_ROOT_LOCAL : process.env.REACT_APP_API_ROOT_PROD;
+// export const API_ROOT = "http://localhost:8080";
 
 let accessToken = null;
 const responseBody = (res) => res.body;
@@ -119,8 +119,8 @@ const Auth = {
     );
     // console.log("testing", test);
   },
-  resetPassword: (email, password) =>
-    requests.post(`/ account / password / reset`, { email, password }),
+  changePassword: (oldPassword, newPassword, confirmPassword) =>
+    requests.put(`/auth/change-password`, { oldPassword, newPassword, confirmPassword }),
   sendResetToken: (email) =>
     requests.post(`/ account / password / email`, { email }),
   verifyResetToken: (email, token) =>
@@ -285,7 +285,7 @@ const Company = {
 
 const InstantJob = {
   save: (instantjob) => requests.post("/instant-job", instantjob),
-  apply: (jobid) => requests.post(`/instant-job/${jobid}/apply`, null),
+  apply: (jobid) => requests.post(`/instant-job/apply`, jobid),
   load: () => requests.get(`/instant-job`),
   loadApplicants: (jobId) => requests.get(`/instant-job/${jobId}/applicants`),
   loadAllInstantJobs: (page, take) =>

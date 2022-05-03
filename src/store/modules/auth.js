@@ -3,6 +3,7 @@ import { push } from "connected-react-router";
 import agent from "../../services/agent.service";
 import { MESSAGE_TYPE } from "store/constant";
 import { ACCOUNT_TYPE } from 'constants/accountType';
+import { useDispatch } from 'react-redux';
 
 // initial values
 const authData = {
@@ -122,14 +123,12 @@ export function loginUser({ email, password, type, app }) {
 
         if (response.role === ("Super-admin" || "developer")) {
           onLogin(dispatch, response);
-          console.log({ response });
           dispatch(push('/admin'));
           return;
         }
 
         if (response.accountType === ACCOUNT_TYPE.CORPORATE) {
           onLogin(dispatch, response);
-          console.log({ response });
           dispatch(push('/company'));
 
         } else if (response.accountType === ACCOUNT_TYPE.INSTANT_HIRE) {
@@ -153,7 +152,6 @@ export function forgotPassword(email) {
     dispatch(isRequestLoading(true))
     return agent.Auth.forgotPassword(email).then(response => {
       // handle success
-      console.log("res", response);
       dispatch(isRequestLoading(false))
       dispatch(push("/recoverbyemail"));
     }, error => { // handle error
@@ -162,6 +160,34 @@ export function forgotPassword(email) {
     });
   }
 }
+
+export function changePassword({ oldPassword, newPassword, confirmPassword }) {
+  return dispatch => {
+    dispatch(isRequestLoading(true))
+    return agent.Auth.changePassword(oldPassword, newPassword, confirmPassword).then(response => {
+      dispatch(isRequestLoading(false))
+      dispatch(showMessage({ type: MESSAGE_TYPE.SUCCESS, message: "Password successfully changed" }));
+      dispatch(OnLogout());
+      // dispatch(push("/recoverbyemail"));
+    }, error => {
+      dispatch(isRequestLoading(false))
+      dispatch(showMessage({ type: "error", message: error }));
+    });
+  }
+}
+
+// export const changePassword = async (data) => {
+//   // return dispatch => {
+//   try {
+//     dispatch(isRequestLoading(true))
+//     const response = await agent.Auth.changePassword(data);
+//     const result = await response.json();
+
+//   } catch (error) {
+//     dispatch(showMessage({ type: "error", message: error }));
+//   }
+//   // }
+// }
 
 export function updateUserPassword(shortCode, email, data) {
   return dispatch => {
