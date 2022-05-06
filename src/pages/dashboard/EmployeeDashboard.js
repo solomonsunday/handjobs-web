@@ -5,6 +5,7 @@ import './Dashboard.css'
 import agentService from 'services/agent.service';
 import { UserPostCount, UserContact, InstantService, UserJob, UserActivities, UserAccountStatus } from 'store/modules/dashboard';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 
 const EmployeeDashboard = () => {
@@ -65,7 +66,7 @@ const EmployeeDashboard = () => {
     for (const [key, value] of Object.entries(profileData)) {
       let itemPercent = 0;
       if (typeof value === 'boolean') {
-       itemPercent = value === true ? 100 : 0;
+        itemPercent = value === true ? 100 : 0;
       } else if (typeof value === 'object' && value !== null) {
         const propertValues = Object.values(value);
         if (propertValues.length > 0) {
@@ -73,9 +74,9 @@ const EmployeeDashboard = () => {
           itemPercent = (trueValues / propertValues.length) * 100;
         }
       }
-      completionPercent  = completionPercent + itemPercent;
+      completionPercent = completionPercent + itemPercent;
     }
-   
+
     return completionPercent.toFixed(0);
   }
 
@@ -159,6 +160,9 @@ const EmployeeDashboard = () => {
                 <span>
                   Experience Updated
                 </span>
+                {getCompletionStatusPercent(userAccountStatus?.experienceCompleted) < 100 && <Link to="/profile">
+                  Click here to update
+                </Link>}
                 <span>
                   {getCompletionStatusPercent(userAccountStatus?.experienceCompleted)} {`%`}
                 </span>
@@ -168,6 +172,9 @@ const EmployeeDashboard = () => {
                 <span>
                   Location Updated
                 </span>
+                {getCompletionStatusPercent(userAccountStatus?.locationCompleted) < 100 && <Link to="/profile">
+                  Click here to update
+                </Link>}
                 <span>
                   {getCompletionStatusPercent(userAccountStatus?.locationCompleted)} {`%`}
                 </span>
@@ -177,6 +184,9 @@ const EmployeeDashboard = () => {
                 <span>
                   Portfolios Uploaded
                 </span>
+                {getCompletionStatusPercent(userAccountStatus?.portfolioUploadCompleted) < 100 && <Link to="/profile">
+                  Click here to update
+                </Link>}
                 <span>
                   {getCompletionStatusPercent(userAccountStatus?.portfolioUploadCompleted)} {`%`}
                 </span>
@@ -186,6 +196,9 @@ const EmployeeDashboard = () => {
                 <span>
                   Profile Information Completed
                 </span>
+                {getCompletionStatusPercent(userAccountStatus?.profileInfo) < 100 && <Link to="/profile">
+                  Click here to update
+                </Link>}
                 <span>
                   {getCompletionStatusPercent(userAccountStatus?.profileInfo)} {`%`}
                 </span>
@@ -195,12 +208,15 @@ const EmployeeDashboard = () => {
                 <span>
                   Services Updated
                 </span>
+                {getCompletionStatusPercent(userAccountStatus?.servicesCompleted) < 100 && <Link to="/profile">
+                  Click here to update
+                </Link>}
                 <span>
                   {getCompletionStatusPercent(userAccountStatus?.servicesCompleted)} {`%`}
                 </span>
               </div>
               <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.servicesCompleted)} className="progressBar progressBar4" />
-              
+
               {/* <hr className='my-3' />
               <div className="progressBar-title">
                 <span className='text-green'>
