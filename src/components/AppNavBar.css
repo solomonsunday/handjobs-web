@@ -7,7 +7,7 @@
 
 .appNavbar {
     /* background-color: var(--app-primary-color); */
-    background-color: #00b4d8;
+    background-color: #357C3C;
     padding: 0.75rem 3rem;
     display: flex;
     justify-content: space-between;
@@ -55,7 +55,7 @@
     border: none;
     font-size: 13px;
     /* background-color: var(--app-primary-color); */
-    background-color: #00b4d8;
+    background-color: #357C3C;
     padding-top: 1.2rem;
 }
 
@@ -90,7 +90,7 @@
 .notification-dropdownItem-appNavbar:hover a,
 .profile-dropdownItem-appNavbar:hover span {
     /* color: var(--app-primary-color); */
-    color: #00b4d8;
+    color: #357C3C;
 }
 
 .profile-dropdownItem-appNavbar .li-icon {
@@ -126,6 +126,7 @@
     .navbar-brand img {
         margin-right: 37vw;
     }
+
     .alert-badge {
         bottom: 16px;
         left: 17.2em;

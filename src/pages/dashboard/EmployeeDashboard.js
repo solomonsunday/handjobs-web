@@ -21,8 +21,7 @@ const EmployeeDashboard = () => {
   const userActivities = activities.data;
   const accountStatus = useSelector(state => state.dashboard.userAccountStatus);
   const userAccountStatus = accountStatus?.data;
-  const [value, setValue] = useState();
-  const [profileValue, setProfileValue] = useState();
+  const authUser = JSON.parse(window.localStorage.getItem('auth'));
 
   useEffect(() => {
     dispatch(UserPostCount(id));
@@ -156,18 +155,45 @@ const EmployeeDashboard = () => {
           <div className="p-card h-100 p-mt-2 p-rounded-lg">
             <div className="p-card-title cardtitle h6">Progress Tracker</div>
             {userAccountStatus && <div className="p-card-body p-pt-0">
-              <div className="progressBar-title">
-                <span>
-                  Experience Updated
-                </span>
-                {getCompletionStatusPercent(userAccountStatus?.experienceCompleted) < 100 && <Link to="/profile">
-                  Click here to update
-                </Link>}
-                <span>
-                  {getCompletionStatusPercent(userAccountStatus?.experienceCompleted)} {`%`}
-                </span>
-              </div>
-              <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.experienceCompleted)} className="progressBar progressBar1" />
+              {authUser?.accountType === "Artisan" && <>
+                <div className="progressBar-title">
+                  <span>
+                    Experience Updated
+                  </span>
+                  {getCompletionStatusPercent(userAccountStatus?.experienceCompleted) < 100 && <Link to="/profile">
+                    Click here to update
+                  </Link>}
+                  <span>
+                    {getCompletionStatusPercent(userAccountStatus?.experienceCompleted)} {`%`}
+                  </span>
+                </div>
+                <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.experienceCompleted)} className="progressBar progressBar1" />
+                <div className="progressBar-title">
+                  <span>
+                    Portfolios Uploaded
+                  </span>
+                  {getCompletionStatusPercent(userAccountStatus?.portfolioUploadCompleted) < 100 && <Link to="/profile">
+                    Click here to update
+                  </Link>}
+                  <span>
+                    {getCompletionStatusPercent(userAccountStatus?.portfolioUploadCompleted)} {`%`}
+                  </span>
+                </div>
+                <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.portfolioUploadCompleted)} className="progressBar progressBar3" />
+                <div className="progressBar-title">
+                  <span>
+                    Services Updated
+                  </span>
+                  {getCompletionStatusPercent(userAccountStatus?.servicesCompleted) < 100 && <Link to="/profile">
+                    Click here to update
+                  </Link>}
+                  <span>
+                    {getCompletionStatusPercent(userAccountStatus?.servicesCompleted)} {`%`}
+                  </span>
+                </div>
+                <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.servicesCompleted)}
+                  className="progressBar progressBar4" />
+              </>}
               <div className="progressBar-title">
                 <span>
                   Location Updated
@@ -180,18 +206,7 @@ const EmployeeDashboard = () => {
                 </span>
               </div>
               <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.locationCompleted)} className="progressBar progressBar2" />
-              <div className="progressBar-title">
-                <span>
-                  Portfolios Uploaded
-                </span>
-                {getCompletionStatusPercent(userAccountStatus?.portfolioUploadCompleted) < 100 && <Link to="/profile">
-                  Click here to update
-                </Link>}
-                <span>
-                  {getCompletionStatusPercent(userAccountStatus?.portfolioUploadCompleted)} {`%`}
-                </span>
-              </div>
-              <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.portfolioUploadCompleted)} className="progressBar progressBar3" />
+
               <div className="progressBar-title">
                 <span>
                   Profile Information Completed
@@ -204,18 +219,6 @@ const EmployeeDashboard = () => {
                 </span>
               </div>
               <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.profileInfo)} className="progressBar progressBar6" />
-              <div className="progressBar-title">
-                <span>
-                  Services Updated
-                </span>
-                {getCompletionStatusPercent(userAccountStatus?.servicesCompleted) < 100 && <Link to="/profile">
-                  Click here to update
-                </Link>}
-                <span>
-                  {getCompletionStatusPercent(userAccountStatus?.servicesCompleted)} {`%`}
-                </span>
-              </div>
-              <ProgressTrackerBar value={getCompletionStatusPercent(userAccountStatus?.servicesCompleted)} className="progressBar progressBar4" />
 
               {/* <hr className='my-3' />
               <div className="progressBar-title">

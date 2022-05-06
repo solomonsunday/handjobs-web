@@ -1,10 +1,10 @@
 /* :root {
-    --app-primary-color: #00b4d8; 
+    --app-primary-color: #357C3C; 
     --app-secondary-color: #03045E;
 } */
 
 :root {
-    --app-primary-color: #0f0e0e; 
+    --app-primary-color: #0f0e0e;
     --app-secondary-color: #357C3C;
 }
 
@@ -42,6 +42,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }

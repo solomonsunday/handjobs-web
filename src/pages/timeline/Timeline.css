@@ -1,12 +1,12 @@
 .timeline-container {
-  background-color: #00b4d81f;
+  background-color: #357C3C1f;
   padding-top: 2rem;
   min-height: 100vh;
 }
 
 .timeline-postsContainer--empty h1,
 .timeline-postsContainer--empty h5 {
-  color: #00b4d8;
+  color: #357C3C;
 }
 
 .timeline-content {
@@ -15,56 +15,56 @@
 }
 
 .profile-picture-timeline {
-  border: 3px #00b4d8 solid;
+  border: 3px #357C3C solid;
   object-fit: cover;
-  background-color: #00b4d8;
+  background-color: #357C3C;
   color: white;
   cursor: pointer;
 }
 
 .timeline-profilePicture,
 .profilepic-startpost-timeline>img {
-  border: 4px #00b4d8 solid;
+  border: 4px #357C3C solid;
   color: white;
   object-fit: cover;
-  background-color: #00b4d8;
+  background-color: #357C3C;
   cursor: pointer;
 }
 
 .timeline-emptyProfilePic {
-  border: 5px #00b4d8 solid;
+  border: 5px #357C3C solid;
   width: fit-content;
   margin: auto;
   font-size: 3rem;
   border-radius: 50%;
   padding: 0.8rem;
-  color: #00b4d8;
+  color: #357C3C;
   font-weight: 700;
   background-color: white;
   margin-bottom: 0.5rem;
 }
 
 .timeline-emptyProfilePic-medium {
-  border: 4px #00b4d8 solid;
+  border: 4px #357C3C solid;
   width: fit-content;
   margin: auto;
   font-size: 1.87rem;
   border-radius: 50%;
   padding: 1rem;
-  color: #00b4d8;
+  color: #357C3C;
   font-weight: 700;
   background-color: white;
   margin-bottom: 0.5rem;
 }
 
 .timeline-emptyProfilePic-small {
-  border: 4px #00b4d8 solid;
+  border: 4px #357C3C solid;
   width: fit-content;
   margin: auto;
   font-size: 1.87rem;
   border-radius: 50%;
   padding: 1rem;
-  color: #00b4d8;
+  color: #357C3C;
   font-weight: 700;
   background-color: white;
   margin-bottom: 0.5rem;
@@ -103,19 +103,19 @@
 }
 
 .timeline-dropdownItem:hover {
-  background-color: #00b4d8;
+  background-color: #357C3C;
   color: white;
 }
 
 .postInputButton {
   width: 100%;
-  background-color: #00b4d825;
+  background-color: #357C3C25;
   border-radius: 15px;
-  border-color: #00b4d825;
+  border-color: #357C3C25;
 }
 
 .postInputButton:hover {
-  background-color: #00b4d821 !important;
+  background-color: #357C3C21 !important;
 }
 
 .postInputButton>.p-button-label {
@@ -147,13 +147,13 @@
 }
 
 .timeline-companyName {
-  color: #00b4d8;
+  color: #357C3C;
   font-weight: 700;
 }
 
 .suggestion-button-timeline {
   color: #00000070;
-  background: #00b4d800;
+  background: #357C3C00;
   border: 2px #00000070 solid;
   width: 2rem !important;
   height: 2rem;
@@ -167,7 +167,7 @@
 /* left panel */
 
 .cardtitle-timeline {
-  border-bottom: 1px solid #00b4d857;
+  border-bottom: 1px solid #357C3C57;
   font-size: 1rem !important;
   padding: 0.7rem 1rem;
 }
@@ -207,7 +207,7 @@ a .cardsubtitle-timeline {
 
 /* Recent Jobs sidepanel on hover */
 .p-card-body-timeline:hover {
-  background-color: #00b4d8;
+  background-color: #357C3C;
 }
 
 .p-card-body-timeline:hover>.jobDescription-timeline,
@@ -218,7 +218,7 @@ a .cardsubtitle-timeline {
 
 /* Recent Jobs sidepanel on hover */
 .timeline-seemore {
-  color: #00b4d8;
+  color: #357C3C;
   font-weight: 600;
 }
 
@@ -237,7 +237,7 @@ a .cardsubtitle-timeline {
 }
 
 .skilltag-timeline {
-  background-color: #00b4d83f;
+  background-color: #357C3C3f;
   color: black;
   padding: 0.3rem 0.5rem;
   border-radius: 15px;
@@ -273,14 +273,14 @@ a .cardsubtitle-timeline {
 .timeline-postShare-button {
   background-color: white;
   border: none;
-  color: #00b4d8;
+  color: #357C3C;
   font-weight: 600;
 }
 
 .timeline-copyModalAlert {
   z-index: 1;
   position: absolute;
-  background-color: #00b4d8;
+  background-color: #357C3C;
   right: -25px;
   top: 45px;
   padding: 7px;
@@ -292,7 +292,7 @@ a .cardsubtitle-timeline {
 .timeline-copyModalAlert--active {
   z-index: 1;
   position: absolute;
-  background-color: #00b4d8;
+  background-color: #357C3C;
   right: -25px;
   top: 45px;
   padding: 7px;
@@ -310,7 +310,7 @@ a .cardsubtitle-timeline {
 /* Modals */
 .viewerGroups-dropdown {
   margin-top: 0.5rem;
-  background-color: #00b4d825;
+  background-color: #357C3C25;
   border-radius: 7px;
 }
 
@@ -330,7 +330,7 @@ a .cardsubtitle-timeline {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background-color: #00b4d8;
+  background-color: #357C3C;
 }
 
 .postInputArea:hover {
@@ -341,13 +341,13 @@ a .cardsubtitle-timeline {
 .createPostModal-title {
   font-size: 14px;
   font-weight: 600;
-  color: #00b4d8;
+  color: #357C3C;
   margin-bottom: 0.25rem;
 }
 
 .postTitle-container {
   margin-top: 1rem;
-  border: 1px solid #00b4d8;
+  border: 1px solid #357C3C;
   width: fit-content;
 }
 
@@ -367,18 +367,18 @@ a .cardsubtitle-timeline {
 }
 
 .addToPost-icon {
-  border: 3px solid #00b4d8;
+  border: 3px solid #357C3C;
   border-radius: 100%;
   padding: 0.25rem;
   background-color: white;
-  color: #00b4d8;
+  color: #357C3C;
   font-weight: 700;
   cursor: pointer;
 }
 
 .timelineModal-Input {
-  background-color: #00b4d826;
-  border: 1px solid #00b4d8;
+  background-color: #357C3C26;
+  border: 1px solid #357C3C;
   border-radius: 10px;
 }
 
@@ -417,7 +417,7 @@ a .cardsubtitle-timeline {
 }
 
 .timelineMediaItem-container {
-  background-color: #00b4d8;
+  background-color: #357C3C;
   border-radius: 10px;
   height: 10rem;
   display: flex;

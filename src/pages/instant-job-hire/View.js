@@ -63,7 +63,7 @@ const View = () => {
                 <div className="row mt-4 mb-5">
                     <div className="col-md-9">
                         <div className="d-flex justify-content-end">
-                            <button onClick={() => history.goBack()} className="btn btn-primary on-hover" style={{ backgroundColor: '#00b4d8', border: 'none', padding: '8px 24px' }}><i className="pi pi-arrow-left"></i></button>
+                            <button onClick={() => history.goBack()} className="btn btn-primary on-hover" style={{ backgroundColor: '#357C3C', border: 'none', padding: '8px 24px' }}><i className="pi pi-arrow-left"></i></button>
                         </div>
                         <div className="p-card p-4 mt-2" style={{ borderRadius: "1rem" }}>
                             <h5 className="p-title">Job Description</h5>
@@ -162,7 +162,7 @@ const styles = {
         marginLeft: '8px'
     },
     btnApply: {
-        backgroundColor: '#00b4d8',
+        backgroundColor: '#357C3C',
         color: 'white',
         padding: '12px 0',
         marginTop: '10px',

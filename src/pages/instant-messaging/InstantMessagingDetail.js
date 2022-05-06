@@ -20,7 +20,7 @@ const sentStyle = {
   fontSize: "13px",
   fontWeight: 400,
   boxShadow: "2px 1px 2px #eee",
-  backgroundColor: "#00b4d84a",
+  backgroundColor: "#357C3C4a",
   color: "#000"
 };
 const receivedStyle = {
