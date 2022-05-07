@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 // import Profile from "../../assests/profile.svg";
 
 import * as classes from "./Options.module.css";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+// import { CopyToClipboard } from "react-copy-to-clipboard";
 import Hang from "../../../../src/assets/images/hang.svg";
 import Msg from "../../../../src/assets/images/msg.svg";
 // import Msg_Illus from "../../../../src/assets/images/msg_Illus.svg";
@@ -538,7 +538,7 @@ const Video = () => {
                         />
 
                         <div className={classes.share_options}>
-                            <CopyToClipboard text={me}>
+                            {/* <CopyToClipboard text={me}>
                                 <Button
                                     type="primary"
                                     // icon={<CopyOutlined />}
@@ -548,7 +548,7 @@ const Video = () => {
                                 >
                                     Copy code
                                 </Button>
-                            </CopyToClipboard>
+                            </CopyToClipboard> */}
 
                             {/* <div className={classes.share_social}>
                             <WhatsappShareButton

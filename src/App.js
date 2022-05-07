@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux';
 import io from "socket.io-client";
-
 import agent, { API_ROOT } from "./services/agent.service";
 import { UserNotifications } from './store/modules/appNotification';
-import { getConversationList, getConversationWithPartnerId } from './store/modules/chat'
+import { getConversationList, getConversationWithPartnerId } from './store/modules/chat';
 
 import './styles/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -48,10 +46,10 @@ function App() {
 
       notificationSocket.on("chat_msg_to_client", (data) => {
         console.log("chat message sent to clients");
-            if (data && data?.recieverId === user?.id) {
-              dispatch(getConversationWithPartnerId(data?.senderId));
-              dispatch(getConversationList());
-            }
+        if (data && data?.recieverId === user?.id) {
+          dispatch(getConversationWithPartnerId(data?.senderId));
+          dispatch(getConversationList());
+        }
       });
     })
     return () => notificationSocket.disconnect();

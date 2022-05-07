@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 
-import VideoState from "./context/VideoState";
-
-import Options from "./components/options/Options";
-import Footer from "./components/Footer/Footer";
+// import VideoState from "./context/VideoState";
+// import Options from "./components/options/Options";
+// import Footer from "./components/Footer/Footer";
 import Video from "./video/Video";
 
 const VideoScreen = () => {
+
     useEffect(() => {
         if (!navigator.onLine) alert("Connect to internet!");
     }, [navigator]);
@@ -23,13 +23,11 @@ const VideoScreen = () => {
     }, [])
 
     return (
-        <VideoState>
-            <div className="App" style={{ height: "100%", width: "100%" }}>
-                <Video />
-                {/* <Options /> */}
-                {/* <Footer /> */}
-            </div>
-        </VideoState>
+        <div className="App" style={{ height: "100%", width: "100%" }}>
+            <Video />
+            {/* <Options /> */}
+            {/* <Footer /> */}
+        </div>
     );
 };
 

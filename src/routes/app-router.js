@@ -65,7 +65,7 @@ const ListJob = React.lazy(() => import('../pages/job/ListJob'));
 const ListJobDetail = React.lazy(() => import('pages/job/ListJobDetail'));
 const Accounts = React.lazy(() => import('pages//admin/dashboard/Accounts'));
 
-const VideoChat = React.lazy(() => import('../pages/VideoChat/VideoIndex'));
+const VideoChat = React.lazy(() => import('../pages/VideoCalling/VideoScreen'));
 const ChangePassword = React.lazy(() => import('../pages/auth/chanagepassword/ChangePassword'));
 
 
