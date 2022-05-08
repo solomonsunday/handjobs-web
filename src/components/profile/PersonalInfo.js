@@ -87,7 +87,7 @@ const PersonalInfo = ({ openCreate, openEdit, data, isViewApplicant }) => {
   return <Card className="personal-profile w-100 mb-2 bg-image" style={styles.container}>
     <div className="p-d-flex p-jc-end">
       {!isViewApplicant && <span> <i
-        className="pi pi-pencil p-pr-3 personalInfo-edit"
+        className="pi pi-pencil p-pr-3 personalInfo-edit text-white"
         id="personalInfoEdit"
         onClick={() => openEdit(PROFILE.PERSONAL_INFO, profileInfo)}
       ></i>

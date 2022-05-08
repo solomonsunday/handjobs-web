@@ -77,7 +77,7 @@ const ViewPost = () => {
                 <div className="p-p-5 d-flex justify-content-center">
                   <i
                     className="pi pi-spin pi-spinner"
-                    style={{ 'fontSize': '2em', color: "#5A2846" }} />
+                    style={{ 'fontSize': '2em', color: "#357C3C" }} />
                 </div>
               }
               {
@@ -103,7 +103,7 @@ const ViewPost = () => {
                     profileInfo={profileInfo}
                     isAuthenticated={isAuthenticated}
                     expandProfileImage={expandProfileImage}
-                    viewPage ={true}
+                    viewPage={true}
                   />
                 </div>
               }

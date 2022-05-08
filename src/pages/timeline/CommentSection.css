@@ -27,7 +27,7 @@
 
 .timeline-commentListTitle {
   background-color: white !important;
-  color: #5A2846 !important;
+  color: #357C3C !important;
   font-weight: 500;
   border: none;
 }
@@ -35,7 +35,7 @@
 .timeline-commentListTitle:hover {
   text-decoration: underline;
   background-color: white;
-  color: #5A2846;
+  color: #357C3C;
   cursor: pointer;
 }
 

@@ -4,12 +4,12 @@
 
 .background-top {
     background-color: rgb(35 38 45 / 15%);
-    color: #5A2846;
+    color: #357C3C;
     height: 10rem;
 }
 
 .background-bottom {
-    background-color: #5a28461f;
+    background-color: #357C3C1f;
 }
 
 .dashboard-container {
@@ -20,7 +20,7 @@
 }
 
 .cardtitle {
-    border-bottom: 1px solid #5a284657;
+    border-bottom: 1px solid #357C3C57;
     font-size: 1rem !important;
     padding: 1rem 1rem;
     background-color: white;

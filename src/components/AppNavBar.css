@@ -55,7 +55,7 @@
     border: none;
     font-size: 13px;
     /* background-color: var(--app-primary-color); */
-    background-color: #357C3C;
+    background-color: #0f0e0e;
     padding-top: 1.2rem;
 }
 
@@ -90,7 +90,7 @@
 .notification-dropdownItem-appNavbar:hover a,
 .profile-dropdownItem-appNavbar:hover span {
     /* color: var(--app-primary-color); */
-    color: #357C3C;
+    color: #0f0e0e;
 }
 
 .profile-dropdownItem-appNavbar .li-icon {
