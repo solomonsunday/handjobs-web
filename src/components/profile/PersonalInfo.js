@@ -10,6 +10,7 @@ import { Card } from 'primereact/card';
 import PersonalInfoSkeleton from "components/skeletons/PersonalInfoSkeleton";
 import BackgroundImage from '../../../src/assets/bg.png'
 import ArtisanBG from '../../../src/assets/artisan_color.png'
+import { confirmDialog } from "primereact/confirmdialog";
 
 
 const PersonalInfo = ({ openCreate, openEdit, data, isViewApplicant }) => {
@@ -51,12 +52,12 @@ const PersonalInfo = ({ openCreate, openEdit, data, isViewApplicant }) => {
     let selectedFile = e.target.files[0];
 
     setSelectedFile(selectedFile);
-    setTimeout(() => {
-      const confirmation = window.confirm(
-        "Do you want to upload this image as avatar?"
-      );
-
-      if (confirmation) {
+    // setTimeout(() => {
+    confirmDialog({
+      message: 'Do you want to upload this image as avatar?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
         var formData = new FormData();
         // var extension = selectedFile.type.replace(/(.*)\//g, "");
         // let filename = `${profileInfo.id}.${extension}`;
@@ -66,8 +67,15 @@ const PersonalInfo = ({ openCreate, openEdit, data, isViewApplicant }) => {
         dispatch(updateProfilePicture(formData));
 
         return;
-      }
-    }, 2000);
+
+      },
+      reject: () => {
+        return;
+      },
+    });
+
+
+    // }, 2000);
   };
 
   const getCurrentJobExperience = experiences => {
