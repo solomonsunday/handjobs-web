@@ -1,3 +1,4 @@
+import React from "react";
 import { ACCOUNT_TYPE } from "constants/accountType";
 import { PROFILE } from "constants/profile";
 import { useEffect, useRef, useState } from "react";
@@ -25,7 +26,7 @@ const PersonalInfo = ({ openCreate, openEdit, data, isViewApplicant }) => {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const profilePicRef = useRef()
+  const profilePicRef = useRef(null);
 
   useEffect(() => {
     if (!selectedFile) {
@@ -38,6 +39,8 @@ const PersonalInfo = ({ openCreate, openEdit, data, isViewApplicant }) => {
 
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile, loading]);
+
+
 
   const uploadProfilePicture = (e) => {
 
@@ -95,6 +98,7 @@ const PersonalInfo = ({ openCreate, openEdit, data, isViewApplicant }) => {
       </span>}
     </div>
     <div className="p-d-flex p-jc-start flex-column align-items-center">
+      <input type="file" onChange={uploadProfilePicture} ref={profilePicRef} style={{ display: 'none' }} />
       <JobplicantAvatar
         data={profileInfo}
         selectedFile={selectedFile}

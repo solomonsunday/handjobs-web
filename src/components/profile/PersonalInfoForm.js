@@ -21,7 +21,7 @@ const corporateProfessions = [
 ];
 
 const artisanProfessions = [
-  { name: 'Tailor', code: 'TR' },
+  { name: 'Stylist', code: 'ST' },
   { name: 'Plumbing', code: 'DR' },
   { name: 'Electrican', code: 'EL' },
   { name: 'Mechanic', code: 'ME' },
@@ -42,10 +42,10 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
     imageUrl: "",
     dateOfBirth: "",
     address: "",
-    country: "",
-    state: "",
+    countryId: "",
+    stateId: "",
     city: "",
-    lga: "",
+    lgaId: "",
     profession: ""
   });
   const loading = useSelector((state) => state.account.submitting);
@@ -70,10 +70,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
   }, [])
 
   useEffect(() => {
-
     if (countries) {
-
-
       const countryObj = data.country ? countries.find(country => country.name === data.country) : null;
 
       dispatch(loadStates(countryObj?.id));
@@ -95,6 +92,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
   useEffect(() => {
     if (states) {
       const stateObj = data.state ? states.find(state => state.name === data.state) : null
+      console.log(data, "data")
 
       setPersonalProfile({
         ...personalProfile,
@@ -152,10 +150,13 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
     }
   }
 
+  let userprofession = '';
   const handleProfChange = (e) => {
     const { name, value } = e.target;
+    console.log(e.target.value.name, "v values")
+    userprofession = e.target.value.name;
 
-    setSelectedProf(e.value.name);
+    setSelectedProf(e.target.value);
     setPersonalProfile({ ...personalProfile, [name]: value });
     setValue(name, value, { shouldValidate: true });
   };
@@ -193,6 +194,11 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
 
   const personalInfoSubmit = (personal) => {
     personalProfile.profession = selectedProf;
+    personalProfile.countryId = personalProfile.country.id;
+    personalProfile.stateId = personalProfile.state.id;
+    personalProfile.lgaId = personalProfile.lga.id;
+    personalProfile.profession = personal.profession.name;
+    console.log(personalProfile, "personalProfile")
     dispatch(updatePersonalProfile(personalProfile));
   }
 
@@ -211,7 +217,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
             <div className="row">
               <div className="col-md-6">
                 <label htmlFor="firstName" className="inputLabel p-mb-2">
-                  First Name *
+                  First Name <span className="text-danger"> *</span>
                 </label>
                 <label htmlFor="biographyInput" className="">
                   {errors?.firstName?.type === "required" && (
@@ -236,7 +242,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
               </div>
               <div className="col-md-6">
                 <label htmlFor="lastName" className="inputLabel p-mb-2">
-                  Last Name *
+                  Last Name <span className="text-danger"> *</span>
                 </label>
                 <label htmlFor="biographyInput" className="">
                   {errors?.lastName?.type === "required" && (
@@ -289,7 +295,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
 
               <div className="p-field p-col-12 p-md-6">
                 <label className="inputLabel" htmlFor="startDate">
-                  Date Of Birth *
+                  Date Of Birth <span className="text-danger"> *</span>
                   {errors.dateOfBirth && (
                     <span className="text-danger font-weight-bold">
                       &nbsp; {errors.dateOfBirth.message}
@@ -314,7 +320,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
               </div>
               <div className="p-field p-col-12 p-md-6">
                 <label className="inputLabel" htmlFor="city">
-                  Country *
+                  Country <span className="text-danger"> *</span>
                   {errors.country && (
                     <span className="text-danger font-weight-bold">
                       &nbsp; {errors.country.message}
@@ -330,7 +336,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                   filterBy="name"
                   icon="pi pi-plus"
                   id="country"
-                  name="country"
+                  name="countryId"
                   value={personalProfile.country}
                   {...register("country",
                     {
@@ -347,7 +353,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
               {accountType === ACCOUNT_TYPE.ARTISAN ?
                 <div className="p-field p-col-12 p-md-6">
                   <label className="inputLabel" htmlFor="profession">
-                    Professsion *
+                    Professsion <span className="text-danger"> *</span>
                     {errors.profession && (
                       <span className="text-danger font-weight-bold">
                         &nbsp; {errors.profession.message}
@@ -357,10 +363,10 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
 
                   <div className="p-field">
                     <Dropdown
-                      value={selectedProf}
                       options={artisanProfessions}
                       optionLabel="name"
                       editable
+                      value={personalProfile.profession}
                       placeholder='Profession'
                       {...register("profession", { required: "Please select your Profession" })}
                       id="profession"
@@ -372,7 +378,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                 </div> : accountType === ACCOUNT_TYPE.JOB_SEEKER ?
                   <div className="p-field p-col-12 p-md-6">
                     <label className="inputLabel" htmlFor="profession">
-                      Professsion *
+                      Professsion <span className="text-danger"> *</span>
                       {errors.profession && (
                         <span className="text-danger font-weight-bold">
                           &nbsp; {errors.profession.message}
@@ -395,7 +401,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
               }
               <div className="p-field p-col-12 p-md-6">
                 <label className="inputLabel" htmlFor="state">
-                  State *
+                  State <span className="text-danger"> *</span>
                   {errors.state && (
                     <span className="text-danger font-weight-bold">
                       &nbsp; {errors.state.message}
@@ -411,7 +417,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                   filterBy="name"
                   icon="pi pi-plus"
                   id="stateList"
-                  name="state"
+                  name="stateId"
                   value={personalProfile.state}
                   {...register("state",
                     {
@@ -427,7 +433,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
               </div>
               <div className="p-field p-col-12 p-md-6">
                 <label className="inputLabel" htmlFor="lga">
-                  LGA *
+                  LGA <span className="text-danger"> *</span>
                   {errors.lga && (
                     <span className="text-danger font-weight-bold">
                       &nbsp; {errors.lga.message}
@@ -443,7 +449,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                   filterBy="name"
                   icon="pi pi-plus"
                   id="lgaList"
-                  name="lga"
+                  name="lgaId"
                   value={personalProfile.lga}
                   {...register("lga",
                     {
@@ -458,7 +464,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
               </div>
               <div className="p-field p-col-12 p-md-6">
                 <label className="inputLabel" htmlFor="city">
-                  City *
+                  City <span className="text-danger"> *</span>
                   {errors.city && (
                     <span className="text-danger font-weight-bold">
                       {errors.city.message}
@@ -477,7 +483,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
               </div>
               <div className="col-md-12">
                 <label className="inputLabel" htmlFor="address">
-                  Address *
+                  Address <span className="text-danger"> *</span>
                   {errors.address && (
                     <span className="text-danger font-weight-bold">
                       {errors.address.message}

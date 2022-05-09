@@ -33,7 +33,6 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
 
     const userId = agentService.Auth.current().id;
     const userDetails = agentService.Auth.current();
-    console.log(userDetails, "UserDetails");
 
 
     useEffect(() => {
@@ -122,7 +121,7 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                                 </Nav.Link>)}
 
 
-                              
+
                                 <span
                                     className="text-white"
                                     onClick={handleToggleNotification}
