@@ -16,9 +16,15 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 
 import './InstantJobHire.css'
 import { loadServices } from 'store/modules/admin';
+import { loadLga, loadStates } from 'store/modules/location';
 
 const New = ({ mode }) => {
     const dispatch = useDispatch();
+    const states = useSelector(state => state.location.states);
+    const Lgas = useSelector(state => state.location.lgas);
+    const loading = useSelector(state => state.instantJob.loading);
+    const services = useSelector(state => state.admin.services).data;
+
     const toast = useRef(null);
 
     const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm({
@@ -34,28 +40,37 @@ const New = ({ mode }) => {
     const [isJobDateNow, setIsJobDateNow] = useState(false);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
-    const API_KEY = "AIzaSyDxaC_Q4OI6Kx84VPT4W4k6N6FYLEVfcw0";
-
-
-    const loading = useSelector(state => state.instantJob.loading);
-    const services = useSelector(state => state.admin.services).data;
-
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [search, setSearch] = useState("");
     const [address, setAddress] = useState("");
     const [location, setLocation] = useState("");
     const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
+    const [selectedState, setSelectedState] = useState("");
+    const [selectLga, setSelectLga] = useState("");
+
 
     useEffect(() => {
         dispatch(loadServices(page, limit, "loadServices", search));
     }, [])
+
+    let id = 1
+    useEffect(() => {
+        dispatch(loadStates(id));
+    }, [id]);
+
+    useEffect(() => {
+        if (selectedState) {
+            dispatch(loadLga(selectedState?.id))
+        }
+    }, [selectedState])
 
     const handleSelect = async (value) => {
         const results = await geocodeByAddress(value);
         setLocation(value);
         setValue("location", location, { shouldValidate: true })
     }
+
 
     const handleSelectAddress = async (value) => {
         const results = await geocodeByAddress(value);
@@ -82,6 +97,21 @@ const New = ({ mode }) => {
         setSelectedCategory(e.value);
         setValue(name, value, { shouldValidate: true });
     };
+
+
+
+    const handleStateChange = (e) => {
+        const { name, value } = e.target;
+        setSelectedState(e.value);
+        setValue(name, value, { shouldValidate: true });
+    }
+
+
+    const handleLgaChange = (e) => {
+        const { name, value } = e.target;
+        setSelectLga(e.value);
+        setValue(name, value, { shouldValidate: true })
+    }
 
 
     let period = new Date();
@@ -161,6 +191,8 @@ const New = ({ mode }) => {
                 data.requesterLocation = { lat: coordinates.lat, long: coordinates.lng };
                 data.location = location;
                 data.address = address;
+                data.state = selectedState.id;
+                data.lga = selectLga.id;
                 console.log(data, "create Data");
                 dispatch(createInstantJob(data));
             },
@@ -188,7 +220,7 @@ const New = ({ mode }) => {
                                     <div className="row">
                                         <div className="p-fluid p-md-6 p-sm-12">
                                             <div className="p-field">
-                                                <label htmlFor="service"> Select Type of Service Needed *</label>
+                                                <label htmlFor="service"> Select Type of Service Needed  <span className='text-danger'>*</span></label>
 
                                                 <Dropdown
                                                     options={services}
@@ -211,7 +243,7 @@ const New = ({ mode }) => {
                                         </div>
                                         <div className="p-fluid p-md-6 p-sm-12">
                                             <div className="p-field">
-                                                <label htmlFor="location">Service Location * </label>
+                                                <label htmlFor="location">Service Location <span className='text-danger'>*</span></label>
                                                 <PlacesAutocomplete
                                                     value={location}
                                                     onChange={setLocation}
@@ -322,7 +354,7 @@ const New = ({ mode }) => {
                                             </div>
                                         </div>
 
-                                        <div className="p-fluid p-md-6 p-sm-12">
+                                        {/* <div className="p-fluid p-md-6 p-sm-12">
                                             <div className="p-field">
                                                 <label htmlFor="phoneNumber">Phone Number * </label>
                                                 <InputText
@@ -336,11 +368,56 @@ const New = ({ mode }) => {
                                                 {errors.phoneNumber && <span className="text-danger font-weight-bold "> <p>{errors.phoneNumber.message}</p>
                                                 </span>}
                                             </div>
+                                        </div> */}
+                                        <div className="p-fluid p-md-3 p-sm-12">
+                                            <div className="p-field">
+                                                <label htmlFor="state"> State <span className='text-danger'>*</span></label>
+                                                <Dropdown
+                                                    options={states}
+                                                    optionLabel="name"
+                                                    filter
+                                                    showClear
+                                                    filterBy="name"
+                                                    icon="pi pi-plus"
+                                                    id="state"
+                                                    name="state"
+                                                    value={selectedState}
+                                                    {...register("state", { required: ` Please Select a state` })}
+                                                    onChange={handleStateChange}
+                                                />
+
+                                                {errors.state && <span className="text-danger font-weight-bold "> <p>{errors.state.message}</p>
+                                                </span>}
+                                            </div>
+
+                                        </div>
+                                        <div className="p-fluid p-md-3 p-sm-12">
+                                            <div className="p-field">
+                                                <label htmlFor="lga"> LGA <span className='text-danger'>*</span></label>
+
+                                                <Dropdown
+                                                    options={Lgas}
+                                                    optionLabel="name"
+                                                    filter
+                                                    showClear
+                                                    filterBy="name"
+                                                    icon="pi pi-plus"
+                                                    id="lga"
+                                                    name="lga"
+                                                    value={selectLga}
+                                                    {...register("lga", { required: ` Please Select a LGA` })}
+                                                    onChange={handleLgaChange}
+                                                />
+
+                                                {errors.lga && <span className="text-danger font-weight-bold "> <p>{errors.lga.message}</p>
+                                                </span>}
+                                            </div>
+
                                         </div>
                                         <div className="p-fluid p-md-6 p-sm-12">
 
                                             <div className="p-field">
-                                                <label htmlFor="startDate">  Start Date * &nbsp;
+                                                <label htmlFor="startDate">  Start Date  <span className='text-danger'>*</span> &nbsp;
                                                     ( <input type="checkbox" onClick={toggleJobDate} name="instance" defaultChecked={isJobDateNow}
                                                         className="align-text-bottom" />
                                                     <small className="font-weight-bold"> NOW </small>  ) &nbsp; {isJobDateNow && (<span className="appcolor text-white px-3"> {instantJobDate}</span>)}
@@ -376,7 +453,7 @@ const New = ({ mode }) => {
 
                                         <div className="p-fluid p-md-6 p-sm-12">
                                             <div className="p-field">
-                                                <label htmlFor="endDate">{" "}End Date * </label>
+                                                <label htmlFor="endDate">{" "}End Date <span className='text-danger'>*</span> </label>
                                                 <Calendar
                                                     id="endDate"
                                                     type="date"
@@ -415,7 +492,7 @@ const New = ({ mode }) => {
                                         </div>} */}
                                         <div className="p-fluid p-md-12 p-sm-12">
                                             <div className="p-field">
-                                                <label htmlFor="lastname">Describe Service Needed *</label>
+                                                <label htmlFor="lastname">Describe Service Needed <span className='text-danger'>*</span></label>
                                                 <InputTextarea
                                                     defaultValue={desc}
                                                     onChange={(e) => setDesc(e.target.value)}
