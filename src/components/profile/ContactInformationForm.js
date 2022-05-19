@@ -147,7 +147,6 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
     contactInfo.region = region;
     contactInfo.address = location
     console.log({ contactInfo })
-    return
     dispatch(updateContactInfo(contactInfo));
   }
 
