@@ -204,7 +204,7 @@ const ChatContent = () => {
     // setConversations([...conversations, newConversation, reply]);
     chatMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-  console.log("conversations to view", conversations);
+
   return (
     <div className={`chat-content-container`}>
       <div className="chat-content-header">
@@ -222,9 +222,6 @@ const ChatContent = () => {
           </h4>
         </div>
         <div className="right">
-          <i onClick={handleRefreshConversation} className="pi pi-refresh"></i>
-          {"   "}
-          {/* to be removed */}
           <i onClick={handleClose} className="pi pi-times"></i>
         </div>
       </div>
@@ -276,6 +273,12 @@ const ChatContentInput = ({ handleSendChat }) => {
         placeholder="type your message"
         onChange={(e) => setMessage(e.target.value)}
         value={message}
+        onKeyPress={(event) => {
+          if (event.key === "Enter") {
+            handleSendChat(message);
+            setMessage("");
+          }
+        }}
       />
       <button
         disabled={!message}
