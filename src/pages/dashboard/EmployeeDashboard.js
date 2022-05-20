@@ -152,7 +152,7 @@ const EmployeeDashboard = () => {
           </div>
         </div>
         <div className="p-col-12 p-lg-6 p-p-lg-1">
-          <div className="p-card h-100 p-mt-2 p-rounded-lg">
+          <div className="p-card h-100 p-mt-2 p-rounded-lg activity-card">
             <div className="p-card-title cardtitle h6">Progress Tracker</div>
             {userAccountStatus && <div className="p-card-body p-pt-0">
               {authUser?.accountType === "Artisan" && <>

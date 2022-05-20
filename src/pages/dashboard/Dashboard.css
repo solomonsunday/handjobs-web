@@ -151,3 +151,7 @@ a.p-card-body-Activity {
 .dashboard-item {
     color: #0f0e0e;
 }
+
+.activity-card {
+    overflow-y: hidden;
+}
