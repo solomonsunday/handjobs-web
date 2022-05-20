@@ -154,4 +154,5 @@ a.p-card-body-Activity {
 
 .activity-card {
     overflow-y: hidden;
+    height: 355px;
 }

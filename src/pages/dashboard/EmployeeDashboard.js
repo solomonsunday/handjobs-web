@@ -133,26 +133,26 @@ const EmployeeDashboard = () => {
 
       <div className="p-grid p-mx-lg-0 grid-margin p-py-1">
         <div className="p-col-12 p-lg-6 p-p-lg-1 p-py-0">
-          <div className="p-card h-100 p-mt-2 p-rounded-lg">
+          <div className="p-card p-mt-2 p-rounded-lg activity-card">
             <div className="p-card-title cardtitle h6">Recent Activities</div>
-            <main style={{ overflowY: 'auto' }}>
-              {userActivities && userActivities.length > 0 && userActivities.map(activity =>
-                <div className="p-card-body p-card-body-Activity p-px-3">
-                  <i className='pi pi-paperclip pr-3  text-warning'></i><span className=' text-green'>{activity.message}</span>
-                  <span className='px-3' style={{ fontWeight: 'bold' }}>
-                    {/* {moment(activity.createdAt).fromNow('MMMM Do YYYY')} ago */}
-                    [{moment(activity.createdAt).format("D MMMM YYYY, h:mm a")}]
-                  </span>
-                </div>
-              )}
-            </main>
+            {/* <main style={{ overflowY: 'auto' }}> */}
+            {userActivities && userActivities.length > 0 && userActivities.map(activity =>
+              <div className="p-card-body p-card-body-Activity p-px-3">
+                <i className='pi pi-paperclip pr-3  text-warning'></i><span className=' text-green'>{activity.message}</span>
+                <span className='px-3' style={{ fontWeight: 'bold' }}>
+                  {/* {moment(activity.createdAt).fromNow('MMMM Do YYYY')} ago */}
+                  [{moment(activity.createdAt).format("D MMMM YYYY, h:mm a")}]
+                </span>
+              </div>
+            )}
+            {/* </main> */}
             {userActivities?.length === 0 && <div className="p-card-body p-card-body-Activity p-px-3">
               <h6 className="text-center">You have no activity yet</h6>
             </div>}
           </div>
         </div>
         <div className="p-col-12 p-lg-6 p-p-lg-1">
-          <div className="p-card h-100 p-mt-2 p-rounded-lg activity-card">
+          <div className="p-card p-mt-2 p-rounded-lg activity-card">
             <div className="p-card-title cardtitle h6">Progress Tracker</div>
             {userAccountStatus && <div className="p-card-body p-pt-0">
               {authUser?.accountType === "Artisan" && <>
