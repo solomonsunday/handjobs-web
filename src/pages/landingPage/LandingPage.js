@@ -49,10 +49,7 @@ const LandingPage = () => {
                                                     <br /> and connect to the right vendor for yourself
 
                                                 </h1>
-                                                <p className="wow fadeInUp" data-wow-delay=".5s">Creating a beautiful job website is
-                                                    not
-                                                    easy always. To make your life easier we are introducing Jobcamp template,
-                                                    Leverage agile frameworks to high level overviews.
+                                                <p className="wow fadeInUp" data-wow-delay=".5s">Connect with skilled craft workers instantly at your service with ease. Showcase your creativity with the world and gain more work exposure.
                                                 </p>
                                                 <div className="button wow fadeInUp" data-wow-delay=".7s">
                                                     <Link to="/login" className="btn">Request for an Instant Service</Link>
@@ -79,10 +76,7 @@ const LandingPage = () => {
                                                     <br />to Make a
                                                     Better Life
                                                 </h1>
-                                                <p className="wow fadeInUp" data-wow-delay=".5s">Creating a beautiful job website is
-                                                    not
-                                                    easy always. To make your life easier we are introducing Jobcamp template,
-                                                    Leverage agile frameworks to high level overviews.
+                                                <p className="wow fadeInUp" data-wow-delay=".5s">Connect with skilled craft workers instantly at your service with ease. Showcase your creativity with the world and gain more work exposure.
                                                 </p>
                                                 <div className="button wow fadeInUp" data-wow-delay=".7s">
                                                     <Link to="/login" className="btn">Request for an Instant Service</Link>
@@ -110,14 +104,14 @@ const LandingPage = () => {
                             <div className="process-item">
                                 <i className="lni lni-cog"></i>
                                 <h4>Artisan Job-Seekers</h4>
-                                <p>Set up ypur profile in minutes and make yourself available by those that requires your servicez.</p>
+                                <p>Set up ypur profile in minutes and make yourself available by those that requires your services.</p>
                             </div>
                         </div>
                         <div className="col-lg-6 col-md-6 col-12">
                             <div className="process-item">
                                 <i className="lni lni-fireworks"></i>
                                 <h4>Instant Applicant Hire</h4>
-                                <p>Find hand-workers near you by either searching for them or create a service for them to applyy.</p>
+                                <p>Find hand-workers near you by either searching for them or create a service for them to apply.</p>
                             </div>
                         </div>
                     </div>
@@ -146,19 +140,6 @@ const LandingPage = () => {
                                         <div className="button wow fadeInUp" data-wow-delay=".7s">
                                             <Link to="/login" className="btn">Request for an Instant Service</Link>
                                             {/* <Link to="#" className="btn btn-alt">See latest  all hires</Link> */}
-                                        </div>
-                                    </div>
-                                    <div className="job-search-wrap-two mt-50 wow fadeInUp" data-wow-delay=".9s">
-                                        <div className="trending-keywords mt-30">
-                                            <div className="keywords style-two">
-                                                <span className="title">Popular Keywords:</span>
-                                                <ul>
-                                                    <li><Link to="#">Administrative</Link></li>
-                                                    <li><Link to="#">Android</Link></li>
-                                                    <li><Link to="#">app</Link></li>
-                                                    <li><Link to="#">ASP.NET</Link></li>
-                                                </ul>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -230,7 +211,7 @@ const LandingPage = () => {
 
 
 
-            <div className="client-logo-section">
+            {/* <div className="client-logo-section">
                 <div className="container">
                     <div className="client-logo-wrapper">
                         <div className="client-logo-carousel d-flex align-items-center justify-content-between">
@@ -264,7 +245,7 @@ const LandingPage = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
 
             <div className="modal fade form-modal" id="login" tabIndex="-1" aria-hidden="true">
@@ -407,9 +388,8 @@ const LandingPage = () => {
                             <div className="col-lg-6 col-12">
                                 <div className="download-text text-white">
                                     <h3 className="text-white">Download HandJobs Now</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do<br />
-                                        eiusmod tempor
-                                        incididunt ut labore et dolore</p>
+                                    <p>Showcase your crafts and connect with <br />
+                                        people in need of your services.</p>
                                 </div>
                             </div>
                             <div className="col-lg-6 col-12">
@@ -442,11 +422,11 @@ const LandingPage = () => {
                                         </Link>
                                     </div>
 
-                                    <p>Start building your creative website with our awesome template Massive.</p>
+                                    <p>Start connecting with people who need your services.</p>
                                     <ul className="contact-address">
                                         <li>
                                             <span>Address:</span>
-                                            555 Wall Street, USA, NY</li>
+                                            Ikeja, Lagos</li>
                                         <li>
                                             <span>Email:</span>
                                             <Link to="https://demo.graygrids.com/cdn-cgi/l/email-protection" className="__cf_email__" data-cfemail="b7d2cfd6dac7dbd2f7d6c7c2c499d4d8da">[email&#160;protected]</Link>
@@ -474,11 +454,8 @@ const LandingPage = () => {
                                             <h3>For Artisans</h3>
                                             <ul>
                                                 <li><Link to="#">User Dashboard</Link></li>
-                                                <li><Link to="#">CV Packages</Link></li>
                                                 <li><Link to="#">Jobs Featured</Link></li>
                                                 <li><Link to="#">Jobs Urgent</Link></li>
-                                                <li><Link to="#">Candidate List</Link></li>
-                                                <li><Link to="#">Candidates Grid</Link></li>
                                             </ul>
                                         </div>
 
@@ -489,9 +466,6 @@ const LandingPage = () => {
                                             <h3>For Instant Service Seekers</h3>
                                             <ul>
                                                 <li><Link to="#">Post New</Link></li>
-                                                <li><Link to="#">Employer List</Link></li>
-                                                <li><Link to="#">Employers Grid</Link></li>
-                                                <li><Link to="#">Job Packages</Link></li>
                                                 <li><Link to="#">Jobs Listing</Link></li>
                                                 <li><Link to="#">Jobs Featured</Link></li>
                                             </ul>
