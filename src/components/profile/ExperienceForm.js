@@ -148,7 +148,7 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
               </div>
               <div className="p-field p-col-12 p-md-6">
                 <label className="inputLabel" htmlFor="company">
-                  Company Name
+                  Business Name
                   {errors.company && (
                     <span className="text-danger font-weight-bold">
                       &nbsp; {errors.company.message}
@@ -188,10 +188,7 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
 
                     setValue(inputName, value, { shouldValidate: true });
                   }}
-                  name="startDate"
-                  {...register("startDate", {
-                    required: `* Start date is required`,
-                  })}
+                
                   monthNavigatorTemplate={monthNavigatorTemplate}
                   yearNavigatorTemplate={yearNavigatorTemplate}
                   view="month"
@@ -224,10 +221,7 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
                     const value = e.value.toISOString();
                     setValue(inputName, value, { shouldValidate: true });
                   }}
-                  name="endDate"
-                  {...register("endDate", {
-                    required: `* End date is required`,
-                  })}
+               
                   monthNavigatorTemplate={monthNavigatorTemplate}
                   yearNavigatorTemplate={yearNavigatorTemplate}
                   view="month"
@@ -281,7 +275,7 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
               </div>
               <div className="p-field p-col-12">
                 <label className="inputLabel" htmlFor="address">
-                  Description
+                  Describe the nature of work
                   {errors.description && (
                     <span className="text-danger font-weight-bold">
                       &nbsp; {errors.description.message}

@@ -363,6 +363,7 @@ export function acceptRequest(id, loadingType, accountDetails) {
         dispatch(addContact(accountDetails))
         dispatch(removeFromPending(id))
         dispatch(loadingContact(null))
+        window.location.reload();
       },
       (error) => {
         // handle error
