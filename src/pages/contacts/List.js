@@ -10,6 +10,7 @@ import ConnectionRequestPanel from "./ConnectionRequestPanel";
 import { ACCOUNT_TYPE } from "constants/accountType";
 import { actionSetSelectedContact } from "store/modules/chat";
 import { BsFillChatDotsFill, BsFillCameraVideoFill, BsFillTrashFill, BsFillTelephoneFill } from "react-icons/bs";
+import { push } from "connected-react-router";
 
 // import './SkeletonDemo.css';
 
@@ -53,6 +54,12 @@ const List = () => {
     }
     return <div></div>;
   };
+
+  const handleVideoCall = () => {
+    //expect name and the usr to call ID
+    // and then route to the video call page
+    dispatch(push("/videochat"))
+  }
 
   const confirmRemove = (e) => {
     let contactId = e.currentTarget.dataset.id;
@@ -194,18 +201,18 @@ const List = () => {
                   </span>
                   <div className="contacts-actionIcons d-flex">
                     {/* <i className="pi pi-phone p-pr-2" /> */}
-                    <div>
+                    <div className="finger">
                       <BsFillTelephoneFill fontSize={25} />
                     </div>
                     {/* <i className="pi pi-video p-pr-2 text-success" /> */}
-                    <div className="px-2">
+                    <div className="px-2 finger" onClick={handleVideoCall}>
                       <BsFillCameraVideoFill fontSize={30} />
                     </div>
                     {/* <i
                       className="pi pi-comments p-pr-2"
                       onClick={() => handleOpenChatRoom(contact)}
                     /> */}
-                    <div>
+                    <div className="finger">
                       <BsFillChatDotsFill fontSize={30} onClick={() => handleOpenChatRoom(contact)} />
                     </div>
                     <div>

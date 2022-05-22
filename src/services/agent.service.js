@@ -299,7 +299,7 @@ const InstantJob = {
   delete: (id) => requests.del(`/instant-job/${id}`),
   accept: (id) => requests.put(`/instant-job/${id}/application/accept`, null),
   reject: (id) => requests.put(`/instant-job/${id}/application/reject`, null),
-  reject: (id) => requests.put(`/instant-job/${id}/application/reject`, null),
+  nearbyUsers: () => requests.put(`/instant-job/nearby-artisans`, null),
 };
 
 const Review = {

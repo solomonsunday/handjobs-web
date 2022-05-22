@@ -33,6 +33,7 @@ import VideoIcon from "../../../../src/assets/images/video.svg"
 
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
+import { useHistory } from "react-router";
 
 // const socket = io()
 
@@ -66,12 +67,13 @@ const Video = () => {
     const connectionRef = useRef();
     const screenTrackRef = useRef();
 
+    const history = useHistory()
+
+
 
     const [idToCall, setIdToCall] = useState("");
     const [isModalVisible, setIsModalVisible] = useState(false);
-
-
-
+    
     socket.on("msgRcv", ({ name, msg: value, sender }) => {
         let msg = {};
         msg.msg = value;
@@ -302,11 +304,12 @@ const Video = () => {
     };
 
     const leaveCall = () => {
-        setCallEnded(true);
+        // setCallEnded(true);
 
-        connectionRef.current.destroy();
-        socket.emit("endCall", { id: otherUser });
-        window.location.reload();
+        // connectionRef.current.destroy();
+        // socket.emit("endCall", { id: otherUser });
+        // window.location.reload();
+        history.goBack()
     };
 
     const leaveCall1 = () => {
@@ -349,7 +352,7 @@ const Video = () => {
         <>
             <div className="App" style={{ height: "100%", width: "100%" }}>
 
-                <div className="grid">
+                <div className="">
                     {stream ? (
                         <div
                             style={{ textAlign: "center" }}
@@ -366,7 +369,7 @@ const Video = () => {
                                     onClick={fullScreen}
                                     ref={myVideo}
                                     autoPlay
-                                    className="video-active"
+                                    className={`${callAccepted ? "video-active" : ""}`}
                                     style={{
                                         opacity: `${myVdoStatus ? "1" : "0"}`,
                                     }}
@@ -412,41 +415,7 @@ const Video = () => {
                                         <img src={Msg} alt="chat icon" />
                                     </div>
                                 )}
-                                {/* <Modal
-                                title="Chat"
-                                footer={null}
-                                visible={isModalVisible}
-                                onOk={() => showModal(false)}
-                                onCancel={() => showModal(false)}
-                                style={{ maxHeight: "100px" }}
-                            >
-                                {chat.length ? (
-                                    <div className="msg_flex">
-                                        {chat.map((msg) => (
-                                            <div
-                                                className={msg.type === "sent" ? "msg_sent" : "msg_rcv"}
-                                            >
-                                                {msg.msg}
-                                            </div>
-                                        ))}
-                                        <div ref={dummy} id="no_border"></div>
-                                    </div>
-                                ) : (
-                                    <div className="chat_img_div">
-                                        <img src={Msg_Illus} alt="msg_illus" className="img_illus" />
-                                    </div>
-                                )}
-                                <Search
-                                    placeholder="your message"
-                                    allowClear
-                                    className="input_msg"
-                                    enterButton="Send 🚀"
-                                    onChange={(e) => setSendMsg(e.target.value)}
-                                    value={sendMsg}
-                                    size="large"
-                                    onSearch={onSearch}
-                                />
-                            </Modal> */}
+
                                 {callAccepted && !callEnded && (
                                     <div
                                         className="icons"
@@ -455,7 +424,15 @@ const Video = () => {
                                     >
                                     </div>
                                 )}
-
+                                <Button
+                                    variant="contained"
+                                    onClick={leaveCall}
+                                    className={classes.hang}
+                                    tabIndex="0"
+                                >
+                                    <img src={Hang} alt="hang up" style={{ height: "15px" }} />
+                                    &nbsp; End Call
+                                </Button>
                                 <div className="icons" onClick={() => updateVideo()} tabIndex="0">
                                     {myVdoStatus ? (
                                         <img src={VideoIcon} alt="video on icon" />
@@ -491,6 +468,16 @@ const Video = () => {
                                     }}
                                 />
 
+                                <Button
+                                    variant="contained"
+                                    onClick={leaveCall}
+                                    className={classes.hang}
+                                    tabIndex="0"
+                                >
+                                    <img src={Hang} alt="hang up" style={{ height: "15px" }} />
+                                    &nbsp; Hang up
+                                </Button>
+
                                 <span
                                     style={{
                                         backgroundColor: "#116",
@@ -502,6 +489,7 @@ const Video = () => {
                                 >
                                     {userName || call.name}
                                 </span>
+
                                 {!userMicStatus && (
                                     <i
                                         style={{
@@ -520,8 +508,8 @@ const Video = () => {
                         </div>
                     )}
                 </div>
-                <div className={classes.options}>
-                    <div style={{ marginBottom: "0.5rem" }}>
+                <div>
+                    {/* <div style={{ marginBottom: "0.5rem" }}>
                         <h2>Account Info</h2>
                         <InputText
                             size="large"
@@ -538,61 +526,9 @@ const Video = () => {
                         />
 
                         <div className={classes.share_options}>
-                            {/* <CopyToClipboard text={me}>
-                                <Button
-                                    type="primary"
-                                    // icon={<CopyOutlined />}
-                                    className={classes.btn}
-                                    tabIndex="0"
-                                    onClick={() => alert("Coppied")}
-                                >
-                                    Copy code
-                                </Button>
-                            </CopyToClipboard> */}
-
-                            {/* <div className={classes.share_social}>
-                            <WhatsappShareButton
-                                url={`https://video-chat-mihir.vercel.app/`}
-                                title={`Join this meeting with the given code "${me}"\n`}
-                                separator="Link: "
-                                className={classes.share_icon}
-                            >
-                                <WhatsappIcon size={26} round />
-                            </WhatsappShareButton>
-                            <FacebookShareButton
-                                url={`https://video-chat-mihir.vercel.app/`}
-                                title={`Join this meeting with the given code "${me}"\n`}
-                                className={classes.share_icon}
-                            >
-                                <FacebookIcon size={26} round />
-                            </FacebookShareButton>
-                            <TwitterShareButton
-                                url={`https://video-chat-mihir.vercel.app/`}
-                                title={`Join this meeting with the given code  "${me}"\n`}
-                                className={classes.share_icon}
-                            >
-                                <TwitterIcon size={26} round className={classes.share_border} />
-                            </TwitterShareButton>
-                        </div> */}
                         </div>
-                    </div>
-                    <div style={{ marginBottom: "0.5rem" }}>
-                        <h2>Make a call</h2>
-
-                        {/* <InputText
-                        placeholder="Enter code to call"
-                        size="large"
-                        className={classes.inputgroup}
-                        value={idToCall}
-                        onChange={(e) => setIdToCall(e.target.value)}
-                        style={{ marginRight: "0.5rem", marginBottom: "0.5rem" }}
-                        prefix={<UserOutlined className="site-form-item-icon" />}
-                        suffix={
-                            <Tooltip title="Enter code of the other user">
-                                <InfoCircleOutlined style={{ color: "rgba(0,0,0,.45)" }} />
-                            </Tooltip>
-                        }
-                    /> */}
+                    </div> */}
+                    {/* <div style={{ marginBottom: "0.5rem" }}>
 
                         {callAccepted && !callEnded ? (
                             <Button
@@ -618,7 +554,7 @@ const Video = () => {
                                 Call
                             </Button>
                         )}
-                    </div>
+                    </div> */}
 
                     {call.isReceivingCall && !callAccepted && (
                         <>

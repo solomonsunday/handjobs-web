@@ -189,7 +189,8 @@ const InfoTab = () => {
               )
             )}
             {/* location of interest */}
-            {loading ? (
+
+            {/* {loading ? (
               <LocationOfInterestSkeleton />
             ) : (
               <LocationOfInterest
@@ -197,7 +198,7 @@ const InfoTab = () => {
                 openEdit={openEdit}
                 profileInfo={profileInfo}
               />
-            )}
+            )} */}
 
             {loading ? (
               <EducationSkeleton />
