@@ -170,7 +170,7 @@ const New = ({ mode }) => {
 
     useEffect(() => {
         register("location", { required: "Location is required" })
-        register("address", { required: "Address is required" })
+        register("address" )
     }, [register])
 
 
@@ -190,7 +190,7 @@ const New = ({ mode }) => {
                 // data.requesterLocation = locateUserHandler();
                 data.requesterLocation = { lat: coordinates.lat, long: coordinates.lng };
                 data.location = location;
-                data.address = address;
+                data.address = address || location;
                 data.state = selectedState.id;
                 data.lga = selectLga.id;
                 console.log(data, "create Data");

@@ -4,7 +4,7 @@ import { RadioButton } from 'primereact/radiobutton';
 import { Link } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from 'store/modules/auth';
 
 import './Register.css'
@@ -16,6 +16,7 @@ import { useRef } from 'react';
 const RegisterStep = ({ goto, accountType }) => {
 
     const dispatch = useDispatch();
+    const loading = useSelector(state => state.auth.loading);
     const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
         mode: "onChange",
         reValidateMode: "onChange"
@@ -257,7 +258,7 @@ const RegisterStep = ({ goto, accountType }) => {
                                                 &nbsp; and <Link to="/"> <span className="app-color font-weight-bold">Cookie Policy.</span></Link>.</p>
 
                                         </div>
-                                        <Button type="submit" label="Sign up" className="form-group rounded-pill on-hover" />
+                                        <Button type="submit" label={`${loading ? "Please wait..." : "Sign up"}`} className="form-group rounded-pill on-hover" />
                                     </div>
 
                                 </form>

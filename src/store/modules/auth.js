@@ -89,11 +89,14 @@ export function isRequestLoading(payload) {
 // Actions
 export function registerUser(user) {
   return dispatch => {
+    dispatch(isRequestLoading(true))
     return agent.Auth.register(user).then(response => { // handle success
       dispatch(showMessage({ type: MESSAGE_TYPE.SUCCESS, message: "Signup successful, login to continue", title: 'Signup Successful' }));
-      dispatch(push(`/security-verification?email=${response.email
-        }`));
+      dispatch(push(`/security-verification?email=${response.email}`));
+      dispatch(isRequestLoading(true))
+
     }, error => { // handle error
+      dispatch(isRequestLoading(false))
       dispatch(showMessage({ type: "error", message: error, title: "User Registration Failed" }));
     });
   }

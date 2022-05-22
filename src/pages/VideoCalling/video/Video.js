@@ -73,9 +73,7 @@ const Video = () => {
 
     const [idToCall, setIdToCall] = useState("");
     const [isModalVisible, setIsModalVisible] = useState(false);
-
-
-
+    
     socket.on("msgRcv", ({ name, msg: value, sender }) => {
         let msg = {};
         msg.msg = value;

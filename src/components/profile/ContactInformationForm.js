@@ -85,7 +85,7 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
   let stateObj;
   useEffect(() => {
     if (states) {
-      stateObj = contactInfo.state ? states.find(state => state.name === contactInfo.state.name) : null
+      stateObj = contactInfo.state ? states.find(state => states.name === contactInfo.state.name) : null
 
       setContactInfo({
         ...contactInfo,
@@ -108,7 +108,6 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
 
 
   useEffect(() => {
-
     if (profileInfo) {
       setContactInfo({
         ...profileInfo,
@@ -131,8 +130,6 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
 
   }, [profileInfo, states]);
 
-
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     const contactData = { ...contactInfo, [name]: value };
@@ -143,9 +140,12 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
 
   const contactInfoSubmit = () => {
     contactInfo.postalCode = 1234; // Postal code not needed but is still required from the back end.
-    contactInfo.latLong = coordinates
+    contactInfo.long = coordinates.lng
+    contactInfo.lat= coordinates.lat
     contactInfo.region = region;
-    contactInfo.address = location
+    contactInfo.address = location;
+    contactInfo.stateId = contactInfo.state.id;
+    contactInfo.lgaId = contactInfo.lga.id;
     console.log({ contactInfo })
     dispatch(updateContactInfo(contactInfo));
   }
@@ -213,7 +213,7 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
                   filterBy="name"
                   icon="pi pi-plus"
                   id="state"
-                  name="state"
+                  name="stateId"
                   {...register("state", { required: 'state is required' })}
                   value={state}
                   onChange={handleChange}
@@ -234,7 +234,7 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
                   filterBy="name"
                   icon="pi pi-plus"
                   id="lga"
-                  name="lga"
+                  name="lgaId"
                   {...register("lga", { required: 'lga is required' })}
                   value={lga}
                   onChange={handleChange}

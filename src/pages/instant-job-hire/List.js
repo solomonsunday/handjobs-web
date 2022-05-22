@@ -79,16 +79,18 @@ const InstantHires = () => {
 
                                                 </div>
                                                 <Link to={`/instant-hire-applicants/${instantjob.id}`}>
+                                                
                                                     <small className="p-text-secondary">
                                                         <div className='row'>
                                                             <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Service : </p></div>  <div className='col-md-10'> <p>{instantjob.service} </p> </div>
-                                                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Location : </p></div>  <div className='col-md-10'> <p>{instantjob.location} </p> </div>
-                                                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Address : </p></div>  <div className='col-md-10'> <p>{instantjob.address} </p> </div>
+                                                            {/* <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Location : </p></div>  <div className='col-md-10'> <p>{instantjob.location} </p> </div> */}
+                                                         <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Address : </p></div>  <div className='col-md-10'> <p>{instantjob.address ? instantjob.address :instantjob.location } </p> </div>
                                                             <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Job Description : </p></div>  <div className='col-md-10'> <p>{instantjob.description} </p> </div>
                                                             <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Start Date  : </p></div>  <div className='col-md-3'> <p>{moment(instantjob.startDate).format('MMMM DD, YYYY')} </p> </div>
                                                             <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">End Date  : </p></div>  <div className='col-md-3'> <p>{moment(instantjob.endDate).format('MMMM DD, YYYY')} </p> </div>
                                                         </div>
                                                     </small>
+                                                
                                                 </Link>
                                             </div>
                                             <hr />
