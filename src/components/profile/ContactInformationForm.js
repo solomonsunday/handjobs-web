@@ -139,15 +139,18 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
   }
 
   const contactInfoSubmit = () => {
-    contactInfo.postalCode = 1234; // Postal code not needed but is still required from the back end.
-    contactInfo.long = coordinates.lng
-    contactInfo.lat= coordinates.lat
-    contactInfo.region = region;
-    contactInfo.address = location;
-    contactInfo.stateId = contactInfo.state.id;
-    contactInfo.lgaId = contactInfo.lga.id;
-    console.log({ contactInfo })
-    dispatch(updateContactInfo(contactInfo));
+    let data = {};
+    data.postalCode = 1234;
+    data.long = coordinates.lng;
+    data.lat = coordinates.lat;
+    data.region = region;
+    data.address = location;
+    data.stateId = contactInfo.state.id;
+    data.lgaId = contactInfo.lga.id;
+    data.phoneNumber = contactInfo.phoneNumber;
+    data.email = contactInfo.email
+    console.log({ data });
+    dispatch(updateContactInfo(data));
   }
 
   const { phoneNumber, email, state, lga, postalCode, address } = contactInfo;
