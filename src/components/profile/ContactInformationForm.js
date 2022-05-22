@@ -85,7 +85,7 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
   let stateObj;
   useEffect(() => {
     if (states) {
-      stateObj = contactInfo.state ? states.find(state => states.name === contactInfo.state.name) : null
+      stateObj = contactInfo.state ? states.find(state => state.name === contactInfo.state.name) : null
 
       setContactInfo({
         ...contactInfo,
@@ -109,10 +109,11 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
 
   useEffect(() => {
     if (profileInfo) {
+      console.log({profileInfo})
       setContactInfo({
         ...profileInfo,
         // country: profileInfo.country ? countries.find(c => c.name === profileInfo.country) : countries[0].name,
-        state: profileInfo.state ? states.find(state => state.name === profileInfo.state) : states[0].name,
+        state: profileInfo.state ? states.find(state => state.name === profileInfo.state) : states[0]?.name,
         phoneNumber: profileInfo.contactPhoneNumber || "",
         email: profileInfo.email || "",
         lga: profileInfo.lga || "",
