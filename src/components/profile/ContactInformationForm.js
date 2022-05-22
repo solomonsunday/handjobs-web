@@ -112,7 +112,7 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
       setContactInfo({
         ...profileInfo,
         // country: profileInfo.country ? countries.find(c => c.name === profileInfo.country) : countries[0].name,
-        state: profileInfo.state ? states.find(s => s.name === profileInfo.state) : states[0].name,
+        state: profileInfo.state ? states.find(s => states.name === profileInfo.state) : states[0].name,
         phoneNumber: profileInfo.contactPhoneNumber || "",
         email: profileInfo.email || "",
         lga: profileInfo.lga || "",
