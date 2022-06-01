@@ -25,6 +25,7 @@ import appNotification from "./appNotification";
 import cv from "./cv";
 import profile from "./profile";
 import dashboard from "./dashboard";
+import notificationSettings from "./notificationSettings"
 
 const appReducer = (history) =>
   combineReducers({
@@ -54,6 +55,7 @@ const appReducer = (history) =>
     cv,
     profile,
     dashboard,
+    notificationSettings,
   });
 
 export default appReducer;

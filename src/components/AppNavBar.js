@@ -188,8 +188,8 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                             </li>
                             <li className="dropdown-item profile-dropdownItem-appNavbar">
                                 <Link to="/settings/notification">
-                                    <i className="li-icon lni lni-settings"></i>
-                                    <span className="li-title">Notification settings</span>
+                                    <i className="li-icon lni lni-cog"></i>
+                                    <span className="li-title">Notification Settings</span>
                                 </Link>
                             </li>
                             <li className='dropdown-item profile-dropdownItem-appNavbar' onClick={LogOut}>

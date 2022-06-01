@@ -496,6 +496,13 @@ const Dashboard = {
     requests.get(`/accounts/account-completion-status`),
 }
 
+const NotificationSettings = {
+  save: (data) =>
+    requests.post("/notification-setting", data),
+  get: () =>
+    requests.get("/notification-setting"),
+}
+
 export default {
   Auth,
   User,
@@ -530,4 +537,5 @@ export default {
   Cv,
   Chat,
   Dashboard,
+  NotificationSettings
 };

@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputSwitch } from 'primereact/inputswitch';
 import { Button } from 'primereact/button';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveNotificationSetting, loadNotificationSetting } from 'store/modules/notificationSettings';
 
 export default function NotificationSettings() {
     const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm({
@@ -13,6 +15,23 @@ export default function NotificationSettings() {
     const [email, setEmail] = useState(false);
     const [hotDeals, setHotDeals] = useState(false);
 
+    const dispatch = useDispatch();
+    const getsettings = useSelector(state => state.notificationSettings.settings);
+    const loading = useSelector(state => state.notificationSettings.loading);
+    const settings = getsettings?.data
+
+    useEffect(() => {
+        dispatch(loadNotificationSetting());
+    }, [])
+
+    useEffect(() => {
+        if (getsettings) {
+            setSms(getsettings?.data?.allowSms);
+            setEmail(getsettings?.data?.allowEmail);
+            setHotDeals(getsettings?.data?.allowHotDeals)
+        }
+    }, [getsettings]);
+    console.log("notificationSet", settings)
 
     // const [settings, setSettings] = useState();
 
@@ -26,13 +45,21 @@ export default function NotificationSettings() {
     //     })
     // }
 
+    const onSubmit = (data) => {
+        data.allowSms = sms;
+        data.allowEmail = email;
+        data.allowHotDeals = hotDeals;
+        console.log(data, "create Data");
+        dispatch(saveNotificationSetting(data));
+
+    }
+
     return <>
         <div className="p-col-11 p-mt-2 p-mx-auto">
             <div className="p-card rounded p-m-5">
                 <div className="card-body">
                     <h5 className='text-center mb-5'>NOTIFICATION SETTINGS</h5>
-                    <form className="row p-mb-5 justify-content-center" action="" >
-
+                    <form onSubmit={handleSubmit(onSubmit)} className="row p-mb-5 justify-content-center">
                         <div className="form-group col-md-3">
                             <label className="font-weight-bold" htmlFor="recieveSMS">Recieve SMS</label>
                             <div className="custom-control custom-switch">
@@ -55,7 +82,7 @@ export default function NotificationSettings() {
                             <Button icon="pi pi-check"
                                 iconPos="left"
                                 label={"Submit"}
-                                // disabled={loading}
+                                disabled={loading}
                                 type="submit"
                                 className="float-right rounded-pill" />
                         </div>
