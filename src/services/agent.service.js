@@ -130,6 +130,7 @@ const Auth = {
     requests.get(
       `/accounts/nearest-artisans?page=${page}&limit=${limit}&search=${search}`
     ),
+  deleteMyAccount: (id)=>requests.delete("/account-type/", id),
 };
 
 const User = {

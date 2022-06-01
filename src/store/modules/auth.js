@@ -208,6 +208,21 @@ export function updateUserPassword(shortCode, email, data) {
   }
 }
 
+
+export function deleteAccount(id) {
+  return dispatch => {
+    dispatch(isRequestLoading(true))
+    return agent.Auth.deleteMyAccount(id).then(response => {
+      dispatch(isRequestLoading(false))
+      dispatch(showMessage({ type: MESSAGE_TYPE.SUCCESS, message: "Account successfully deleted" }));
+      dispatch(push("/login"));
+    }, error => {
+      dispatch(isRequestLoading(false))
+      dispatch(showMessage({ type: "error", message: error }));
+    });
+  }
+}
+
 function onLogin(dispatch, user) {
   agent.Auth.saveAuthData(user)
   dispatch(userLoggedIn(user))
