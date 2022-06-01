@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { saveNotificationSetting, loadNotificationSetting } from 'store/modules/notificationSettings';
 
 export default function NotificationSettings() {
-    const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm({
+    const { handleSubmit } = useForm({
         mode: "onChange",
         reValidateMode: "onChange"
     });
@@ -18,7 +18,6 @@ export default function NotificationSettings() {
     const dispatch = useDispatch();
     const getsettings = useSelector(state => state.notificationSettings.settings);
     const loading = useSelector(state => state.notificationSettings.loading);
-    const settings = getsettings?.data
 
     useEffect(() => {
         dispatch(loadNotificationSetting());
@@ -31,27 +30,12 @@ export default function NotificationSettings() {
             setHotDeals(getsettings?.data?.allowHotDeals)
         }
     }, [getsettings]);
-    console.log("notificationSet", settings)
-
-    // const [settings, setSettings] = useState();
-
-    // const handleOnChange = async (e) => {
-    //     const { name, value, checked } = e.target
-
-    //     setSettings({
-    //         ...settings,
-    //         [name]: value === 'on' ? checked : value ?? JSON.parse(value),
-
-    //     })
-    // }
 
     const onSubmit = (data) => {
         data.allowSms = sms;
         data.allowEmail = email;
         data.allowHotDeals = hotDeals;
-        console.log(data, "create Data");
         dispatch(saveNotificationSetting(data));
-
     }
 
     return <>
