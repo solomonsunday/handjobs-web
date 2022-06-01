@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 const authData = {
   loading: false,
   currentUser: {},
-  loading: false,
 };
 
 
@@ -105,12 +104,15 @@ export function registerUser(user) {
 
 export function verifyAccount(code) {
   return dispatch => {
+    dispatch(isRequestLoading(true))
     return agent.Auth.verifyAccount(code).then(response => {
       // handle success
       dispatch(showMessage({ type: MESSAGE_TYPE.SUCCESS, message: "account verification successful, login to continue" }));
+      dispatch(isRequestLoading(false))
       dispatch(push(`/login`));
     }, error => {
       // handle error
+      dispatch(isRequestLoading(false))
       dispatch(showMessage({ type: "error", message: error }));
     });
   }
@@ -208,20 +210,6 @@ export function updateUserPassword(shortCode, email, data) {
   }
 }
 
-
-export function deleteAccount(id) {
-  return dispatch => {
-    dispatch(isRequestLoading(true))
-    return agent.Auth.deleteMyAccount(id).then(response => {
-      dispatch(isRequestLoading(false))
-      dispatch(showMessage({ type: MESSAGE_TYPE.SUCCESS, message: "Account successfully deleted" }));
-      dispatch(push("/login"));
-    }, error => {
-      dispatch(isRequestLoading(false))
-      dispatch(showMessage({ type: "error", message: error }));
-    });
-  }
-}
 
 function onLogin(dispatch, user) {
   agent.Auth.saveAuthData(user)

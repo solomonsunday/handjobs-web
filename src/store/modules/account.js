@@ -4,6 +4,7 @@ import { MESSAGE_TYPE } from "../constant";
 import { closeModal } from "./modal";
 import { loadError } from "./experience";
 import { isRequestLoading } from "./review";
+import { OnLogout } from "./auth";
 
 // initial values
 const account = {
@@ -504,3 +505,17 @@ export const deleteEducation = (id) => (dispatch) => {
     }
   );
 };
+
+export function deactivateAccount() {
+  return dispatch => {
+    dispatch(isRequestLoading(true))
+    return agent.Account.deactivateMyAccount().then(response => {
+      dispatch(isRequestLoading(false))
+      dispatch(showMessage({ type: MESSAGE_TYPE.SUCCESS, message: "Account successfully deactivated!" }));
+      dispatch(OnLogout());
+    }, error => {
+      dispatch(isRequestLoading(false))
+      dispatch(showMessage({ type: "error", message: error }));
+    });
+  }
+}
