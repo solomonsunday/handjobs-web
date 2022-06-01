@@ -82,7 +82,7 @@ export function saveNotificationSetting(settings) {
     return (dispatch) => {
         dispatch(isRequestLoading(true));
         return agent.NotificationSettings.save(settings).then(
-            (response) => {
+            () => {
                 dispatch(isRequestLoading(false));
                 // handle success
                 dispatch(
@@ -92,7 +92,6 @@ export function saveNotificationSetting(settings) {
                         title: "Notification settings saved successfully",
                     })
                 );
-                dispatch(push("/posts"));
             },
             (error) => {
                 // handle error

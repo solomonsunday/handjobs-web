@@ -67,7 +67,7 @@ const Accounts = React.lazy(() => import('pages//admin/dashboard/Accounts'));
 
 const VideoChat = React.lazy(() => import('../pages/VideoCalling/VideoScreen'));
 const ChangePassword = React.lazy(() => import('../pages/auth/chanagepassword/ChangePassword'));
-const NotificationSettings = React.lazy(() => import('../pages/notification/settings'));
+const Settings = React.lazy(() => import('../pages/settings/settings'));
 
 
 
@@ -138,7 +138,7 @@ const AppRouter = () => {
         {/* <ProtectedRoute path="/cv-template" component={CVTEMPLATE} /> */}
         {/* INSTANT MESSAGING */}
         <ProtectedRoute path="/instant-messaging" children={<InstantMessaging />} />
-        <ProtectedRoute path="/settings/notification" component={NotificationSettings} />
+        <ProtectedRoute path="/settings" component={Settings} />
 
         {/* VIDEO CHAT */}
         <ProtectedRoute path="/videochat" component={VideoChat} />
