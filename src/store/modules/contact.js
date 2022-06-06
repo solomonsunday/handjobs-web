@@ -222,6 +222,7 @@ export const requestSent = (data) => ({
   id: data.contactId
 });
 
+
 //Actions
 export function loadFreeUsers(page, limit, loadingType, search) {
   return dispatch => {
@@ -396,6 +397,53 @@ export function rejectRequest(id, loadingType) {
         dispatch(loadingContact(""))
         dispatch(isError("rejectFail"));
         dispatch(showMessage({ type: "error", message: error }));
+      }
+    );
+  }
+}
+
+export function blockContact(id) {
+  return dispatch => {
+    return agent.Contact.block(id).then(
+      response => {
+        //handle success
+        dispatch(
+          showMessage({
+            type: MESSAGE_TYPE.SUCCESS,
+            title: "Block Contact",
+            message: "Contact blocked successfully",
+          })
+        );
+        window.location.reload();
+      },
+      (error) => {
+        // handle error
+        dispatch(showMessage({ type: "error", message: error }));
+        dispatch(isError("requestFail"));
+      }
+    );
+  }
+}
+
+export function unblockContact(id) {
+  return dispatch => {
+    return agent.Contact.unblock(id).then(
+      response => {
+        //handle success
+        dispatch(
+          showMessage({
+            type: MESSAGE_TYPE.SUCCESS,
+            title: "Unblock Contact",
+            message: "Contact unblocked successfully",
+          })
+        );
+        window.location.reload();
+
+      },
+      (error) => {
+        // handle error
+        dispatch(showMessage({ type: "error", message: error }));
+        dispatch(isError("requestFail"));
       }
     );
   }

@@ -436,6 +436,8 @@ const Contact = {
   delete: (id) => requests.del(`/contact/${id}`),
   accept: (data) => requests.post("/contact/accept", data),
   reject: (id) => requests.del(`/contact/reject/${id}`),
+  block: (id) => requests.put(`/contact/block-contact/${id}`),
+  unblock: (id) => requests.put(`/contact/unblock-contact/${id}`),
 };
 
 const Notification = {
