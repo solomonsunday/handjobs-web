@@ -177,6 +177,7 @@ const Account = {
   loadArtisanAccounts: () => requests.get("/accounts/nearest-artisans"),
   getByID: (id) => requests.get(`/accounts/${id}`),
   verifyAccount: (id) => requests.get(`/account/${id}`),
+  deactivateMyAccount: ()=>requests.put("/accounts/deactivate-account"),
 };
 
 const JobExperience = {

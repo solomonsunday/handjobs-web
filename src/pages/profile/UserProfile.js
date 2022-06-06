@@ -19,7 +19,9 @@ import ChatContent from "components/chat/ChatContent";
 import { ACCOUNT_TYPE } from "constants/accountType";
 import CustomError from "pages/error-page/CustomError";
 import { ErrorBoundary } from "react-error-boundary";
-import { loadProfileInfo } from "store/modules/account";
+import { deactivateAccount, loadProfileInfo } from "store/modules/account";
+import { ConfirmDialog } from 'primereact/confirmdialog'; // To use <ConfirmDialog> tag
+import { confirmDialog } from 'primereact/confirmdialog';
 
 // import BreadCrumbPane from 'helpers/BreadCrumb';
 
@@ -30,8 +32,10 @@ const UserProfile = ({ match }) => {
 
   const dispatch = useDispatch();
   const [, setMode] = useState("");
-  const [] = useState({});
   const accountType = agentService.Auth.current().accountType;
+  const userID = agentService.Auth.current().id;
+  console.log({userID})
+
 
 
   const openCreate = (name) => {
@@ -44,6 +48,21 @@ const UserProfile = ({ match }) => {
     // setItemToEdit(data);
     dispatch(openModal(name));
   };
+
+  const handleDeleteAccount =()=> {
+    confirmDialog({
+      header: 'Confirmation',
+      message: 'Are you sure you want to Delete your account? all your data will be completely lost and this is irreversible',
+      icon: 'pi pi-info-circle',
+      acceptClassName: 'p-button-danger',
+      accept: () => {
+        dispatch(deactivateAccount())       
+      },
+      reject: () => {
+          return;
+      },
+  });
+  }
 
   // useEffect(() => {
   //   dispatch(loadProfileInfo());
@@ -89,6 +108,9 @@ const UserProfile = ({ match }) => {
                 <Route path={`${match.path}/contacts`} component={ContactsTab} />
                 <Route path={`${match.path}/groups`} component={GroupsTab} />
                 <Route path={`${match.path}/review`} component={ReviewTab} />
+              <p>Click <span className="text-danger font-weight-bold finger" onClick={handleDeleteAccount}>Here</span> if you wish to delete your account </p>
+
+
               </div>
             </div>
             {/* portfolio */}

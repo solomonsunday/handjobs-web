@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
@@ -11,6 +11,8 @@ import { useQuery } from 'hooks/use-query';
 
 
 const SecurityVerification = () => {
+
+    const isRequestLoading = useSelector(state => state.auth.loading);
 
     const dispatch = useDispatch();
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -79,7 +81,7 @@ const SecurityVerification = () => {
                                                         <hr className="p-mb-3" />
                                                     </div>
 
-                                                    <Button type="submit" label="Submit" className="appcolor continue-btn rounded-pill on-hover" />
+                                                    <Button type={`${isRequestLoading? "Verifying...": "Submit"}`} label="Submit" className="appcolor continue-btn rounded-pill on-hover" />
                                                 </form>
                                             </div>
                                         </div>
