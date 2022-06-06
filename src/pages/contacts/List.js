@@ -91,7 +91,6 @@ const List = () => {
       icon: "pi pi-info-circle",
       acceptClassName: "p-button-danger",
       accept: () => {
-        setSelectedId(contactId);
         dispatch(blockContact(contactId));
       },
     });
@@ -109,7 +108,6 @@ const List = () => {
       icon: "pi pi-info-circle",
       acceptClassName: "p-button-danger",
       accept: () => {
-        setSelectedId(contactId);
         dispatch(unblockContact(contactId));
       },
     });
