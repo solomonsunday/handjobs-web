@@ -11,7 +11,10 @@ export const currentApp = process.env.REACT_APP_CURRENT_APP;
 export const isArtisanApp = process.env.REACT_APP_CURRENT_APP === "artisan";
 
 // export const API_ROOT = "https://jobplicant-api.herokuapp.com";
-export const API_ROOT = process.env.NODE_ENV === "development" ? process.env.REACT_APP_API_ROOT_LOCAL : process.env.REACT_APP_API_ROOT_PROD;
+export const API_ROOT =
+  process.env.NODE_ENV === "development"
+    ? process.env.REACT_APP_API_ROOT_LOCAL
+    : process.env.REACT_APP_API_ROOT_PROD;
 // export const API_ROOT = "http://localhost:8080";
 
 let accessToken = null;
@@ -25,8 +28,7 @@ const getAuthToken = () => {
 
 export const tokenPlugin = (req) => {
   req.set("Accept", "application/json");
-  req.set('platform', process.env.REACT_APP_PLATFORM);
-
+  req.set("platform", process.env.REACT_APP_PLATFORM);
 
   accessToken = getAuthToken();
   if (accessToken) {
@@ -34,7 +36,7 @@ export const tokenPlugin = (req) => {
   }
 
   req.on("response", function (res) {
-    console.log()
+    console.log();
     if (res.status === 401) {
       //Always revert back here to change the production to the *CORRECT URL*
       // console.log("onResponse: This is called when Authorization is hit")
@@ -120,7 +122,11 @@ const Auth = {
     // console.log("testing", test);
   },
   changePassword: (oldPassword, newPassword, confirmPassword) =>
-    requests.put(`/auth/change-password`, { oldPassword, newPassword, confirmPassword }),
+    requests.put(`/auth/change-password`, {
+      oldPassword,
+      newPassword,
+      confirmPassword,
+    }),
   sendResetToken: (email) =>
     requests.post(`/ account / password / email`, { email }),
   verifyResetToken: (email, token) =>
@@ -177,7 +183,7 @@ const Account = {
   loadArtisanAccounts: () => requests.get("/accounts/nearest-artisans"),
   getByID: (id) => requests.get(`/accounts/${id}`),
   verifyAccount: (id) => requests.get(`/account/${id}`),
-  deactivateMyAccount: ()=>requests.put("/accounts/deactivate-account"),
+  deactivateMyAccount: () => requests.put("/accounts/deactivate-account"),
 };
 
 const JobExperience = {
@@ -437,7 +443,10 @@ const Contact = {
   delete: (id) => requests.del(`/contact/${id}`),
   accept: (data) => requests.post("/contact/accept", data),
   reject: (id) => requests.del(`/contact/reject/${id}`),
-  cancelConnectionRequest: (accountId) => requests.del(`/contact/cancel-request/${accountId}`)
+  cancelConnectionRequest: (accountId) =>
+    requests.del(`/contact/cancel-request/${accountId}`),
+  block: (id) => requests.put(`/contact/block-contact/${id}`),
+  unblock: (id) => requests.put(`/contact/unblock-contact/${id}`),
 };
 
 const Notification = {
@@ -473,37 +482,26 @@ const Chat = {
   getConversationsWithPartnerId: (partnerId) =>
     requests.get(`/chat/conversation-messages/${partnerId}`),
   markAsRead: (partnerId) =>
-    requests.put(`/chat/conversation/read/${partnerId}`)
-
+    requests.put(`/chat/conversation/read/${partnerId}`),
 };
 
 const Dashboard = {
-  getCountByGroup: () =>
-    requests.get("/accounts/users-count-by-group"),
-  getAllPostCount: () =>
-    requests.get("/post/count"),
-  getAllJobCount: () =>
-    requests.get("/job/count"),
-  getUserPostCount: (userId) =>
-    requests.get(`/post/user/${userId}/count`),
-  loadUserContact: () =>
-    requests.get(`/contact/count`),
-  loadInstantService: () =>
-    requests.get(`/instant-job/applications/m/count`),
-  loadJobs: () =>
-    requests.get(`/job/applications/m/count`),
-  loadUserActivities: () =>
-    requests.get(`/accounts/user-activities`),
+  getCountByGroup: () => requests.get("/accounts/users-count-by-group"),
+  getAllPostCount: () => requests.get("/post/count"),
+  getAllJobCount: () => requests.get("/job/count"),
+  getUserPostCount: (userId) => requests.get(`/post/user/${userId}/count`),
+  loadUserContact: () => requests.get(`/contact/count`),
+  loadInstantService: () => requests.get(`/instant-job/applications/m/count`),
+  loadJobs: () => requests.get(`/job/applications/m/count`),
+  loadUserActivities: () => requests.get(`/accounts/user-activities`),
   loadUserAccountStatus: () =>
     requests.get(`/accounts/account-completion-status`),
-}
+};
 
 const NotificationSettings = {
-  save: (data) =>
-    requests.post("/notification-setting", data),
-  get: () =>
-    requests.get("/notification-setting"),
-}
+  save: (data) => requests.post("/notification-setting", data),
+  get: () => requests.get("/notification-setting"),
+};
 
 export default {
   Auth,
@@ -539,5 +537,5 @@ export default {
   Cv,
   Chat,
   Dashboard,
-  NotificationSettings
+  NotificationSettings,
 };

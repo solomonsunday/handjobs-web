@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { loadContacts, removeContact } from "../../store/modules/contact";
+import { loadContacts, removeContact, blockContact, unblockContact } from "../../store/modules/contact";
 import { confirmDialog } from "primereact/confirmdialog";
 import { formatter } from "../../helpers/converter";
 import { Button } from "primereact/button";
@@ -75,6 +75,40 @@ const List = () => {
       accept: () => {
         setSelectedId(contactId);
         dispatch(removeContact(contactId));
+      },
+    });
+  };
+
+  const confirmBlock = (e) => {
+    let contactId = e.currentTarget.dataset.id;
+    let firstName = e.currentTarget.dataset.firstName;
+    let lastName = e.currentTarget.dataset.lastName;
+    confirmDialog({
+      message: `Are you sure you want to block ${formatter.capitalizeFirstLetter(
+        firstName
+      )} ${formatter.capitalizeFirstLetter(lastName)}?`,
+      header: "Block Contact",
+      icon: "pi pi-info-circle",
+      acceptClassName: "p-button-danger",
+      accept: () => {
+        dispatch(blockContact(contactId));
+      },
+    });
+  };
+
+  const confirmUnblock = (e) => {
+    let contactId = e.currentTarget.dataset.id;
+    let firstName = e.currentTarget.dataset.firstName;
+    let lastName = e.currentTarget.dataset.lastName;
+    confirmDialog({
+      message: `Are you sure you want to unblock ${formatter.capitalizeFirstLetter(
+        firstName
+      )} ${formatter.capitalizeFirstLetter(lastName)}?`,
+      header: "Unblock Contact",
+      icon: "pi pi-info-circle",
+      acceptClassName: "p-button-danger",
+      accept: () => {
+        dispatch(unblockContact(contactId));
       },
     });
   };
@@ -215,6 +249,27 @@ const List = () => {
                     <div className="finger">
                       <BsFillChatDotsFill fontSize={30} onClick={() => handleOpenChatRoom(contact)} />
                     </div>
+                    {!contact.blocked && <div>
+
+                      <i
+                        data-id={contact.id}
+                        onClick={confirmBlock}
+                        className="pi pi-ban p-pr-2 text-warning"
+                        data-last-name={contact.lastName}
+                        data-first-name={contact.firstName}
+                      />
+                    </div>}
+                    {contact.blocked && <div>
+
+                      <i
+                        data-id={contact.id}
+                        onClick={confirmUnblock}
+                        className="pi pi-ban p-pr-2 text-green"
+                        data-last-name={contact.lastName}
+                        data-first-name={contact.firstName}
+                      />
+                    </div>}
+
                     <div>
 
                       <i

@@ -11,3 +11,8 @@
     line-height: 1.5;
     margin: 0;
 }
+
+.settings-cardtitle {
+    padding: 0.8rem;
+    font-size: 1.1rem !important;
+}

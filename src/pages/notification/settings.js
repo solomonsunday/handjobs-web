@@ -24,12 +24,12 @@ export default function NotificationSettings() {
     }, [])
 
     useEffect(() => {
-        if (getsettings) {
+        if (getsettings.data) {
             setSms(getsettings?.data?.allowSms);
             setEmail(getsettings?.data?.allowEmail);
             setHotDeals(getsettings?.data?.allowHotDeals)
         }
-    }, [getsettings]);
+    }, [getsettings.data]);
 
     const onSubmit = (data) => {
         data.allowSms = sms;

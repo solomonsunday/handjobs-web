@@ -2,16 +2,28 @@ import React, { useState } from 'react';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import './settings.css';
 import NotificationSettings from 'pages/notification/settings';
-
+import { useHistory } from 'react-router-dom';
 
 export default function Settings() {
 
+    const history = useHistory();
+    const goToPreviousPath = () => {
+        history.goBack()
+    }
 
     return <>
         <div className="p-col-11 p-mt-2 p-mx-auto">
-            <div className="p-card rounded p-m-5">
+            <div className="p-card p-m-5" style={{ borderRadius: "1rem" }}>
                 <div className="card-body">
-                    <h5 className='text-center mb-3'>SETTINGS</h5>
+                    <div className="d-flex justify-content-between align-items-center">
+                        <span className="settings-cardtitle h6">
+                            <i className="pi pi-cog p-pr-2" />
+                            Settings
+                        </span>
+                        <span className="p-pr-5" style={{ cursor: "pointer" }} onClick={goToPreviousPath}>
+                            <i className="pi pi-arrow-left" />
+                        </span>
+                    </div>
                     <Accordion className="accordion-custom" activeIndex={0}>
                         <AccordionTab header={<span><i className="pi pi-bell p-mr-1"></i>Notifications <span className="app-sec-text-color"> (select your preferred notification method)</span></span>}>
                             <NotificationSettings />
