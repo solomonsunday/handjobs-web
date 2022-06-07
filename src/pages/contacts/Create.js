@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadFreeUsers, sendContactRequest } from "../../store/modules/contact";
+import { cancelContactRequest, loadFreeUsers, sendContactRequest } from "../../store/modules/contact";
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import ConnectionRequestPanel from "./ConnectionRequestPanel";
@@ -19,14 +19,6 @@ const Create = () => {
   const pageLimit = 10;
   const [pageNumber, setPageNumber] = useState(1);
 
-  const sortOptions = [
-    { name: 'Name (Ascending)', code: 'NY' },
-    { name: 'Name (Descending)', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
-  ];
-
   const capitalizeFirstLetter = (name) => {
     if (name) {
       return name[0].toUpperCase() + name.slice(1);
@@ -40,6 +32,12 @@ const Create = () => {
   const handleConnectionRequest = (e) => {
     let id = e.currentTarget.dataset.id
     dispatch(sendContactRequest({ contactId: id }));
+    setSelectedId(id);
+  }
+
+  const handleCancelRequest = (e) => {
+    let id = e.currentTarget.dataset.id
+    dispatch(cancelContactRequest({ contactId: id }));
     setSelectedId(id);
   }
 
@@ -162,6 +160,15 @@ const Create = () => {
                         </span>
                       </Button>
                     }
+
+                      {/* {
+                      (error || user.id !== selectedId) &&
+                      <Button className="contacts-cardsubtitle p-p-1 p-mr-3 rounded-pill on-hover bg-danger border-0" data-id={user.id} onClick={(e) => handleCancelRequest(e)}>
+                        <span className="p-m-2">
+                          Cancel Connection Request
+                        </span>
+                      </Button>
+                    } */}
                   </div>
                 </div>
               )

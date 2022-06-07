@@ -437,6 +437,7 @@ const Contact = {
   delete: (id) => requests.del(`/contact/${id}`),
   accept: (data) => requests.post("/contact/accept", data),
   reject: (id) => requests.del(`/contact/reject/${id}`),
+  cancelConnectionRequest: (accountId) => requests.del(`/contact/cancel-request/${accountId}`)
 };
 
 const Notification = {

@@ -13,7 +13,7 @@ export default function Settings() {
                 <div className="card-body">
                     <h5 className='text-center mb-3'>SETTINGS</h5>
                     <Accordion className="accordion-custom" activeIndex={0}>
-                        <AccordionTab header={<span><i className="pi pi-bell p-mr-1"></i>Notification</span>}>
+                        <AccordionTab header={<span><i className="pi pi-bell p-mr-1"></i>Notifications <span className="app-sec-text-color"> (select your preferred notification method)</span></span>}>
                             <NotificationSettings />
                         </AccordionTab>
                         {/* <AccordionTab header={<React.Fragment><i className="pi pi-user"></i><span>Header II</span></React.Fragment>}>

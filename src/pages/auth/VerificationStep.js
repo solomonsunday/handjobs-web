@@ -61,7 +61,7 @@ const VerificationStep = ({ goto, accountType, setAccountType }) => {
                 <div className="verificationContainer">
                     <div className='d-flex'>
 
-                        <i className="pi pi-arrow-left font-weight-bold px-4 finger" onClick={() => history.goBack()}></i> <h5>Select Account Type</h5>
+                        <i className="pi pi-arrow-left font-weight-bold px-4 finger" onClick={() => history.goBack()}></i> <h5>Sign-up as</h5>
                     </div>
                     <div className="verificationStep">
                         {isArtisanApp && <>
@@ -70,14 +70,14 @@ const VerificationStep = ({ goto, accountType, setAccountType }) => {
                                     setSelectedAccountType(ACCOUNT_TYPE.INSTANT_HIRE, e)
                                 }
                                 image="/assets/images/accountTypes/thinkingman.png"
-                                body="To Request for Instant Artisan Services"
+                                body="Customer"
                                 customstyle={` artisan ${instantHireCard ? "active-card" : ""}`}
                                 style={{ border: "4px solid yellow" }}
                             />
                             <AccountTypesOptions
                                 onClick={(e) => setSelectedAccountType(ACCOUNT_TYPE.ARTISAN, e)}
                                 image="/assets/images/accountTypes/handworker.png"
-                                body="To Provide Service as an Artisan."
+                                body="Service Provider"
                                 customstyle={` artisanService ${artisanCard ? "active-card" : ""}`}
                             />
                         </>}

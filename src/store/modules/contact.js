@@ -25,6 +25,7 @@ const CONTACT_ADDED = "CONTACT_ADDED";
 const CONTACT_DELETED = "CONTACT_DELETED";
 const REMOVE_PENDING = "REMOVE_PENDING";
 const REQUEST_SENT = "REQUEST_SENT";
+const REQUEST_CANCELLED = "REQUEST_CANCELLED";
 
 //Reducer
 export default function reducer(state = contact, action = {}) {
@@ -110,16 +111,26 @@ export default function reducer(state = contact, action = {}) {
       };
     case REQUEST_SENT:
       const sentRequestId = action.id;
-      const updatedRequestArray = [...state.freeUsers.ids]
-      updatedRequestArray.splice(updatedRequestArray.indexOf(sentRequestId), 1)
-      console.log("request sent", sentRequestId, updatedRequestArray)
+      // const updatedRequestArray = [...state.freeUsers.ids]
+      // updatedRequestArray.splice(updatedRequestArray.indexOf(sentRequestId), 1)
+      // console.log("request sent", sentRequestId, updatedRequestArray)
       return {
         ...state,
         freeUsers: {
           ...state.freeUsers,
-          ids: updatedRequestArray,
+          // ids: updatedRequestArray,
         }
       };
+      case REQUEST_CANCELLED:
+        // const revertRequestArray = [...state.freeUsers.ids]
+        // updatedRequestArray.splice(updatedRequestArray.indexOf(cancelRequestId), 1)
+        return {
+          ...state,
+          freeUsers: {
+            ...state.freeUsers,
+            // ids: updatedRequestArray,
+          }
+        };
     case CONTACT_DELETED:
       const deletedId = action.id;
       const updatedIdArray = [...state.contacts.ids]
@@ -222,6 +233,11 @@ export const requestSent = (data) => ({
   id: data.contactId
 });
 
+export const requestCancelled = (data) => ({
+  type: REQUEST_CANCELLED,
+  id: data.contactId
+});
+
 //Actions
 export function loadFreeUsers(page, limit, loadingType, search) {
   return dispatch => {
@@ -311,6 +327,33 @@ export function sendContactRequest(id) {
           }),
         );
         dispatch(requestSent(id));
+        dispatch(loadingContact(""));
+      },
+      (error) => {
+        // handle error
+        dispatch(showMessage({ type: "error", message: error }));
+        dispatch(loadingContact(""));
+        dispatch(isError("requestFail"));
+      }
+    );
+  }
+}
+
+export function cancelContactRequest(id) {
+  return dispatch => {
+    dispatch(loadingContact("cancelContactRequest"));
+    dispatch(isError(null));
+    return agent.Contact.cancelConnectionRequest(id).then(
+      response => {
+        //handle success
+        dispatch(
+          showMessage({
+            type: MESSAGE_TYPE.SUCCESS,
+            title: "Cancel Connection Request",
+            message: "Request cancelled",
+          }),
+        );
+        dispatch(requestCancelled(id));
         dispatch(loadingContact(""));
       },
       (error) => {
