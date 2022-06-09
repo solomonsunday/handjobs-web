@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { acceptRequest, rejectRequest } from "../../../store/modules/contact";
 import { confirmDialog } from 'primereact/confirmdialog';
 
-const ConnectionConfirm = ({ contactId, contactDetails }) => {
+const ConnectionConfirm = ({ contactId, contactDetails, title, application}) => {
   const loading = useSelector(state => state.contact.loadingContact);
   const dispatch = useDispatch()
 
@@ -34,10 +34,17 @@ const ConnectionConfirm = ({ contactId, contactDetails }) => {
     <div className="p-2"  >
       <Card >
         <div className="pd-flex p-flex-column">
-          <p>Do you accept connection request?</p>
+          <p>{title}</p>
           {loading ? <Spinner /> : <div className="d-flex p-jc-center p-ai-center ">
-            <Button loading={loading === "acceptConnectionRequest"} label="Accept" icon="pi pi-check" className='rounded-pill' onClick={handleAcceptRequest} />
+            {application === "connection request" &&
+            <>
+             <Button loading={loading === "acceptConnectionRequest"} label="Accept" icon="pi pi-check" className='rounded-pill' onClick={handleAcceptRequest} />
             <Button loading={loading === "rejectRequest"} label="Reject" icon="pi pi-times" className="p-button-danger ml-2 rounded-pill" onClick={confirmRequestRejection} />
+            </>}
+            {application === "send request" &&
+            <>
+             <Button loading={loading === "acceptConnectionRequest"} label="Send Request" className="rounded-pill on-hover" onClick={handleAcceptRequest} />
+            </>}
           </div>}
         </div>
       </Card>

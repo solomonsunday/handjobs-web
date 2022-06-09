@@ -114,7 +114,42 @@ const RecentInstantJobs = () => {
                               )} ${"..."}`}
                             </p>
                           </Link>
-                          <div className="d-flex justify-content-between">
+                          {/* <div className="d-flex justify-content-between">
+                            <div>
+                              <p className="p-pt-2 float-right">
+                                {" "}
+                                {moment(instantjob.createdAt).fromNow()}{" "}
+                              </p>
+                            </div>
+                            <div>
+                              <div>
+                                <i
+                                  className="pi pi-share-alt p-pt-2 icon-size"
+                                  data-id={instantjob.id}
+                                  onClick={handleShareButton}
+                                >
+                                  {" "}
+                                  Share
+                                </i>
+                              </div>
+                              <span
+                                className={
+                                  copyAlert === instantjob.id
+                                    ? "job-copyModalAlert--active"
+                                    : "job-copyModalAlert"
+                                }
+                              >
+                                Link copied
+                              </span>
+                            </div>
+                          </div> */}
+                        </small>
+                      </div>
+                      <div className="col-3">
+                        </div>
+                      <div className="col-9">
+                        <small>
+                        <div className="d-flex justify-content-between">
                             <div>
                               <p className="p-pt-2 float-right">
                                 {" "}
@@ -143,8 +178,8 @@ const RecentInstantJobs = () => {
                               </span>
                             </div>
                           </div>
-                        </small>
-                      </div>
+</small>
+</div>
                       <hr />
                     </div>
                   </div>

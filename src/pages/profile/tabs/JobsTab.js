@@ -93,8 +93,8 @@ const JobsTab = () => {
                           </div>
                           <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Location : </p></div>  <div className='col-md-10'> <p>{jobApplied.location} </p> </div>
                           <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize"> Description: </p></div>  <div className='col-md-10'> <p>{jobApplied.description} </p> </div>
-                          <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Start Date  : </p></div>  <div className='col-md-3'> <p>{moment(jobApplied.startDate).format('MMMM DD, YYYY')} </p> </div>
-                          <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">End Date  : </p></div>  <div className='col-md-3'> <p>{moment(jobApplied.endDate).format('MMMM DD, YYYY')} </p> </div>
+                          <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Start Date  : </p></div>  <div className='col-md-10'> <p>{moment(jobApplied.startDate).format('MMMM DD, YYYY')} </p> </div>
+                          <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">End Date  : </p></div>  <div className='col-md-10'> <p>{moment(jobApplied.endDate).format('MMMM DD, YYYY')} </p> </div>
                         </div>
                       </small>
                       {/* </Link> */}
@@ -122,8 +122,8 @@ const JobsTab = () => {
                             <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Location : </p></div>  <div className='col-md-10'> <p>{instantjob.location} </p> </div>
                             <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Address : </p></div>  <div className='col-md-10'> <p>{instantjob.address} </p> </div>
                             <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Job Description: </p></div>  <div className='col-md-10'> <p>{instantjob.description} </p> </div>
-                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Start Date  : </p></div>  <div className='col-md-3'> <p>{moment(instantjob.startDate).format('MMMM DD, YYYY')} </p> </div>
-                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">End Date  : </p></div>  <div className='col-md-3'> <p>{moment(instantjob.endDate).format('MMMM DD, YYYY')} </p> </div>
+                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Start Date  : </p></div>  <div className='col-md-10'> <p>{moment(instantjob.startDate).format('MMMM DD, YYYY')} </p> </div>
+                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">End Date  : </p></div>  <div className='col-md-10'> <p>{moment(instantjob.endDate).format('MMMM DD, YYYY')} </p> </div>
                           </div>
                         </small>
                       </Link>

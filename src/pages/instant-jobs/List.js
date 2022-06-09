@@ -151,7 +151,7 @@ const InstantJobs = () => {
                                     Start Date :{" "}
                                   </p>
                                 </div>{" "}
-                                <div className="col-md-3">
+                                <div className="col-md-10">
                                   {" "}
                                   <p>
                                     {moment(instantjob.startDate).format(
@@ -165,7 +165,7 @@ const InstantJobs = () => {
                                     End Date :{" "}
                                   </p>
                                 </div>{" "}
-                                <div className="col-md-3">
+                                <div className="col-md-10">
                                   {" "}
                                   <p>
                                     {moment(instantjob.endDate).format(

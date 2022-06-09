@@ -88,10 +88,16 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                     <div>
                         <Navbar.Collapse id="responsive-navbar-nav" className="brown-color text-center">
                             <Nav className="me-auto text-align-sm-center">
-                                <Nav.Link className="text-white" href="/posts">
+                                <Nav.Link className="text-white" href="/dashboard">
                                     <i className="pi pi-home itemIcon-appNavbar" style={{ 'fontSize': '1.5em' }} />
                                     <div className="itemTitle-appNavbar mx-3">
                                         Home
+                                    </div>
+                                </Nav.Link>
+                                <Nav.Link className="text-white" href="/posts">
+                                    <i className="pi pi-comments itemIcon-appNavbar" style={{ 'fontSize': '1.5em' }} />
+                                    <div className="itemTitle-appNavbar mx-3">
+                                        Posts
                                     </div>
                                 </Nav.Link>
                                 <Nav.Link className="text-white" href="/instant-jobs">

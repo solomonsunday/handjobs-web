@@ -126,6 +126,17 @@ const ApplicantProfile = () => {
             <ConnectionConfirm
               contactId={profileInfo.id}
               contactDetails={profileInfo}
+              title= "Do you accept connection request?"
+              application="connection request"
+            />
+          )}
+
+          {isRequestConnection !== "1" && (
+            <ConnectionConfirm
+              contactId={profileInfo.id}
+              contactDetails={profileInfo}
+              title= "Do you want to connect?"
+              application="send request"
             />
           )}
           <div className="flex-shrink-0">
