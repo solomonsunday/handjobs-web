@@ -126,7 +126,7 @@ const Create = () => {
                     }
                     <span className="p-ml-2" title="View user's profile">
                       <span className="p-card-title contacts-contactHeader p-mb-0">
-                        <Link to={`/applicant/${user.id}`}><span className="p-mr-2 app-color">
+                        <Link to={`/applicant/${user.id}?request-connection=2`}><span className="p-mr-2 app-color">
                           {`${capitalizeFirstLetter(user?.firstName)} ${capitalizeFirstLetter(user?.lastName)}`}
                         </span></Link>
                         {

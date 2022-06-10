@@ -58,6 +58,8 @@ const ApplicantProfile = () => {
     "request-connection"
   );
 
+
+
   const handleInfoTab = () => {
     setIsHideReview(true);
     setIsShowInfo(true);
@@ -131,12 +133,20 @@ const ApplicantProfile = () => {
             />
           )}
 
-          {isRequestConnection !== "1" && (
+          {isRequestConnection === "2" && (
             <ConnectionConfirm
               contactId={profileInfo.id}
               contactDetails={profileInfo}
-              title= "Do you want to connect?"
+              title= "Do you want to connect with this user?"
               application="send request"
+            />
+          )}
+          {isRequestConnection === "3" && (
+            <ConnectionConfirm
+              contactId={profileInfo.id}
+              contactDetails={profileInfo}
+              title= "Do you want to accept applicant?"
+              application="accept applicant"
             />
           )}
           <div className="flex-shrink-0">

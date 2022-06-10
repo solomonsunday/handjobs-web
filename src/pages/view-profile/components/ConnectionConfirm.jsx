@@ -45,6 +45,11 @@ const ConnectionConfirm = ({ contactId, contactDetails, title, application}) => 
             <>
              <Button loading={loading === "acceptConnectionRequest"} label="Send Request" className="rounded-pill on-hover" onClick={handleAcceptRequest} />
             </>}
+            {application === "accept applicant" &&
+            <>
+             <Button loading={loading === "acceptConnectionRequest"} label="Accept" icon="pi pi-check" className='rounded-pill' onClick={handleAcceptRequest} />
+            <Button loading={loading === "rejectRequest"} label="Reject" icon="pi pi-times" className="p-button-danger ml-2 rounded-pill" onClick={confirmRequestRejection} />
+            </>}
           </div>}
         </div>
       </Card>
