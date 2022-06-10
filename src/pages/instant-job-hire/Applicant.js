@@ -55,6 +55,7 @@ const Applicant = (props) => {
 
 
     const acceptHandler = (id) => {
+        console.log({id})
         dispatch(acceptApplicant(id));
         // window.location.reload();
 
