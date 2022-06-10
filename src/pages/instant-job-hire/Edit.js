@@ -90,7 +90,7 @@ const Edit = (props) => {
             setValue("endDate", itemToEdit.endDate);
             setValue("startDate", itemToEdit.startDate);
             setValue("description", itemToEdit.description);
-            setValue("staet", itemToEdit.state);
+            setValue("state", itemToEdit.state);
             setValue("lga", itemToEdit.lga);
         }
     }, [instantjob, itemToEdit])
@@ -461,7 +461,7 @@ const Edit = (props) => {
                                                             const value = new Date(e.value).toISOString();
                                                             setValue(inputName, value, { shouldValidate: true });
                                                         }}
-                                                        name="startDate"
+                                                        // name="startDate"
                                                         {...register("startDate", { required: `Start date is required` })}
                                                     />
                                                     {errors.startDate && <span className="text-danger font-weight-bold "> <p>{errors.startDate.message}</p>
@@ -485,7 +485,8 @@ const Edit = (props) => {
                                                             const value = new Date(e.value).toISOString();
                                                             setValue(inputName, value, { shouldValidate: true });
                                                         }}
-                                                        name="endDate"{...register("endDate", { required: `* End date is required` })}
+                                                        // name="endDate"
+                                                        {...register("endDate", { required: `* End date is required` })}
                                                     />
                                                     {errors.endDate && (<span className="text-danger font-weight-bold">&nbsp; {errors.endDate.message}</span>)}
                                                 </div>
@@ -509,7 +510,7 @@ const Edit = (props) => {
                                                 <div className="p-field">
                                                     <label htmlFor="description"> Description <span className='text-danger'>*</span></label>
                                                     <InputTextarea
-                                                        defaultValue={desc}
+                                                        // defaultValue={desc}
                                                         // onChange={(e) => setDesc(e.target.value)}
                                                         rows={3}
                                                         cols={30}
