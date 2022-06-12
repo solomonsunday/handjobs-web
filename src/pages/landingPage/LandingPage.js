@@ -290,7 +290,6 @@ const LandingPage = () => {
                           })}
                           onChange={handleServiceGroupChange}
                         />
-
                         {errors.service && (
                           <span className="text-danger font-weight-bold ">
                             {" "}
