@@ -9,28 +9,27 @@ import SectionHeader from "./SectionHeader";
 import { Dropdown } from "primereact/dropdown";
 import { Calendar } from "primereact/calendar";
 import { loadCountry, loadLga, loadStates } from "store/modules/location";
-import { ACCOUNT_TYPE } from 'constants/accountType';
-import agentService from 'services/agent.service';
+import { ACCOUNT_TYPE } from "constants/accountType";
+import agentService from "services/agent.service";
 
 const corporateProfessions = [
-  { name: 'Software Developer', code: 'SD' },
-  { name: 'Doctor', code: 'DR' },
-  { name: 'Lawyer', code: 'LY' },
-  { name: 'Structural Engineer', code: 'SE' },
-  { name: 'Mechanical Engineer', code: 'ME' }
+  { name: "Software Developer", code: "SD" },
+  { name: "Doctor", code: "DR" },
+  { name: "Lawyer", code: "LY" },
+  { name: "Structural Engineer", code: "SE" },
+  { name: "Mechanical Engineer", code: "ME" },
 ];
 
 const artisanProfessions = [
-  { name: 'Stylist', code: 'ST' },
-  { name: 'Plumbing', code: 'DR' },
-  { name: 'Electrican', code: 'EL' },
-  { name: 'Mechanic', code: 'ME' },
-  { name: 'Dry-Cleaner', code: 'DC' },
-  { name: 'Cobbler', code: 'CL' }
+  { name: "Stylist", code: "ST" },
+  { name: "Plumbing", code: "DR" },
+  { name: "Electrican", code: "EL" },
+  { name: "Mechanic", code: "ME" },
+  { name: "Dry-Cleaner", code: "DC" },
+  { name: "Cobbler", code: "CL" },
 ];
 
 const PersonalInfoForm = ({ data, closeEditMode }) => {
-
   const accountType = agentService.Auth.current()?.accountType;
 
   const [selectedProf, setSelectedProf] = useState(null);
@@ -46,12 +45,12 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
     stateId: "",
     city: "",
     lgaId: "",
-    profession: ""
+    profession: "",
   });
   const loading = useSelector((state) => state.account.submitting);
-  const countries = useSelector(state => state.location.countries);
-  const states = useSelector(state => state.location.states);
-  const lgas = useSelector(state => state.location.lgas);
+  const countries = useSelector((state) => state.location.countries);
+  const states = useSelector((state) => state.location.states);
+  const lgas = useSelector((state) => state.location.lgas);
   const dispatch = useDispatch();
   const {
     register,
@@ -61,27 +60,29 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
     formState: { errors },
   } = useForm({ mode: "onChange", reValidateMode: "onChange" });
 
-  const [countryObj, setCountryObj] = useState(null)
-  const [stateObj, setStateObj] = useState(null)
-  const [lgaObj, setLgaObj] = useState(null)
+  const [countryObj, setCountryObj] = useState(null);
+  const [stateObj, setStateObj] = useState(null);
+  const [lgaObj, setLgaObj] = useState(null);
 
   useEffect(() => {
-    dispatch(loadCountry())
-  }, [])
+    dispatch(loadCountry());
+  }, []);
 
   useEffect(() => {
     if (countries) {
-      const countryObj = data.country ? countries.find(country => country.name === data.country) : null;
+      const countryObj = data.country
+        ? countries.find((country) => country.name === data.country)
+        : null;
 
       dispatch(loadStates(countryObj?.id));
       setPersonalProfile({
         ...personalProfile,
-        dateOfBirth: data.dateOfBirth === null ? null : new Date(data.dateOfBirth),
-        country: countryObj
-      })
+        dateOfBirth:
+          data.dateOfBirth === null ? null : new Date(data.dateOfBirth),
+        country: countryObj,
+      });
       setValue("country", countryObj?.name);
       // setCountryObj(countryObj)
-
 
       // // setCountryId(countryId)
 
@@ -91,27 +92,31 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
 
   useEffect(() => {
     if (states) {
-      const stateObj = data.state ? states.find(state => state.name === data.state) : null
-      console.log(data, "data")
+      const stateObj = data.state
+        ? states.find((state) => state.name === data.state)
+        : null;
+      console.log(data, "data");
 
       setPersonalProfile({
         ...personalProfile,
-        state: stateObj
-      })
-      setValue("state", stateObj?.name)
-      setStateObj(stateObj)
-      dispatch(loadLga(stateObj?.id))
+        state: stateObj,
+      });
+      setValue("state", stateObj?.name);
+      setStateObj(stateObj);
+      dispatch(loadLga(stateObj?.id));
     }
-  }, [states])
+  }, [states]);
 
   useEffect(() => {
     if (lgas) {
-      const lgaObj = data.lga ? lgas.find(lga => lga.name === data.lga) : null;
+      const lgaObj = data.lga
+        ? lgas.find((lga) => lga.name === data.lga)
+        : null;
       setPersonalProfile({ ...personalProfile, lga: lgaObj });
-      setValue('lga', lgaObj?.name);
-      setLgaObj(lgaObj)
+      setValue("lga", lgaObj?.name);
+      setLgaObj(lgaObj);
     }
-  }, [lgas])
+  }, [lgas]);
 
   useEffect(() => {
     if (data !== null) {
@@ -122,9 +127,9 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
         otherName: data.otherName || "Berner",
         dateOfBirth: new Date(data.dateOfBirth),
         city: data.city,
-        country: countries.find(country => country.name === data.country),
-        state: states.find(state => state.name === data.state),
-        lga: lgas.find(lga => lga.name === data.lga),
+        country: countries.find((country) => country.name === data.country),
+        state: states.find((state) => state.name === data.state),
+        lga: lgas.find((lga) => lga.name === data.lga),
         address: data.address,
         profession: data.profession,
       });
@@ -137,9 +142,8 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
       setValue("state", data.state);
       setValue("country", data.country);
       setValue("lga", data.country);
-      setValue("address", data.address || '');
-      setValue("profession", data.profession || '');
-
+      setValue("address", data.address || "");
+      setValue("profession", data.profession || "");
     }
   }, [data]);
 
@@ -148,12 +152,12 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
       let conuntryId = e.target.value.id;
       dispatch(loadStates(conuntryId));
     }
-  }
+  };
 
-  let userprofession = '';
+  let userprofession = "";
   const handleProfChange = (e) => {
     const { name, value } = e.target;
-    console.log(e.target.value.name, "v values")
+    console.log(e.target.value.name, "v values");
     userprofession = e.target.value.name;
 
     setSelectedProf(e.target.value);
@@ -166,7 +170,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
       let stateId = e.target.value.id;
       dispatch(loadLga(stateId));
     }
-  }
+  };
 
   const handleDateOfBirth = (e) => {
     const inputName = "dateOfBirth";
@@ -178,8 +182,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
       [inputName]: e.value,
     });
     setValue(inputName, value, { shouldValidate: true });
-  }
-
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -198,9 +201,10 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
     personalProfile.stateId = personalProfile.state.id;
     personalProfile.lgaId = personalProfile.lga.id;
     personalProfile.profession = personal.profession.name;
-    console.log(personalProfile, "personalProfile")
+    console.log(personalProfile, "personalProfile");
+    // console.log('personalProfile', personalProfile)
     dispatch(updatePersonalProfile(personalProfile));
-  }
+  };
 
   return (
     <>
@@ -263,7 +267,6 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                   placeholder="Last Name"
                   value={personalProfile.lastName}
                   inputChange={handleChange}
-                  register={register}
                 />
               </div>
               {/* <div className="p-field p-col-12 p-md-6">
@@ -302,7 +305,20 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                     </span>
                   )}
                 </label>
-                <Calendar
+                <InputField
+                  name="dateOfBirth"
+                  register={register}
+                  id="dateOfBirth"
+                  type="date"
+                  inputLabel="Date Of Birth"
+                  className="inputField"
+                  placeholder=""
+                  value={new Date(
+                    personalProfile.dateOfBirth
+                  ).toLocaleDateString("en-CA")}
+                  inputChange={handleChange}
+                />
+                {/* <Calendar
                   id="dateOfBirth"
                   type="date"
                   mask="99/99/9999"
@@ -316,7 +332,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                   onSelect={handleDateOfBirth}
                   onChange={handleDateOfBirth}
                 // yearNavigator
-                />
+                /> */}
               </div>
               <div className="p-field p-col-12 p-md-6">
                 <label className="inputLabel" htmlFor="city">
@@ -338,19 +354,17 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                   id="country"
                   name="countryId"
                   value={personalProfile.country}
-                  {...register("country",
-                    {
-                      required: `Country is required`
-                    }
-                  )}
+                  {...register("country", {
+                    required: `Country is required`,
+                  })}
                   onChange={(e) => {
-                    handleChange(e)
+                    handleChange(e);
                     handleCountryChange(e);
                   }}
                   className="form-control"
                 />
               </div>
-              {accountType === ACCOUNT_TYPE.ARTISAN ?
+              {accountType === ACCOUNT_TYPE.ARTISAN ? (
                 <div className="p-field p-col-12 p-md-6">
                   <label className="inputLabel" htmlFor="profession">
                     Professsion <span className="text-danger"> *</span>
@@ -367,38 +381,43 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                       optionLabel="name"
                       editable
                       value={personalProfile.profession}
-                      placeholder='Profession'
-                      {...register("profession", { required: "Please select your Profession" })}
+                      placeholder="Profession"
+                      {...register("profession", {
+                        required: "Please select your Profession",
+                      })}
                       id="profession"
                       name="profession"
                       onChange={handleProfChange}
                     />
-
                   </div>
-                </div> : accountType === ACCOUNT_TYPE.JOB_SEEKER ?
-                  <div className="p-field p-col-12 p-md-6">
-                    <label className="inputLabel" htmlFor="profession">
-                      Professsion <span className="text-danger"> *</span>
-                      {errors.profession && (
-                        <span className="text-danger font-weight-bold">
-                          &nbsp; {errors.profession.message}
-                        </span>
-                      )}
-                    </label>
-                    <Dropdown
-                      value={selectedProf}
-                      options={corporateProfessions}
-                      optionLabel="name"
-                      editable
-                      placeholder='Profession'
-                      {...register("profession", { required: "Please select your Profession" })}
-                      id="profession"
-                      name="profession"
-                      onChange={handleProfChange}
-                    />
-                  </div> : ""
-
-              }
+                </div>
+              ) : accountType === ACCOUNT_TYPE.JOB_SEEKER ? (
+                <div className="p-field p-col-12 p-md-6">
+                  <label className="inputLabel" htmlFor="profession">
+                    Professsion <span className="text-danger"> *</span>
+                    {errors.profession && (
+                      <span className="text-danger font-weight-bold">
+                        &nbsp; {errors.profession.message}
+                      </span>
+                    )}
+                  </label>
+                  <Dropdown
+                    value={selectedProf}
+                    options={corporateProfessions}
+                    optionLabel="name"
+                    editable
+                    placeholder="Profession"
+                    {...register("profession", {
+                      required: "Please select your Profession",
+                    })}
+                    id="profession"
+                    name="profession"
+                    onChange={handleProfChange}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
               <div className="p-field p-col-12 p-md-6">
                 <label className="inputLabel" htmlFor="state">
                   State <span className="text-danger"> *</span>
@@ -419,11 +438,9 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                   id="stateList"
                   name="stateId"
                   value={personalProfile.state}
-                  {...register("state",
-                    {
-                      required: `State is required`
-                    }
-                  )}
+                  {...register("state", {
+                    required: `State is required`,
+                  })}
                   onChange={(e) => {
                     handleChange(e);
                     handleStateChange(e);
@@ -451,13 +468,11 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                   id="lgaList"
                   name="lgaId"
                   value={personalProfile.lga}
-                  {...register("lga",
-                    {
-                      required: `LGA is required`
-                    }
-                  )}
+                  {...register("lga", {
+                    required: `LGA is required`,
+                  })}
                   onChange={(e) => {
-                    handleChange(e)
+                    handleChange(e);
                   }}
                   className="form-control"
                 />
@@ -500,7 +515,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                   })}
                   name="address"
                   onChange={handleChange}
-                  value={personalProfile.address || ''}
+                  value={personalProfile.address || ""}
                 />
               </div>
             </div>
