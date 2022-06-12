@@ -368,6 +368,7 @@ const ServiceGroup = {
 
 const Service = {
   save: (data) => requests.post("/service", data),
+  loadServiceGroup: () => requests.get("/service-group"),
   load: (page, limit, search) =>
     requests.get(
       `/service?${new URLSearchParams({
@@ -376,6 +377,7 @@ const Service = {
         search: search,
       }).toString()}`
     ),
+  loadbyid: (id) => requests.get(`/service/${id}`),
   get: () => requests.get(`/service`),
   view: (id) => requests.get(`/service/${id}`),
   edit: (id, data) => requests.put(`/service/${id}`, data),

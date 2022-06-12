@@ -11,11 +11,15 @@ const initialState = {
   loading: false,
   service: null,
   services: [],
+  servicesById: [],
+  servicesGroup: [],
 };
 
 // Action types
 const UPDATE_USER_SERVICE = "app/service/UPDATE_USER_SERVICE ";
+const LOAD_SERVICE_GROUP = "app/service/UPDATE_SERVICE_GROUP";
 const LOAD_USER_SERVICE = "app/service/LOAD_USER_SERVICE";
+const LOAD_SERVICES_BY_ID = "LOAD_SERVICE_BY_ID";
 const DELETE_USER_SERVICE = "DELETE_USER_SERVICE";
 const LOADING = "LOADING";
 const USER_SERVICE_ERROR = "USER_SERVICE_ERROR";
@@ -29,6 +33,16 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         service: action.payload,
         updatedOrDeleted: true,
+      };
+    case LOAD_SERVICES_BY_ID:
+      return {
+        ...state,
+        servicesById: action.payload,
+      };
+    case LOAD_SERVICE_GROUP:
+      return {
+        ...state,
+        servicesGroup: action.payload,
       };
     case LOAD_USER_SERVICE:
       return {
@@ -70,6 +84,9 @@ export function loading() {
 export function serviceLoaded(data) {
   return { type: LOAD_USER_SERVICE, payload: data };
 }
+export function serviceGroupsLoaded(data) {
+  return { type: LOAD_SERVICE_GROUP, payload: data };
+}
 export function actionGetServices(payload) {
   return { type: GET_SERVICES, payload };
 }
@@ -77,17 +94,29 @@ export function actionGetServices(payload) {
 export function actionCreateService(data) {
   return { type: UPDATE_USER_SERVICE, payload: data };
 }
+
+export function servicesById(data) {
+  return { type: LOAD_SERVICES_BY_ID, payload: data };
+}
 export function actionDeleteService() {
   return { type: DELETE_USER_SERVICE };
 }
 export function serviceError() {
   return { type: USER_SERVICE_ERROR };
 }
+
 // Actions
 export function loadServices() {
   return (dispatch) => {
     return agent.Service.load().then((response) => {
       dispatch(serviceLoaded(response));
+    });
+  };
+}
+export function loadServiceGroups() {
+  return (dispatch) => {
+    return agent.Service.loadServiceGroup().then((response) => {
+      dispatch(serviceGroupsLoaded(response));
     });
   };
 }
@@ -123,6 +152,22 @@ export function createService(service) {
     );
   };
 }
+
+export const loadServicesById = (id) => (dispatch) => {
+  dispatch(loading(true));
+  return agent.Service.loadbyid(id).then(
+    (response) => {
+      dispatch(servicesById(response));
+      dispatch(loading(false));
+    },
+    (error) => {
+      // handle error
+      dispatch(loading(true));
+      dispatch(showMessage({ type: "error", message: error }));
+      dispatch(loading(false));
+    }
+  );
+};
 
 export function deleteService(id) {
   return (dispatch) => {
