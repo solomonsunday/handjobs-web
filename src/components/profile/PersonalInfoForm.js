@@ -193,6 +193,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
 
   const personalInfoSubmit = (personal) => {
     personalProfile.profession = selectedProf;
+    // console.log('personalProfile', personalProfile)
     dispatch(updatePersonalProfile(personalProfile));
   }
 
@@ -257,7 +258,6 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                   placeholder="Last Name"
                   value={personalProfile.lastName}
                   inputChange={handleChange}
-                  register={register}
                 />
               </div>
               {/* <div className="p-field p-col-12 p-md-6">
@@ -295,8 +295,20 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                       &nbsp; {errors.dateOfBirth.message}
                     </span>
                   )}
+
                 </label>
-                <Calendar
+                <InputField
+                  name="dateOfBirth"
+                  register={register}
+                  id="dateOfBirth"
+                  type="date"
+                  inputLabel="Date Of Birth"
+                  className="inputField"
+                  placeholder=""
+                  value={new Date(personalProfile.dateOfBirth).toLocaleDateString('en-CA')}
+                  inputChange={handleChange}
+                />
+                {/* <Calendar
                   id="dateOfBirth"
                   type="date"
                   mask="99/99/9999"
@@ -310,7 +322,7 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                   onSelect={handleDateOfBirth}
                   onChange={handleDateOfBirth}
                 // yearNavigator
-                />
+                /> */}
               </div>
               <div className="p-field p-col-12 p-md-6">
                 <label className="inputLabel" htmlFor="city">
