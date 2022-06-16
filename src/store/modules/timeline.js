@@ -15,7 +15,8 @@ const timeline = {
   totalPostCount: 0,
   PostCountByUser: 0,
   error: null,
-  commentIds: {}
+  loadingStatus: false,
+  commentIds: {},
 };
 
 // Action types
@@ -32,6 +33,7 @@ const DISLIKE_POST = "DISLIKE_POST";
 const LOAD_COMMENT_IDS_BY_POSTID = "LOAD_COMMENT_IDS_BY_POSTID";
 const LIKE_POST = "LIKE_POST";
 const ERROR = "ERROR";
+const LOADING_STATUS = "LOADING_STATUS";
 const ADD_COMMENT_ID = "ADD_COMMENT_ID";
 const REMOVE_COMMENT_ID = "REMOVE_COMMENT_ID";
 
@@ -42,23 +44,25 @@ export default function reducer(state = timeline, action = {}) {
       return {
         ...state,
         loadingPosts: action.payload,
-        error: null
+        error: null,
+      };
+    case LOADING_STATUS:
+      return {
+        ...state,
+        loadingStatus: action.payload,
+        error: null,
       };
     case LOAD_POSTS:
-      const { data, meta } = action.payload
+      const { data, meta } = action.payload;
       const uniquePostIds = [];
       if (state?.loadingPosts === "loadMore") {
-        const idArray = Array.from(new Set([
-          ...state.posts.ids,
-          ...data.map(({ id }) => id),
-        ]));
-        uniquePostIds.push(...idArray)
-      }
-      else {
-        const idArray = Array.from(new Set([
-          ...data.map(({ id }) => id),
-        ]));
-        uniquePostIds.push(...idArray)
+        const idArray = Array.from(
+          new Set([...state.posts.ids, ...data.map(({ id }) => id)])
+        );
+        uniquePostIds.push(...idArray);
+      } else {
+        const idArray = Array.from(new Set([...data.map(({ id }) => id)]));
+        uniquePostIds.push(...idArray);
       }
       const normalizedPosts = data.reduce((acc, post) => {
         acc[post.id] = post;
@@ -71,7 +75,7 @@ export default function reducer(state = timeline, action = {}) {
           ids: uniquePostIds,
           data: {
             ...state.posts.data,
-            ...normalizedPosts
+            ...normalizedPosts,
           },
           meta: {
             ...meta,
@@ -86,39 +90,41 @@ export default function reducer(state = timeline, action = {}) {
         error: null,
         posts: {
           data: {
-            [action.payload.id]: action.payload
+            [action.payload.id]: action.payload,
           },
           meta: {},
-          ids: [action.payload.id]
-        }
+          ids: [action.payload.id],
+        },
       };
     case LOAD_COMMENT_IDS_BY_POSTID:
-      const commentDataInPost = action.payload
+      const commentDataInPost = action.payload;
       const postID = action.postId;
 
-      //if routing from another page, remove all comments for post else save in idArray 
-      let idArray = action.loadingType === (postID + "-loadingMoreComments") ? state.commentIds[postID] || [] : []
+      //if routing from another page, remove all comments for post else save in idArray
+      let idArray =
+        action.loadingType === postID + "-loadingMoreComments"
+          ? state.commentIds[postID] || []
+          : [];
 
-      const ids = Array.from(new Set([
-        ...idArray,
-        ...commentDataInPost.map(({ id }) => id)
-      ]));
+      const ids = Array.from(
+        new Set([...idArray, ...commentDataInPost.map(({ id }) => id)])
+      );
       return {
         ...state,
         loading: "",
         error: null,
         commentIds: {
           ...state.commentIds,
-          [postID]: ids
-        }
+          [postID]: ids,
+        },
       };
     case LIKE_POST:
       const likedPostId = action.payload.id;
       const likedPost = {
         ...state.posts.data[likedPostId],
         likes: action.payload.likes,
-        dislikes: action.payload.dislikes
-      }
+        dislikes: action.payload.dislikes,
+      };
       return {
         ...state,
         error: null,
@@ -126,8 +132,8 @@ export default function reducer(state = timeline, action = {}) {
           ...state.posts,
           data: {
             ...state.posts.data,
-            [likedPostId]: { ...likedPost }
-          }
+            [likedPostId]: { ...likedPost },
+          },
         },
       };
 
@@ -136,8 +142,8 @@ export default function reducer(state = timeline, action = {}) {
       const dislikedPost = {
         ...state.posts.data[dislikedPostId],
         likes: action.payload.likes,
-        dislikes: action.payload.dislikes
-      }
+        dislikes: action.payload.dislikes,
+      };
       return {
         ...state,
         error: null,
@@ -145,7 +151,7 @@ export default function reducer(state = timeline, action = {}) {
           ...state.posts,
           data: {
             ...state.posts.data,
-            [dislikedPostId]: { ...dislikedPost }
+            [dislikedPostId]: { ...dislikedPost },
           },
         },
       };
@@ -168,7 +174,10 @@ export default function reducer(state = timeline, action = {}) {
         PostCountByUser: action.payload,
       };
     case POSTS_EDITED:
-      const updatedPost = Object.assign({}, state.posts.data[action.payload.id]);
+      const updatedPost = Object.assign(
+        {},
+        state.posts.data[action.payload.id]
+      );
       updatedPost.title = action.payload.title;
       updatedPost.body = action.payload.body;
       updatedPost.postImage = action.payload.postImage;
@@ -179,7 +188,7 @@ export default function reducer(state = timeline, action = {}) {
           ids: [...state.posts.ids],
           data: {
             ...state.posts.data,
-            [action.payload.id]: updatedPost
+            [action.payload.id]: updatedPost,
           },
           meta: { ...state.posts.meta },
         },
@@ -194,14 +203,14 @@ export default function reducer(state = timeline, action = {}) {
           meta: {
             ...state.posts.meta,
             itemCount: state.posts.meta.itemCount + 1,
-            total: state.posts.meta.total + 1
+            total: state.posts.meta.total + 1,
           },
-        }
-      }
+        },
+      };
     case DELETE_POST:
       const deletedId = action.id;
-      const updatedIdArray = [...state.posts.ids]
-      updatedIdArray.splice(state.posts.ids.indexOf(deletedId), 1)
+      const updatedIdArray = [...state.posts.ids];
+      updatedIdArray.splice(state.posts.ids.indexOf(deletedId), 1);
       return {
         ...state,
         error: null,
@@ -210,10 +219,10 @@ export default function reducer(state = timeline, action = {}) {
           data: { ...state.posts.data },
           meta: {
             ...state.posts.meta,
-            total: state.posts.meta.total - 1
-          }
-        }
-      }
+            total: state.posts.meta.total - 1,
+          },
+        },
+      };
     case ADD_COMMENT_ID:
       const postIdToAddTo = action.postId;
       const commentIdToAdd = action.commentId;
@@ -223,31 +232,31 @@ export default function reducer(state = timeline, action = {}) {
           ...state.commentIds,
           [postIdToAddTo]: [
             commentIdToAdd,
-            ...state.commentIds[postIdToAddTo] || []
-          ]
-        }
+            ...(state.commentIds[postIdToAddTo] || []),
+          ],
+        },
       };
     case REMOVE_COMMENT_ID:
       const postIdToRemoveFrom = action.postId;
       const commentIdToRemove = action.commentId;
-      const indexOfCommentId = state.commentIds[postIdToRemoveFrom].indexOf(commentIdToRemove);
+      const indexOfCommentId =
+        state.commentIds[postIdToRemoveFrom].indexOf(commentIdToRemove);
       const updatedCommentIds = [...state.commentIds[postIdToRemoveFrom]];
-      updatedCommentIds.splice(indexOfCommentId, 1)
+      updatedCommentIds.splice(indexOfCommentId, 1);
       return {
         ...state,
         commentIds: {
           ...state.commentIds,
-          [postIdToRemoveFrom]:
-            updatedCommentIds
-        }
+          [postIdToRemoveFrom]: updatedCommentIds,
+        },
       };
 
     case ERROR:
       return {
         ...state,
         error: action.payload,
-        posts: { data: [], meta: {}, ids: [] }
-      }
+        posts: { data: [], meta: {}, ids: [] },
+      };
     default:
       return state;
   }
@@ -268,57 +277,58 @@ export const totalPostCountLoaded = (data) => ({
 });
 export const loading = (data) => ({
   type: LOADING_POSTS,
-  payload: data
+  payload: data,
+});
+export const loadingStataus = (data) => ({
+  type: LOADING_STATUS,
+  payload: data,
 });
 export const postEdited = (data) => ({
   type: POSTS_EDITED,
-  payload: data
+  payload: data,
 });
 export const postCreated = (data) => ({
   type: CREATE_POST,
-  payload: data
+  payload: data,
 });
 export const postDeleted = (data) => ({
   type: DELETE_POST,
-  id: data
+  id: data,
 });
 export const postDisliked = (data) => ({
   type: DISLIKE_POST,
-  payload: data
+  payload: data,
 });
 export const postLiked = (data) => ({
   type: LIKE_POST,
-  payload: data
+  payload: data,
 });
 export const errorCode = (data) => ({
   type: ERROR,
-  payload: data
+  payload: data,
 });
 export const loadCommentIdsByPostId = (id, data, loadingType) => ({
   type: LOAD_COMMENT_IDS_BY_POSTID,
   payload: data,
   postId: id,
-  loadingType: loadingType
+  loadingType: loadingType,
 });
 export const addCommentId = (postId, commentId) => ({
   type: ADD_COMMENT_ID,
   postId: postId,
-  commentId: commentId
+  commentId: commentId,
 });
 export const removeCommentId = (postId, commentId) => ({
   type: REMOVE_COMMENT_ID,
   postId: postId,
-  commentId: commentId
+  commentId: commentId,
 });
-
-
-
 
 // Actions
 export function createPost(post) {
-  return dispatch => {
+  return (dispatch) => {
     return agent.Post.save(post).then(
-      response => {
+      (response) => {
         //handle success
         dispatch(
           showMessage({
@@ -337,14 +347,14 @@ export function createPost(post) {
         dispatch(showMessage({ type: "error", message: error }));
       }
     );
-  }
+  };
 }
 
 export function editPost(id, post) {
-  return dispatch => {
+  return (dispatch) => {
     // dispatch(isLoading());
     return agent.Post.edit(id, post).then(
-      response => {
+      (response) => {
         //handle success
         dispatch(
           showMessage({
@@ -361,14 +371,14 @@ export function editPost(id, post) {
         dispatch(showMessage({ type: "error", message: error }));
       }
     );
-  }
+  };
 }
 
 export function loadPosts(page, take, loadingType) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(loading(loadingType));
     return agent.Post.load(page, take).then(
-      response => {
+      (response) => {
         //handle success
         // dispatch(
         //   showMessage({
@@ -379,10 +389,10 @@ export function loadPosts(page, take, loadingType) {
         // );
 
         //For when there are comments loaded in each post
-        response.data.forEach(post => {
+        response.data.forEach((post) => {
           dispatch(commentsLoaded(post.id, post.comments, post.commentCount));
           dispatch(loadCommentIdsByPostId(post.id, post.comments));
-        })
+        });
         dispatch(postsLoaded(response));
         dispatch(loading(null));
       },
@@ -392,14 +402,14 @@ export function loadPosts(page, take, loadingType) {
         dispatch(showMessage({ type: "error", message: error }));
       }
     );
-  }
+  };
 }
 
 export function loadTotalPostCount() {
-  return dispatch => {
+  return (dispatch) => {
     // dispatch(isLoading());
     return agent.Post.postCount().then(
-      response => {
+      (response) => {
         dispatch(totalPostCountLoaded(response));
       },
       (error) => {
@@ -407,14 +417,14 @@ export function loadTotalPostCount() {
         dispatch(showMessage({ type: "error", message: error }));
       }
     );
-  }
+  };
 }
 
 export function loadPostsByUserId(page, take) {
-  return dispatch => {
+  return (dispatch) => {
     // dispatch(isLoading());
     return agent.Post.loadByUserId(page, take).then(
-      response => {
+      (response) => {
         //handle success
         // dispatch(
         //   showMessage({
@@ -429,14 +439,14 @@ export function loadPostsByUserId(page, take) {
         dispatch(showMessage({ type: "error", message: error }));
       }
     );
-  }
+  };
 }
 
 export function viewPost(id, loadingType) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(loading(loadingType));
     return agent.Post.view(id).then(
-      response => {
+      (response) => {
         //handle success
         // dispatch(
         //   showMessage({
@@ -457,13 +467,13 @@ export function viewPost(id, loadingType) {
         dispatch(errorCode(error.response));
       }
     );
-  }
+  };
 }
 
 export function deletePost(id, deleteType) {
-  return dispatch => {
+  return (dispatch) => {
     return agent.Post.delete(id).then(
-      response => {
+      (response) => {
         //handle success
         dispatch(
           showMessage({
@@ -474,8 +484,7 @@ export function deletePost(id, deleteType) {
         );
         if (deleteType === "fromViewPost") {
           dispatch(push("/posts"));
-        }
-        else {
+        } else {
           dispatch(postDeleted(id));
         }
       },
@@ -487,13 +496,14 @@ export function deletePost(id, deleteType) {
         dispatch(showMessage({ type: "error", message: error }));
       }
     );
-  }
+  };
 }
 
 export function likePost(id) {
-  return dispatch => {
+  return (dispatch) => {
+    dispatch(loadingStataus(true));
     return agent.Post.like(id).then(
-      response => {
+      (response) => {
         //handle success
         dispatch(
           showMessage({
@@ -503,6 +513,7 @@ export function likePost(id) {
           })
         );
         dispatch(postLiked(response));
+        dispatch(loadingStataus(false));
       },
       (error) => {
         // handle error
@@ -510,15 +521,16 @@ export function likePost(id) {
           dispatch(postDeleted(id));
         }
         dispatch(showMessage({ type: "error", message: error }));
+        dispatch(loadingStataus(false));
       }
     );
-  }
+  };
 }
 
 export function dislikePost(id) {
-  return dispatch => {
+  return (dispatch) => {
     return agent.Post.dislike(id).then(
-      response => {
+      (response) => {
         //handle success
         dispatch(
           showMessage({
@@ -531,12 +543,12 @@ export function dislikePost(id) {
       },
       (error) => {
         // handle error
-        console.log(error.response.statusCode)
+        console.log(error.response.statusCode);
         if (error.response.statusCode === 404) {
           dispatch(postDeleted(id));
         }
         dispatch(showMessage({ type: "error", message: error }));
       }
     );
-  }
+  };
 }

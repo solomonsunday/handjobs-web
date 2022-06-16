@@ -4,18 +4,23 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./LandingPage.css";
-import { loadServiceGroups, loadServicesById } from "store/modules/service";
+import {
+  getServicesByServiceGroupId,
+  loadServiceGroups,
+  loadServicesById,
+} from "store/modules/service";
 import { Button } from "primereact/button";
+import { BsSortAlphaDown } from "react-icons/bs";
 
 const LandingPage = () => {
   const dispatch = useDispatch();
-  const servicesbyGroupID = useSelector((state) => state.service?.servicesById);
+  const servicesbyGroupID = useSelector(
+    (state) => state.service?.servicesById
+  ).data;
   const loading = useSelector((state) => state.service.loading);
   const serviceGroups = useSelector(
     (state) => state.service.servicesGroup
   ).data;
-  console.log({ serviceGroups });
-  console.log(servicesbyGroupID, "servicesbyGroupID");
 
   const {
     register,
@@ -30,6 +35,7 @@ const LandingPage = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(50);
   const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("");
   const [services, setServices] = useState([]);
   console.log({ services });
 
@@ -61,8 +67,12 @@ const LandingPage = () => {
   };
 
   const onSubmit = (data) => {
-    console.log({ data });
+    let serviceName = data.service.name;
+    dispatch(
+      getServicesByServiceGroupId(page, limit, search, sort, serviceName)
+    );
   };
+
   return (
     <>
       <header className="header">
@@ -348,18 +358,18 @@ const LandingPage = () => {
                     </div>
                   </div> */}
 
-                  <div className="button">
-                    {/* <Button
+                  <div className="max-weight">
+                    <Button
                       icon="pi pi-check"
                       iconPos="left"
                       label={loading ? "Please wait..." : "Search"}
                       id="saveButton"
                       disabled={loading}
                       type="submit"
-                    /> */}
-                    <Link className="btn green-back" to="#">
+                    />
+                    {/* <Link className="btn green-back" to="#">
                       Search
-                    </Link>
+                    </Link> */}
                   </div>
                 </form>
               </div>

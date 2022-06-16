@@ -290,15 +290,7 @@ const New = ({ mode }) => {
                                   name: "location",
                                 })}
                               />
-                              <div
-                                className="autocomplete-dropdown-container"
-                                style={{
-                                  position: "absolute",
-                                  top: "40px",
-                                  boxShadow: "1px 3px 2px #eee",
-                                  width: "100%",
-                                }}
-                              >
+                              <div className="autocomplete-dropdown-container geolocation-dropdown">
                                 {loading && <div>Loading...</div>}
                                 {suggestions.map((suggestion) => {
                                   const className = suggestion.active

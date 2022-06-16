@@ -13,11 +13,13 @@ const initialState = {
   services: [],
   servicesById: [],
   servicesGroup: [],
+  servicesByServicesName: [],
 };
 
 // Action types
 const UPDATE_USER_SERVICE = "app/service/UPDATE_USER_SERVICE ";
 const LOAD_SERVICE_GROUP = "app/service/UPDATE_SERVICE_GROUP";
+const LOAD_SERVICES_BY_SERVICE_NAME = "LOAD_SERVICES_BY_SERVICE_NAME";
 const LOAD_USER_SERVICE = "app/service/LOAD_USER_SERVICE";
 const LOAD_SERVICES_BY_ID = "LOAD_SERVICE_BY_ID";
 const DELETE_USER_SERVICE = "DELETE_USER_SERVICE";
@@ -44,6 +46,11 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         servicesGroup: action.payload,
       };
+    case LOAD_SERVICES_BY_SERVICE_NAME:
+      return {
+        ...state,
+        servicesByServicesName: action.payload,
+      };
     case LOAD_USER_SERVICE:
       return {
         ...state,
@@ -64,7 +71,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         updatedOrDeleted: false,
-        loading: true,
+        loading: false,
       };
     case USER_SERVICE_ERROR:
       return {
@@ -98,6 +105,12 @@ export function actionCreateService(data) {
 export function servicesById(data) {
   return { type: LOAD_SERVICES_BY_ID, payload: data };
 }
+export function servicesByServiceName(data) {
+  return {
+    type: LOAD_SERVICES_BY_SERVICE_NAME,
+    payload: data,
+  };
+}
 export function actionDeleteService() {
   return { type: DELETE_USER_SERVICE };
 }
@@ -125,6 +138,26 @@ export function getServices() {
   return (dispatch) => {
     return agent.Service.get().then((response) => {
       dispatch(actionGetServices(response));
+    });
+  };
+}
+
+export function getServicesByServiceGroupId(
+  page,
+  limit,
+  search,
+  sort,
+  serviceName
+) {
+  return (dispatch) => {
+    return agent.InstantJob.getInstantJobsByServices(
+      page,
+      limit,
+      search,
+      sort,
+      serviceName
+    ).then((response) => {
+      dispatch(servicesByServiceName(response));
     });
   };
 }

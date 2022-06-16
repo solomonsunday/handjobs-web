@@ -1,12 +1,12 @@
 .timeline-container {
-  background-color: #357C3C1f;
+  /* background-color: #357C3C1f; */
   padding-top: 2rem;
   min-height: 100vh;
 }
 
 .timeline-postsContainer--empty h1,
 .timeline-postsContainer--empty h5 {
-  color: #357C3C;
+  color: #357c3c;
 }
 
 .timeline-content {
@@ -15,56 +15,56 @@
 }
 
 .profile-picture-timeline {
-  border: 3px #357C3C solid;
+  border: 3px #357c3c solid;
   object-fit: cover;
-  background-color: #357C3C;
+  background-color: #357c3c;
   color: white;
   cursor: pointer;
 }
 
 .timeline-profilePicture,
-.profilepic-startpost-timeline>img {
-  border: 4px #357C3C solid;
+.profilepic-startpost-timeline > img {
+  border: 4px #357c3c solid;
   color: white;
   object-fit: cover;
-  background-color: #357C3C;
+  background-color: #357c3c;
   cursor: pointer;
 }
 
 .timeline-emptyProfilePic {
-  border: 5px #357C3C solid;
+  border: 5px #357c3c solid;
   width: fit-content;
   margin: auto;
   font-size: 3rem;
   border-radius: 50%;
   padding: 0.8rem;
-  color: #357C3C;
+  color: #357c3c;
   font-weight: 700;
   background-color: white;
   margin-bottom: 0.5rem;
 }
 
 .timeline-emptyProfilePic-medium {
-  border: 4px #357C3C solid;
+  border: 4px #357c3c solid;
   width: fit-content;
   margin: auto;
   font-size: 1.87rem;
   border-radius: 50%;
   padding: 1rem;
-  color: #357C3C;
+  color: #357c3c;
   font-weight: 700;
   background-color: white;
   margin-bottom: 0.5rem;
 }
 
 .timeline-emptyProfilePic-small {
-  border: 4px #357C3C solid;
+  border: 4px #357c3c solid;
   width: fit-content;
   margin: auto;
   font-size: 1.87rem;
   border-radius: 50%;
   padding: 1rem;
-  color: #357C3C;
+  color: #357c3c;
   font-weight: 700;
   background-color: white;
   margin-bottom: 0.5rem;
@@ -74,7 +74,7 @@
 :root {
   --star-size: 25px;
   --star-color: rgb(180, 175, 175);
-  --star-background: #03045E;
+  --star-background: #03045e;
 }
 
 .stars {
@@ -86,14 +86,17 @@
 }
 
 .stars:before {
-  content: '★★★★★';
+  content: "★★★★★";
   letter-spacing: 3px;
-  background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+  background: linear-gradient(
+    90deg,
+    var(--star-background) var(--percent),
+    var(--star-color) var(--percent)
+  );
   background-clip: content-box;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 
 /* rating */
 
@@ -103,22 +106,22 @@
 }
 
 .timeline-dropdownItem:hover {
-  background-color: #357C3C;
+  background-color: #357c3c;
   color: white;
 }
 
 .postInputButton {
   width: 100%;
-  background-color: #357C3C25;
+  background-color: #357c3c25;
   border-radius: 15px;
-  border-color: #357C3C25;
+  border-color: #357c3c25;
 }
 
 .postInputButton:hover {
-  background-color: #357C3C21 !important;
+  background-color: #357c3c21 !important;
 }
 
-.postInputButton>.p-button-label {
+.postInputButton > .p-button-label {
   flex: none;
   color: #495057;
 }
@@ -143,23 +146,23 @@
 }
 
 .timeline-leftpanel-connection h6 {
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 .timeline-companyName {
-  color: #357C3C;
+  color: #357c3c;
   font-weight: 700;
 }
 
 .suggestion-button-timeline {
   color: #00000070;
-  background: #357C3C00;
+  background: #357c3c00;
   border: 2px #00000070 solid;
   width: 2rem !important;
   height: 2rem;
 }
 
-.suggestion-button-timeline>.pi-plus {
+.suggestion-button-timeline > .pi-plus {
   font-weight: 600;
   font-size: 0.85rem;
 }
@@ -167,7 +170,7 @@
 /* left panel */
 
 .cardtitle-timeline {
-  border-bottom: 1px solid #357C3C57;
+  border-bottom: 1px solid #357c3c57;
   font-size: 1rem !important;
   padding: 0.7rem 1rem;
 }
@@ -190,7 +193,7 @@
   font-size: 0.7rem !important;
 }
 
-.timeline-cardtitle-posttime>.pi-clock {
+.timeline-cardtitle-posttime > .pi-clock {
   padding-bottom: 0.05rem;
 }
 
@@ -207,18 +210,18 @@ a .cardsubtitle-timeline {
 
 /* Recent Jobs sidepanel on hover */
 .p-card-body-timeline:hover {
-  background-color: #357C3C;
+  background-color: #357c3c;
 }
 
-.p-card-body-timeline:hover>.jobDescription-timeline,
-.p-card-body-timeline:hover>.cardsubtitle-timeline,
+.p-card-body-timeline:hover > .jobDescription-timeline,
+.p-card-body-timeline:hover > .cardsubtitle-timeline,
 .p-card-body-timeline:hover .timeline-seemore {
   color: white;
 }
 
 /* Recent Jobs sidepanel on hover */
 .timeline-seemore {
-  color: #357C3C;
+  color: #357c3c;
   font-weight: 600;
 }
 
@@ -237,7 +240,7 @@ a .cardsubtitle-timeline {
 }
 
 .skilltag-timeline {
-  background-color: #357C3C3f;
+  background-color: #357c3c3f;
   color: black;
   padding: 0.3rem 0.5rem;
   border-radius: 15px;
@@ -266,21 +269,21 @@ a .cardsubtitle-timeline {
 }
 
 .post-statusbar-content:hover {
-  color: #6FCF97;
+  color: #6fcf97;
   transition: none;
 }
 
 .timeline-postShare-button {
   background-color: white;
   border: none;
-  color: #357C3C;
+  color: #357c3c;
   font-weight: 600;
 }
 
 .timeline-copyModalAlert {
   z-index: 1;
   position: absolute;
-  background-color: #357C3C;
+  background-color: #357c3c;
   right: -25px;
   top: 45px;
   padding: 7px;
@@ -292,7 +295,7 @@ a .cardsubtitle-timeline {
 .timeline-copyModalAlert--active {
   z-index: 1;
   position: absolute;
-  background-color: #357C3C;
+  background-color: #357c3c;
   right: -25px;
   top: 45px;
   padding: 7px;
@@ -302,7 +305,7 @@ a .cardsubtitle-timeline {
   opacity: 1;
 }
 
-.timeline-postShare-button>.p-button-label:hover {
+.timeline-postShare-button > .p-button-label:hover {
   text-decoration: underline;
   cursor: pointer;
 }
@@ -310,17 +313,17 @@ a .cardsubtitle-timeline {
 /* Modals */
 .viewerGroups-dropdown {
   margin-top: 0.5rem;
-  background-color: #357C3C25;
+  background-color: #357c3c25;
   border-radius: 7px;
 }
 
-.viewerGroups-dropdown>.p-dropdown-label {
+.viewerGroups-dropdown > .p-dropdown-label {
   font-size: 0.8rem !important;
   font-weight: 600;
   padding: 0.3rem 0.5rem;
 }
 
-.viewerGroups-dropdown>.p-dropdown-trigger>.p-dropdown-trigger-icon {
+.viewerGroups-dropdown > .p-dropdown-trigger > .p-dropdown-trigger-icon {
   font-size: 0.8rem;
   width: 1rem;
 }
@@ -330,7 +333,7 @@ a .cardsubtitle-timeline {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background-color: #357C3C;
+  background-color: #357c3c;
 }
 
 .postInputArea:hover {
@@ -341,13 +344,13 @@ a .cardsubtitle-timeline {
 .createPostModal-title {
   font-size: 14px;
   font-weight: 600;
-  color: #357C3C;
+  color: #357c3c;
   margin-bottom: 0.25rem;
 }
 
 .postTitle-container {
   margin-top: 1rem;
-  border: 1px solid #357C3C;
+  border: 1px solid #357c3c;
   width: fit-content;
 }
 
@@ -367,22 +370,22 @@ a .cardsubtitle-timeline {
 }
 
 .addToPost-icon {
-  border: 3px solid #357C3C;
+  border: 3px solid #357c3c;
   border-radius: 100%;
   padding: 0.25rem;
   background-color: white;
-  color: #357C3C;
+  color: #357c3c;
   font-weight: 700;
   cursor: pointer;
 }
 
 .timelineModal-Input {
-  background-color: #357C3C26;
-  border: 1px solid #357C3C;
+  background-color: #357c3c26;
+  border: 1px solid #357c3c;
   border-radius: 10px;
 }
 
-.timelineModal-Input>.p-editor-container>.p-editor-toolbar {
+.timelineModal-Input > .p-editor-container > .p-editor-toolbar {
   background-color: inherit;
 }
 
@@ -406,7 +409,7 @@ a .cardsubtitle-timeline {
 .TextEditor-container-timeline .ql-snow.ql-toolbar button.ql-active .ql-stroke,
 .p-editor-container .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
 .p-editor-container .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke {
-  stroke: #6FCF97;
+  stroke: #6fcf97;
 }
 
 /* text editor picker */
@@ -417,7 +420,7 @@ a .cardsubtitle-timeline {
 }
 
 .timelineMediaItem-container {
-  background-color: #357C3C;
+  background-color: #357c3c;
   border-radius: 10px;
   height: 10rem;
   display: flex;
@@ -438,7 +441,6 @@ a .cardsubtitle-timeline {
   color: red !important;
 }
 
-
 .timelineMediaItem {
   height: 9rem;
   width: 100%;
@@ -448,7 +450,7 @@ a .cardsubtitle-timeline {
 .timeline-postImage {
   object-fit: contain;
   height: 17rem;
-  background-color: #357C3C;
+  background-color: #357c3c;
   cursor: pointer;
 }
 
@@ -474,22 +476,21 @@ a .cardsubtitle-timeline {
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1168px) {
-  .profilepic-startpost-timeline>i {
+  .profilepic-startpost-timeline > i {
     font-size: 20px;
   }
 
-  .profilepic-startpost-timeline>img {
+  .profilepic-startpost-timeline > img {
     width: 50px;
     height: 50px;
   }
 }
 
 @media only screen and (max-width: 550px) {
-  .profilepic-startpost-timeline>img {
+  .profilepic-startpost-timeline > img {
     width: 50px;
     height: 50px;
   }
-
 
   .timeline-emptyProfilePic-small {
     font-size: 1.2rem;
@@ -516,7 +517,7 @@ a .cardsubtitle-timeline {
     left: -15px;
   }
 
-  .TextEditor-actions-emoji-picker-timeline--open>.emoji-mart {
+  .TextEditor-actions-emoji-picker-timeline--open > .emoji-mart {
     width: 300px !important;
   }
 }

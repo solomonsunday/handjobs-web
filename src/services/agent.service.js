@@ -307,6 +307,10 @@ const InstantJob = {
   accept: (id) => requests.put(`/instant-job/${id}/application/accept`, null),
   reject: (id) => requests.put(`/instant-job/${id}/application/reject`, null),
   nearbyUsers: () => requests.put(`/instant-job/nearby-artisans`, null),
+  getInstantJobsByServices: (page, limit, search, sort, serviceName) =>
+    requests.get(
+      `/instant-job/jobs-by-service?page=${page}&limit${limit}&search${search}&sort${sort}&service=${serviceName}`
+    ),
 };
 
 const Review = {
@@ -377,7 +381,8 @@ const Service = {
         search: search,
       }).toString()}`
     ),
-  loadbyid: (id) => requests.get(`/service/${id}`),
+  loadbyid: (serviceGroupId) =>
+    requests.get(`/service?serviceGroupId=${serviceGroupId}`),
   get: () => requests.get(`/service`),
   view: (id) => requests.get(`/service/${id}`),
   edit: (id, data) => requests.put(`/service/${id}`, data),

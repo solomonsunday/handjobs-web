@@ -11,6 +11,7 @@ import "./Instant-Jobs.css";
 import RecentInstantJobs from "./Recent_instant_Jobs";
 import { Tag } from "primereact/tag";
 import agent from "../../services/agent.service";
+import { showMessage } from "store/modules/notification";
 
 const InstantJobs = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,9 @@ const InstantJobs = () => {
 
   console.log(err, "err");
   const requestedId = agent.Auth.current().id;
+  let isApplicantHasPhoneNumber = agent.Auth.current().phoneNumber;
+
+  console.log({ requestedId });
 
   useEffect(() => {
     dispatch(fetchAllInstantJobs(page, take));
@@ -45,6 +49,18 @@ const InstantJobs = () => {
   };
 
   const handleApply = (id, i) => {
+    if (!isApplicantHasPhoneNumber) {
+      console.log({ isApplicantHasPhoneNumber });
+      dispatch(
+        showMessage({
+          type: "error",
+          message:
+            "Kindly add your phone number in your profile to apply for this job!!!",
+          title: "Phone number required",
+        })
+      );
+      return;
+    }
     let data = {
       jobId: id,
     };
@@ -180,17 +196,18 @@ const InstantJobs = () => {
                                 hidden={false}
                               >
                                 <div className="p-pr-2 d-flex">
-                                  {requestedId !== instantjob.accountId && (
-                                    <p>
-                                      {" "}
-                                      <span className="font-weight-bold app-color p-mt-2 interest-tx">
+                                  {requestedId !== instantjob.accountId &&
+                                    instantjob.company.id && (
+                                      <p>
                                         {" "}
-                                        Interested ? &nbsp;{" "}
-                                      </span>{" "}
-                                    </p>
-                                  )}
+                                        <span className="font-weight-bold app-color p-mt-2 interest-tx">
+                                          {" "}
+                                          Interested ? &nbsp;{" "}
+                                        </span>{" "}
+                                      </p>
+                                    )}
                                 </div>
-                                {requestedId !== instantjob.accountId && (
+                                {requestedId !== instantjob.company.id && (
                                   <div>
                                     <Button
                                       label="Yes"
@@ -224,10 +241,12 @@ const InstantJobs = () => {
                                 id={`${i}`}
                                 hidden={true}
                               >
-                                {!err && <Tag>
-                                  {" "}
-                                  <span>Waiting to be accepted...</span>
-                                </Tag>}
+                                {!err && (
+                                  <Tag>
+                                    {" "}
+                                    <span>Waiting to be accepted...</span>
+                                  </Tag>
+                                )}
                               </div>
                             </small>
                           </div>
@@ -236,9 +255,9 @@ const InstantJobs = () => {
                       <hr />
                     </div>
                   ))}
-                {
-                  allInstantJobs && allInstantJobs < 1 && allInstantJobs && <div className="font-weight-bold"> No Jobs created yet</div>
-                }
+                {allInstantJobs && allInstantJobs < 1 && allInstantJobs && (
+                  <div className="font-weight-bold"> No Jobs created yet</div>
+                )}
               </div>
             </div>
             {/* <RecentInstantJobs /> */}

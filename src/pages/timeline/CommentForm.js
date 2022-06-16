@@ -1,76 +1,84 @@
-import React, { useState, useEffect } from 'react';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { useForm } from 'react-hook-form';
-import { Button } from 'primereact/button';
-import 'emoji-mart/css/emoji-mart.css';
-import { Picker } from 'emoji-mart';
-import { Emoji } from 'emoji-mart'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { InputTextarea } from "primereact/inputtextarea";
+import { useForm } from "react-hook-form";
+import { Button } from "primereact/button";
+import "emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart";
+import { Emoji } from "emoji-mart";
+import { useDispatch, useSelector } from "react-redux";
 import { postComment } from "../../store/modules/comment";
 import { openEmojiPicker, closeEmojiPicker } from "store/modules/emojiPicker";
-import './CommentSection.css';
+import "./CommentSection.css";
+import { loading } from "store/modules/notification";
 
 const CommentForm = ({ postId, imageUrl, expandProfileImage }) => {
   const dispatch = useDispatch();
-  const emojiPickerId = useSelector(state => state.emojiPicker.name);
-  const loadingTypeCommentModule = useSelector(state => state.comment.loadingType);
+  const emojiPickerId = useSelector((state) => state.emojiPicker.name);
+  const loadingTypeCommentModule = useSelector(
+    (state) => state.comment.loadingType
+  );
   const [comment, setComment] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue } = useForm("");
+    setValue,
+  } = useForm("");
 
   useEffect(() => {
     if (loadingTypeCommentModule === "createCommentSuccess") {
       // clear comment form input on successful comment create
-      setComment("")
+      setComment("");
       setValue("message", "");
       if (emojiPickerId === postId) {
         // close picker of comment form with same postId on successful comment create
         dispatch(closeEmojiPicker());
       }
     }
-  }, [loadingTypeCommentModule])
+  }, [loadingTypeCommentModule]);
 
   const inputChange = (e) => {
     const inputValue = e.target.value;
-    setComment(inputValue)
+    setComment(inputValue);
 
     // check if inputValue is empty
     if (inputValue.trim().length > 0) {
-      setValue("message", inputValue, { shouldValidate: true })
+      setValue("message", inputValue, { shouldValidate: true });
+    } else {
+      setValue("message", inputValue.trim(), { shouldValidate: true });
     }
-    else {
-      setValue("message", inputValue.trim(), { shouldValidate: true })
-    }
-  }
+  };
 
   //Emoji Picker
   useEffect(() => {
-    window.addEventListener('click', _handleClickEvent);
-  }, [])
+    window.addEventListener("click", _handleClickEvent);
+  }, []);
 
   const handleEmojiSelect = (emojiToAdd) => {
-    let sym = emojiToAdd.unified.split('-')
-    let codesArray = []
-    sym.forEach(el => codesArray.push('0x' + el))
-    let emoji = String.fromCodePoint(...codesArray)
-    setComment(comment + emoji)
-  }
+    let sym = emojiToAdd.unified.split("-");
+    let codesArray = [];
+    sym.forEach((el) => codesArray.push("0x" + el));
+    let emoji = String.fromCodePoint(...codesArray);
+    setComment(comment + emoji);
+  };
 
   const _handleClickEvent = (e) => {
     const { target } = e;
-    const parentIds = ['TextEditor-comment-emoji-button', 'TextEditor-comment-emoji-picker'];
+    const parentIds = [
+      "TextEditor-comment-emoji-button",
+      "TextEditor-comment-emoji-picker",
+    ];
 
     // Check if the target element is a decendant of any of the above parent IDs
-    const isDescendant = parentIds.some((parentId) => isDescendantElement(target, parentId));
+    const isDescendant = parentIds.some((parentId) =>
+      isDescendantElement(target, parentId)
+    );
 
     // If element is not a descendant, then close the picker
     if (!isDescendant) {
       _handleEmojiToggle(false);
     }
-  }
+  };
 
   const isDescendantElement = (el, parentId) => {
     let isDescendant = false;
@@ -79,31 +87,30 @@ const CommentForm = ({ postId, imageUrl, expandProfileImage }) => {
       isDescendant = true;
     }
 
-    while (el = el.parentNode) {
+    while ((el = el.parentNode)) {
       if (el.id === parentId) {
         isDescendant = true;
       }
     }
 
     return isDescendant;
-  }
+  };
 
   const _handleEmojiToggle = (state) => {
     if (emojiPickerId) {
       dispatch(closeEmojiPicker());
-    }
-    else {
+    } else {
       dispatch(openEmojiPicker(state));
-    };
-  }
+    }
+  };
   //Emoji Picker
 
   const onSubmit = (data) => {
     dispatch(postComment(postId, data, "createComment"));
-  }
+  };
 
   return (
-    <div className='d-flex p-mt-2 w-100'>
+    <div className="d-flex p-mt-2 w-100">
       <img
         alt="Profile"
         src={imageUrl}
@@ -114,7 +121,7 @@ const CommentForm = ({ postId, imageUrl, expandProfileImage }) => {
       />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='timeline-commentInputContainer'
+        className="timeline-commentInputContainer"
       >
         <InputTextarea
           rows={1}
@@ -125,7 +132,9 @@ const CommentForm = ({ postId, imageUrl, expandProfileImage }) => {
           className="commentForm"
           placeholder="Write your comment..."
           {...register("message", { required: true })}
-          onChange={(e) => { inputChange(e) }}
+          onChange={(e) => {
+            inputChange(e);
+          }}
         />
         <span className="timeline-commentButtons-container">
           {/* {
@@ -152,7 +161,11 @@ const CommentForm = ({ postId, imageUrl, expandProfileImage }) => {
           </span> */}
           <Button
             type="submit"
-            label="Comment"
+            label={`${
+              loadingTypeCommentModule === "createComment"
+                ? "Loading..."
+                : "Comment"
+            }`}
             disabled={loadingTypeCommentModule === "createComment"}
             className="p-px-1 p-ml-2 timeline-commentButton"
           />
@@ -160,6 +173,6 @@ const CommentForm = ({ postId, imageUrl, expandProfileImage }) => {
       </form>
     </div>
   );
-}
+};
 
 export default CommentForm;
