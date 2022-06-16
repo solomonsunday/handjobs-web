@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { Avatar } from "primereact/avatar";
 import chatJSON from "./chat.json";
-import { actionSetSelectedContact, actionSetTotalUnread, markAsRead } from "../../store/modules/chat";
+import {
+  actionSetSelectedContact,
+  actionSetTotalUnread,
+  markAsRead,
+} from "../../store/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import ChatAvatar from "../../assets/avatar-chat.png";
@@ -26,22 +30,22 @@ const ChatList = () => {
   useEffect(() => {
     if (conversationList) {
       setConversations(conversationList);
-      const totalUnread = conversationList.filter(x => x.unReadCount > 0).length;
+      const totalUnread = conversationList.filter(
+        (x) => x.unReadCount > 0
+      ).length;
       dispatch(actionSetTotalUnread(totalUnread));
     }
   }, [conversationList]);
 
-
-
   const transformObjToList = (contact) => {
     return contact.ids.map((id) => contact.data[id]);
   };
-  const handleSelected = (contact, unReadCount = 0) =>{
-   dispatch(actionSetSelectedContact(contact));
+  const handleSelected = (contact, unReadCount = 0) => {
+    dispatch(actionSetSelectedContact(contact));
     if (unReadCount > 0) {
       dispatch(markAsRead(contact.id));
     }
-  }
+  };
 
   const [toggleContact, setToggleContact] = React.useState(false);
 
@@ -92,37 +96,44 @@ const ChatList = () => {
               <p>No recent conversation</p>
             </div>
           )}
-          {conversations.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => {
-                // console.log("item selected", item);
-                handleSelected(item.partner, item.unReadCount);
-              }}
-              className={`contact-item ${selectedContact && item?.partner.id === selectedContact.id
-                  ? "selected"
-                  : ""
+          {conversations.map((item) => {
+            console.log("item chat", item);
+            return (
+              <div
+                key={item.id}
+                onClick={() => {
+                  // console.log("item selected", item);
+                  handleSelected(item.partner, item.unReadCount);
+                }}
+                className={`contact-item ${
+                  selectedContact && item?.partner.id === selectedContact.id
+                    ? "selected"
+                    : ""
                 }`}
-            >
-              <img
-                style={{ width: "30px", height: "30px" }}
-                src={item.imageUrl ?? ChatAvatar}
-              />
-              <div className="contact-detail">
-                <h4>
-                  {item?.partner?.firstName} {item?.partner?.lastName}
-                  {item.unReadCount ? <span className="mx-1 px-1 py-1 text-white badge bg-danger">{item.unReadCount}</span>: <></>}
-                </h4>
-                <p>{item.message}
-                </p>
+              >
+                <img
+                  style={{ width: "30px", height: "30px" }}
+                  src={item?.partner?.imageUrl ?? ChatAvatar}
+                />
+                <div className="contact-detail">
+                  <h4>
+                    {item?.partner?.firstName} {item?.partner?.lastName}
+                    {item.unReadCount ? (
+                      <span className="mx-1 px-1 py-1 text-white badge bg-danger">
+                        {item.unReadCount}
+                      </span>
+                    ) : (
+                      <></>
+                    )}
+                  </h4>
+                  <p>{item.message}</p>
+                </div>
+                <div className="last-seen">
+                  <small>{moment(item.createdAt).format("hh:mma")}</small>{" "}
+                </div>
               </div>
-              <div className="last-seen">
-                <small>
-                  {moment(item.createdAt).format("hh:mma")}
-                </small>{" "}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </>
     );
@@ -154,10 +165,11 @@ const ChatList = () => {
               console.log("item seleected", item);
               handleSelected({ ...item, messages: [] });
             }}
-            className={`contact-item ${selectedContact && item.id === selectedContact.id
+            className={`contact-item ${
+              selectedContact && item.id === selectedContact.id
                 ? "selected"
                 : ""
-              }`}
+            }`}
           >
             <img
               style={{ width: "40px", height: "40px" }}
