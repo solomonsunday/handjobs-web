@@ -5,6 +5,7 @@ import { closeModal } from "./modal";
 import { loadError } from "./experience";
 import { isRequestLoading } from "./review";
 import { OnLogout } from "./auth";
+import { push } from "connected-react-router";
 
 // initial values
 const account = {
@@ -515,6 +516,45 @@ export function deactivateAccount() {
       dispatch(OnLogout());
     }, error => {
       dispatch(isRequestLoading(false))
+      dispatch(showMessage({ type: "error", message: error }));
+    });
+  }
+}
+
+export function getSmsShortCode(data) {
+  return (dispatch) => {
+    dispatch(submitting());
+    return agent.Account.getSmsShortCode(data).then(
+      (response) => {
+        dispatch(
+          showMessage({
+            type: MESSAGE_TYPE.SUCCESS,
+            title: "SMS Verification Code",
+            message: "SMS Verification Code sent successfully",
+          })
+        );
+        console.log({ response })
+      },
+      (error) => {
+        // handle error
+        dispatch(showMessage({ type: "error", message: error }));
+      }
+    );
+  };
+}
+
+export function verifyPhoneNumber(userRes) {
+  return dispatch => {
+    dispatch(loading(true))
+    return agent.Account.verifyPhoneNumber(userRes).then(response => {
+      // handle success
+      dispatch(showMessage({ type: MESSAGE_TYPE.SUCCESS, message: "Phone verification successful" }));
+      dispatch(loading(false))
+      dispatch(push(`/profile`));
+      console.log({ response })
+    }, error => {
+      // handle error
+      dispatch(loading(false));
       dispatch(showMessage({ type: "error", message: error }));
     });
   }

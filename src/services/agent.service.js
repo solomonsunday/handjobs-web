@@ -184,6 +184,8 @@ const Account = {
   getByID: (id) => requests.get(`/accounts/${id}`),
   verifyAccount: (id) => requests.get(`/account/${id}`),
   deactivateMyAccount: () => requests.put("/accounts/deactivate-account"),
+  getSmsShortCode: (data) => requests.post("/verification/send-sms-shortcode", data),
+  verifyPhoneNumber: (code) => requests.put(`/verification/phonenumber/${code}`),
 };
 
 const JobExperience = {
