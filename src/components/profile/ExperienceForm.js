@@ -9,7 +9,7 @@ import { createExperience, updateExperience } from "store/modules/experience";
 import { Calendar } from "primereact/calendar";
 import InputField from "components/InputField";
 
-import { Checkbox } from 'primereact/checkbox';
+import { Checkbox } from "primereact/checkbox";
 import LimitedTextarea from "../LimitedTextarea";
 
 const jobCategoryList = [
@@ -31,9 +31,10 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
     formState: { errors },
   } = useForm({ mode: "onChange", reValidateMode: "onChange" });
 
-  const loading = useSelector(state => state.experience.requesting);
+  const loading = useSelector((state) => state.experience.requesting);
   const [experience, setExperience] = useState({});
-  const [checkedCurrent, setCheckedCurrent] = useState(false)
+  const [checkedCurrent, setCheckedCurrent] = useState(false);
+  const [checkStartDate, setCheckStartDate] = useState(null);
 
   useEffect(() => {
     if (itemToEdit !== null) {
@@ -48,10 +49,8 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
         description: itemToEdit.description,
         jobTitle: itemToEdit.jobTitle,
         company: itemToEdit.company,
-        current: checkedCurrent
+        current: checkedCurrent,
       });
-
-
 
       setValue("description", itemToEdit.description);
       setValue("startDate", itemToEdit.startDate);
@@ -59,7 +58,10 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
       setValue("location", itemToEdit.location);
       setValue("description", itemToEdit.description);
       setValue("jobTitle", itemToEdit.jobTitle);
-      setValue("jobCategory", jobCategoryList.find((j) => j.name == itemToEdit.jobCategoryName));
+      setValue(
+        "jobCategory",
+        jobCategoryList.find((j) => j.name == itemToEdit.jobCategoryName)
+      );
       setValue("company", itemToEdit.company);
       setValue("current", checkedCurrent);
     }
@@ -83,7 +85,6 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
     updatedExperienceObject[inputName] = inputValue;
     setExperience({ ...experience, ...updatedExperienceObject });
     setValue(inputName, inputValue, { shouldValidate: true });
-
   };
 
   const handleDelete = (e) => {
@@ -98,23 +99,35 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
 
     if (formData.current) {
       // delete formData.endDate;
-      formData.endDate = new Date().toISOString()
+      formData.endDate = new Date().toISOString();
     }
 
-    if (mode === 'create')
-      dispatch(createExperience(formData));
-    else
-      dispatch(updateExperience(itemToEdit.id, formData));
-
+    if (mode === "create") dispatch(createExperience(formData));
+    else dispatch(updateExperience(itemToEdit.id, formData));
   };
 
   const monthNavigatorTemplate = (e) => {
-    return <Dropdown value={e.value} options={e.options} onChange={(event) => e.onChange(event.originalEvent, event.value)} style={{ lineHeight: 1 }} />;
-  }
+    return (
+      <Dropdown
+        value={e.value}
+        options={e.options}
+        onChange={(event) => e.onChange(event.originalEvent, event.value)}
+        style={{ lineHeight: 1 }}
+      />
+    );
+  };
 
   const yearNavigatorTemplate = (e) => {
-    return <Dropdown value={e.value} options={e.options} onChange={(event) => e.onChange(event.originalEvent, event.value)} className="p-ml-2" style={{ lineHeight: 1 }} />;
-  }
+    return (
+      <Dropdown
+        value={e.value}
+        options={e.options}
+        onChange={(event) => e.onChange(event.originalEvent, event.value)}
+        className="p-ml-2"
+        style={{ lineHeight: 1 }}
+      />
+    );
+  };
 
   return (
     <>
@@ -164,7 +177,11 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
                   defaultValue={experience.company}
                 />
               </div>
-              <div className={`p-field p-col-12 ${checkedCurrent ? 'p-md-12' : 'p-md-6'}`}>
+              <div
+                className={`p-field p-col-12 ${
+                  checkedCurrent ? "p-md-12" : "p-md-6"
+                }`}
+              >
                 <label className="inputLabel" htmlFor="startDate">
                   Start Date
                   {errors.startDate && (
@@ -187,8 +204,8 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
                     const value = new Date(e.value).toISOString();
 
                     setValue(inputName, value, { shouldValidate: true });
+                    setCheckStartDate(e.value); //set the start date
                   }}
-                
                   monthNavigatorTemplate={monthNavigatorTemplate}
                   yearNavigatorTemplate={yearNavigatorTemplate}
                   view="month"
@@ -197,40 +214,42 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
                   yearRange="2010:2030"
                 />
               </div>
-              {!checkedCurrent && <div className="p-field p-col-12 p-md-6">
-                <label className="inputLabel" htmlFor="endDate">
-                  {" "}
-                  End Date
-                  {errors.endDate && (
-                    <span className="text-danger font-weight-bold">
-                      &nbsp; {errors.endDate.message}
-                    </span>
-                  )}
-                </label>
-                <Calendar
-                  id="endDate"
-                  type="date"
-                  value={experience.endDate}
-                  // dateFormat='dd/mm/yy'
-                  name="endDate"
-                  {...register("endDate", {
-                    required: `* End Date is required`,
-                  })}
-                  onSelect={(e) => {
-                    const inputName = "endDate";
-                    const value = e.value.toISOString();
-                    setValue(inputName, value, { shouldValidate: true });
-                  }}
-               
-                  monthNavigatorTemplate={monthNavigatorTemplate}
-                  yearNavigatorTemplate={yearNavigatorTemplate}
-                  view="month"
-                  dateFormat="mm/yy"
-                  yearNavigator
-                  yearRange="2010:2030"
-                  disabled={checkedCurrent}
-                />
-              </div>}
+              {!checkedCurrent && (
+                <div className="p-field p-col-12 p-md-6">
+                  <label className="inputLabel" htmlFor="endDate">
+                    {" "}
+                    End Date
+                    {errors.endDate && (
+                      <span className="text-danger font-weight-bold">
+                        &nbsp; {errors.endDate.message}
+                      </span>
+                    )}
+                  </label>
+                  <Calendar
+                    id="endDate"
+                    type="date"
+                    value={experience.endDate}
+                    // dateFormat='dd/mm/yy'
+                    name="endDate"
+                    {...register("endDate", {
+                      required: `* End Date is required`,
+                    })}
+                    onSelect={(e) => {
+                      const inputName = "endDate";
+                      const value = e.value.toISOString();
+                      setValue(inputName, value, { shouldValidate: true });
+                    }}
+                    monthNavigatorTemplate={monthNavigatorTemplate}
+                    yearNavigatorTemplate={yearNavigatorTemplate}
+                    view="month"
+                    dateFormat="mm/yy"
+                    yearNavigator
+                    yearRange="2010:2030"
+                    disabled={checkedCurrent || checkStartDate === null}
+                    minDate={checkStartDate}
+                  />
+                </div>
+              )}
               <div className="p-field p-col-12 p-md-6">
                 <label className="inputLabel" htmlFor="jobCategory">
                   Job Category
@@ -304,24 +323,34 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
                 <label htmlFor="current">
                   <Checkbox
                     name="current"
-                    onChange={e => {
+                    onChange={(e) => {
                       setCheckedCurrent(e.checked);
                       // console.log(e)
-                      setExperience({ ...experience, [e.target.name]: e.checked });
-                      setValue(e.target.name, e.checked, { shouldValidate: true });
-                    }} checked={checkedCurrent}></Checkbox>
+                      setExperience({
+                        ...experience,
+                        [e.target.name]: e.checked,
+                      });
+                      setValue(e.target.name, e.checked, {
+                        shouldValidate: true,
+                      });
+                    }}
+                    checked={checkedCurrent}
+                  ></Checkbox>
                   Set as current
                 </label>
               </div>
             </div>
             {loading && <i className="fa fa-spin fa-spinner"></i>}
-            <ModeFooter id="experienceEdit" onCancel={onEditCancel} loading={loading} />
+            <ModeFooter
+              id="experienceEdit"
+              onCancel={onEditCancel}
+              loading={loading}
+            />
           </form>
         </div>
       </div>
     </>
   );
 };
-
 
 export default ExperienceForm;
