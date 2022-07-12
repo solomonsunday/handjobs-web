@@ -139,7 +139,7 @@ const ChatContent = () => {
   const dispatch = useDispatch();
   const contact = useSelector((state) => state.chat.selectedContact);
   const handleClose = () => dispatch(actionSetSelectedContact(null));
-
+  console.log("selected contact", contact);
   const getName = (contact) => {
     console.log("contact me", contact);
     return `${contact.firstName} ${contact.lastName}`;
@@ -205,6 +205,24 @@ const ChatContent = () => {
     chatMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // console.log("contact to mess", contact);
+
+  React.useEffect(() => {
+    chatMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [contact]);
+  React.useEffect(() => {
+    if (conversations?.conversation) {
+      // console.log(conversations);
+      const hasUnreadMessges = conversations?.conversation?.some(
+        (x) => x.read == false
+      );
+      if (hasUnreadMessges) {
+        dispatch(markAsRead(conversations?.partner.id));
+      }
+      chatMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [conversations]);
+
   return (
     <div className={`chat-content-container`}>
       <div className="chat-content-header">
@@ -212,7 +230,9 @@ const ChatContent = () => {
           <img
             className="rounded-image"
             style={{ width: "40px", height: "40px" }}
-            src={contact.imageUrl ?? "https://source.unsplash.com/random/50x50"}
+            src={
+              contact?.imageUrl ?? "https://source.unsplash.com/random/50x50"
+            }
           />
           <h4
             style={{ cursor: "pointer" }}

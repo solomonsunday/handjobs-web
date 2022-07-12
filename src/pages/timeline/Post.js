@@ -4,7 +4,12 @@ import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
 import { formatter } from "../../helpers/converter";
 import { openModal } from "store/modules/modal";
-import { deletePost, likePost } from "../../store/modules/timeline";
+import {
+  deletePost,
+  likePost,
+  likePostAsync,
+  postLiked,
+} from "../../store/modules/timeline";
 import { loadComments } from "../../store/modules/comment";
 import { TIMELINE } from "constants/timeline";
 import agent from "../../services/agent.service";
@@ -19,6 +24,8 @@ import { Link } from "react-router-dom";
 import { MEDIATYPES } from "constants/setup";
 import AppLoading from "components/AppLoading";
 import Spinner from "components/spinner/spinner.component";
+import { showMessage } from "store/modules/notification";
+import { MESSAGE_TYPE } from "store/constant";
 const Post = ({
   profileInfo,
   post,
@@ -29,6 +36,7 @@ const Post = ({
   setImageToDisplay,
   viewPage = false,
 }) => {
+  const [likeLoading, setLikeLoading] = useState(false);
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.timeline.loadingPosts);
   const loadingStatus = useSelector((state) => state.timeline.loadingStatus);
@@ -45,9 +53,25 @@ const Post = ({
     dispatch(openModal(TIMELINE.POSTIMAGE));
   };
 
-  const handleLike = (e) => {
+  const handleLike = async (e) => {
+    setLikeLoading(true);
     const postId = e.currentTarget.dataset.id;
-    dispatch(likePost(postId));
+    try {
+      const response = await likePostAsync(postId);
+
+      dispatch(
+        showMessage({
+          type: MESSAGE_TYPE.SUCCESS,
+          title: "Like Post",
+          message: "Post liked!!",
+        })
+      );
+      dispatch(postLiked(response));
+    } catch (error) {
+      dispatch(showMessage({ type: "error", message: error }));
+    } finally {
+      setLikeLoading(false);
+    }
   };
 
   const handleShareButton = (e) => {
@@ -226,7 +250,7 @@ const Post = ({
                 onClick={(e) => handleLike(e)}
                 className="post-statusbar-content p-pr-2 align-items-start"
               >
-                {loadingStatus ? (
+                {likeLoading ? (
                   <Spinner style={{ width: "1px", height: "50px" }} />
                 ) : (
                   <ThumbsUp

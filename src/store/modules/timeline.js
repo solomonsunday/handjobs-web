@@ -499,32 +499,8 @@ export function deletePost(id, deleteType) {
   };
 }
 
-export function likePost(id) {
-  return (dispatch) => {
-    dispatch(loadingStataus(true));
-    return agent.Post.like(id).then(
-      (response) => {
-        //handle success
-        dispatch(
-          showMessage({
-            type: MESSAGE_TYPE.SUCCESS,
-            title: "Like Post",
-            message: "Post liked!!",
-          })
-        );
-        dispatch(postLiked(response));
-        dispatch(loadingStataus(false));
-      },
-      (error) => {
-        // handle error
-        if (error.response.statusCode === 404) {
-          dispatch(postDeleted(id));
-        }
-        dispatch(showMessage({ type: "error", message: error }));
-        dispatch(loadingStataus(false));
-      }
-    );
-  };
+export async function likePostAsync(id) {
+  return agent.Post.like(id);
 }
 
 export function dislikePost(id) {

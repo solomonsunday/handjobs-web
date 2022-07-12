@@ -1,94 +1,182 @@
-import Spinner from 'components/spinner/spinner.component'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useParams } from 'react-router-dom'
-import BackgroundImage from '../../assets/bg.png'
-import { applyInstantJob, loadInstantJob } from 'store/modules/instantJob'
-import moment from 'moment'
-import { confirmDialog } from 'primereact/confirmdialog'
-import { Tag } from 'primereact/tag'
-import AppNavBar from 'components/AppNavBar'
+import Spinner from "components/spinner/spinner.component";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import BackgroundImage from "../../assets/bg.png";
+import { applyInstantJob, loadInstantJob } from "store/modules/instantJob";
+import moment from "moment";
+import { confirmDialog } from "primereact/confirmdialog";
+import { Tag } from "primereact/tag";
+import AppNavBar from "components/AppNavBar";
+import agent from "../../services/agent.service";
 
 const View = () => {
-    const dispatch = useDispatch()
-    const history = useHistory();
-    const param = useParams();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const param = useParams();
 
-    const instantJobDetail = useSelector(state => state.instantJob.instantjob)
-    const jobApplicationRequest = useSelector(state => state.job.jobApplicationRequest)
-    const loading = useSelector(state => state.job.loading)
+  const instantJobDetail = useSelector((state) => state.instantJob.instantjob);
+  const jobApplicationRequest = useSelector(
+    (state) => state.job.jobApplicationRequest
+  );
+  const loading = useSelector((state) => state.job.loading);
+  const requestedId = agent.Auth.current()?.id;
 
-    useEffect(() => {
-        dispatch(loadInstantJob(param.id))
-    }, []);
+  useEffect(() => {
+    dispatch(loadInstantJob(param.id));
+  }, []);
 
-    const handleApply = (id) => {
-        let data = {
-            jobId: id
-        }
-        confirmDialog({
-            message: 'You are about to apply for this job?',
-            header: 'Confirmation',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                dispatch(applyInstantJob(data))
-            },
-            reject: () => {
-                return;
-            },
-        });
-    }
+  const handleApply = (id) => {
+    let data = {
+      jobId: id,
+    };
+    confirmDialog({
+      message: "You are about to apply for this job?",
+      header: "Confirmation",
+      icon: "pi pi-exclamation-triangle",
+      accept: () => {
+        dispatch(applyInstantJob(data));
+      },
+      reject: () => {
+        return;
+      },
+    });
+  };
 
-    if (instantJobDetail === null)
-        return <Spinner />
+  if (instantJobDetail === null) return <Spinner />;
 
-    return (
-        <>
-            {/* <AppNavBar /> */}
-            <div style={styles.container}>
-                <div className="container">
-                    <div className="d-flex" style={styles.topBarContainer}>
-                        <div className="company-logo" >
-                            <img src="https://source.unsplash.com/random/100x100" alt="company-logo" style={{ borderRadius: '50%', height: '75px', justifyContent: 'center' }} />
-                        </div>
-                        <div className="company-caption" style={styles.topBarTextContainer}>
-                            <h4 style={styles.topBarHeaderTextStyle}>{instantJobDetail.title}</h4>
-                            {/* <p style={styles.topBarSubHeaderTextStyle}>{instantJobDetail.createdBy}</p> */}
-                        </div>
-                    </div>
-                </div>
+  return (
+    <>
+      {/* <AppNavBar /> */}
+      <div style={styles.container}>
+        <div className="container">
+          <div className="d-flex" style={styles.topBarContainer}>
+            <div className="company-logo">
+              <img
+                src="https://source.unsplash.com/random/100x100"
+                alt="company-logo"
+                style={{
+                  borderRadius: "50%",
+                  height: "75px",
+                  justifyContent: "center",
+                }}
+              />
             </div>
+            <div className="company-caption" style={styles.topBarTextContainer}>
+              <h4 style={styles.topBarHeaderTextStyle}>
+                {instantJobDetail.title}
+              </h4>
+              {/* <p style={styles.topBarSubHeaderTextStyle}>{instantJobDetail.createdBy}</p> */}
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <div className="container">
-                <div className="row mt-4 mb-5">
-                    <div className="col-md-9">
-                        <div className="d-flex justify-content-end">
-                            <button onClick={() => history.goBack()} className="btn btn-primary on-hover" style={{ backgroundColor: '#357C3C', border: 'none', padding: '8px 24px' }}><i className="pi pi-arrow-left"></i></button>
-                        </div>
-                        <div className="p-card p-4 mt-2" style={{ borderRadius: "1rem" }}>
-                            <h5 className="p-title">Job Description</h5>
-                            <p className="mt-3">{instantJobDetail?.description}</p>
-
-                        </div>
-                        <div className="p-card p-4 mt-3" style={{ borderRadius: "1rem" }}>
-                            <h5 className="p-title">Instant Job Detail</h5>
-                            <div className="mt-3">
-                                <div className="p-text-secondary">
-                                    <div className='row'>
-                                        <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Service : </p></div>  <div className='col-md-10'> <p>{instantJobDetail.service} </p> </div>
-                                        <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Location : </p></div>  <div className='col-md-10'> <p>{instantJobDetail.location} </p> </div>
-                                        <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Address : </p></div>  <div className='col-md-10'> <p>{instantJobDetail.address} </p> </div>
-                                        <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Start Date  : </p></div>  <div className='col-md-3'> <p>{moment(instantJobDetail.startDate).format('MMMM DD, YYYY')} </p> </div>
-                                        <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">End Date  : </p></div>  <div className='col-md-3'> <p>{moment(instantJobDetail.endDate).format('MMMM DD, YYYY')} </p> </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button onClick={() => handleApply(instantJobDetail.id)} className="btn btn-block on-hover" style={styles.btnApply}>{jobApplicationRequest ? <span><i className="pi pi-spin pi-spinner"></i> Please wait...</span> : `Apply`}</button>
+      <div className="container">
+        <div className="row mt-4 mb-5">
+          <div className="col-md-9">
+            <div className="d-flex justify-content-end">
+              <button
+                onClick={() => history.goBack()}
+                className="btn btn-primary on-hover"
+                style={{
+                  backgroundColor: "#357C3C",
+                  border: "none",
+                  padding: "8px 24px",
+                }}
+              >
+                <i className="pi pi-arrow-left"></i>
+              </button>
+            </div>
+            <div className="p-card p-4 mt-2" style={{ borderRadius: "1rem" }}>
+              <h5 className="p-title">Job Description</h5>
+              <p className="mt-3">{instantJobDetail?.description}</p>
+            </div>
+            <div className="p-card p-4 mt-3" style={{ borderRadius: "1rem" }}>
+              <h5 className="p-title">Instant Job Detail</h5>
+              <div className="mt-3">
+                <div className="p-text-secondary">
+                  <div className="row">
+                    <div className="col-md-2">
+                      {" "}
+                      <p className="font-weight-bold app-color text-capitalize">
+                        Service :{" "}
+                      </p>
+                    </div>{" "}
+                    <div className="col-md-10">
+                      {" "}
+                      <p>{instantJobDetail.service} </p>{" "}
                     </div>
+                    <div className="col-md-2">
+                      {" "}
+                      <p className="font-weight-bold app-color text-capitalize">
+                        Location :{" "}
+                      </p>
+                    </div>{" "}
+                    <div className="col-md-10">
+                      {" "}
+                      <p>{instantJobDetail.location} </p>{" "}
+                    </div>
+                    <div className="col-md-2">
+                      {" "}
+                      <p className="font-weight-bold app-color text-capitalize">
+                        Address :{" "}
+                      </p>
+                    </div>{" "}
+                    <div className="col-md-10">
+                      {" "}
+                      <p>{instantJobDetail.address} </p>{" "}
+                    </div>
+                    <div className="col-md-2">
+                      {" "}
+                      <p className="font-weight-bold app-color text-capitalize">
+                        Start Date :{" "}
+                      </p>
+                    </div>{" "}
                     <div className="col-md-3">
-                        {/* <div className="p-card p-4 mt-3">
+                      {" "}
+                      <p>
+                        {moment(instantJobDetail.startDate).format(
+                          "MMMM DD, YYYY"
+                        )}{" "}
+                      </p>{" "}
+                    </div>
+                    <div className="col-md-2">
+                      {" "}
+                      <p className="font-weight-bold app-color text-capitalize">
+                        End Date :{" "}
+                      </p>
+                    </div>{" "}
+                    <div className="col-md-3">
+                      {" "}
+                      <p>
+                        {moment(instantJobDetail.endDate).format(
+                          "MMMM DD, YYYY"
+                        )}{" "}
+                      </p>{" "}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {requestedId !== instantJobDetail?.accountId && (
+              <button
+                onClick={() => handleApply(instantJobDetail.id)}
+                className="btn btn-block on-hover"
+                style={styles.btnApply}
+              >
+                {jobApplicationRequest ? (
+                  <span>
+                    <i className="pi pi-spin pi-spinner"></i> Please wait...
+                  </span>
+                ) : (
+                  `Apply`
+                )}
+              </button>
+            )}{" "}
+          </div>
+          <div className="col-md-3">
+            {/* <div className="p-card p-4 mt-3">
                             <h4 className="p-title">Overview</h4>
                             <hr />
                             <div className="overview-list">
@@ -114,7 +202,7 @@ const View = () => {
                                 </div>
                             </div>
                         </div> */}
-                        {/* {!instantJobDetail.hideCompanyName && (<div className="p-card p-4 mt-3">
+            {/* {!instantJobDetail.hideCompanyName && (<div className="p-card p-4 mt-3">
                             <h4 className="p-title">Company Address</h4>
                             <hr />
                             <ul className="overview-list">
@@ -124,68 +212,65 @@ const View = () => {
                                 <li style={styles.contactItem}>{instantJobDetail.jobUrl}</li>
                             </ul>
                         </div>)} */}
-                    </div>
-                </div>
-            </div>
-        </>
-    )
-}
-
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
 const styles = {
-    container: {
-        backgroundImage: `url(${BackgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        width: "100%",
-        height: '160px',
-        position: "relative",
+  container: {
+    backgroundImage: `url(${BackgroundImage})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    width: "100%",
+    height: "160px",
+    position: "relative",
+  },
+  topBarContainer: {
+    width: "600px",
+    marginTop: "30px",
+  },
+  topBarTextContainer: {
+    alignSelf: "center",
+  },
+  topBarHeaderTextStyle: {
+    fontSize: "22px",
+    fontWeight: "500",
+    marginLeft: "8px",
+    marginBottom: "4px",
+  },
+  topBarSubHeaderTextStyle: {
+    color: "black",
+    fontSize: "16px",
+    fontWeight: "500",
+    marginLeft: "8px",
+  },
+  btnApply: {
+    backgroundColor: "#357C3C",
+    color: "white",
+    padding: "12px 0",
+    marginTop: "10px",
+    fontSize: "18px",
+    fontWeight: 500,
+  },
+  overListItem: {
+    marginBottom: "16px",
+  },
+  overviewListHeader: {
+    fontSize: "18px",
+    fontWeight: 500,
+  },
+  overviewListText: {
+    fontSize: "16px",
+    fontWeight: "normal",
+  },
+  contactItem: {
+    marginBottom: "10px",
+    fontSize: "16px",
+    fontWeight: 500,
+  },
+};
 
-    },
-    topBarContainer: {
-        width: '600px', marginTop: '30px'
-    }
-    ,
-    topBarTextContainer: {
-        alignSelf: 'center'
-    },
-    topBarHeaderTextStyle: {
-        fontSize: '22px',
-        fontWeight: '500',
-        marginLeft: '8px',
-        marginBottom: '4px'
-    },
-    topBarSubHeaderTextStyle: {
-        color: 'black',
-        fontSize: '16px',
-        fontWeight: '500',
-        marginLeft: '8px'
-    },
-    btnApply: {
-        backgroundColor: '#357C3C',
-        color: 'white',
-        padding: '12px 0',
-        marginTop: '10px',
-        fontSize: '18px',
-        fontWeight: 500
-    },
-    overListItem: {
-        marginBottom: '16px'
-    },
-    overviewListHeader: {
-        fontSize: '18px',
-        fontWeight: 500,
-    },
-    overviewListText: {
-        fontSize: '16px',
-        fontWeight: 'normal'
-    },
-    contactItem: {
-        marginBottom: '10px',
-        fontSize: '16px',
-        fontWeight: 500
-    }
-}
-
-
-export default View
+export default View;
