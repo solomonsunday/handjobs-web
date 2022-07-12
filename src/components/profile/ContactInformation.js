@@ -13,11 +13,19 @@ import { getSmsShortCode, verifyPhoneNumber } from "store/modules/account";
 const ContactInformation = ({ openCreate, openEdit, profileInfo, isViewApplicant }) => {
 
   const isRequestLoading = useSelector(state => state.account.loading);
+  const userVerificationCode = useSelector(state => state.account.userVerificationCode);
   const dispatch = useDispatch();
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     mode: "onChange",
     reValidateMode: "onChange"
   });
+
+  console.log({ userVerificationCode })
+  console.log({ profileInfo })
+
+  useEffect(() => {
+    dispatch(getSmsShortCode());
+  }, []);
 
   const handleVerifyNumber = () => {
     let data = {
@@ -26,9 +34,10 @@ const ContactInformation = ({ openCreate, openEdit, profileInfo, isViewApplicant
       ],
       accountId: profileInfo?.id
     }
-    dispatch(getSmsShortCode(data))
+    dispatch(getSmsShortCode(data));
   }
 
+  console.log({ profileInfo })
   const onSubmit = (code) => {
     let userResponse = code.code;
     dispatch(verifyPhoneNumber(userResponse));
@@ -92,7 +101,7 @@ const ContactInformation = ({ openCreate, openEdit, profileInfo, isViewApplicant
                   </div>
                 </div>
                 <div className="float-right">
-                  <button type="button" id="closeModal" className="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+                  <button type="button" id="closeModal" className="btn btn-secondary py-2 rounded-pill mr-2" data-bs-dismiss="modal">Close</button>
                   <Button type="submit" label={`${isRequestLoading ? "Verifying..." : "Submit"}`} className="appcolor rounded-pill on-hover" />
                 </div>
 

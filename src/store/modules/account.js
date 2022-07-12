@@ -37,6 +37,7 @@ const account = {
     portfolios: []
   },
   artisanAccounts: [],
+  verificationCode: "",
 };
 
 // Action types
@@ -50,11 +51,18 @@ const DELETE_EXPERIENCE = "DELETE_EXPERIENCE";
 const DELETE_EDUCATION = "DELETE_EDUCATION";
 const REMOVE_PORTFOLIO = "REMOVE_PORTFOLIO"
 const SUBMITTING = "SUBMITTING";
+const VERI_CODE = "VERI_CODE";
 // Reducer
 export default function reducer(state = account, action = {}) {
   switch (action.type) {
     case LOADING:
       return { ...state, loading: true };
+    case VERI_CODE:
+      return {
+        ...state,
+        loading: true,
+        verificationCode: action.payload
+      };
     case SUBMITTING:
       return { ...state, submitting: true }
     case LOAD_PROFILE_INFO:
@@ -127,6 +135,12 @@ export default function reducer(state = account, action = {}) {
 export function profileInfoLoaded(data) {
   return { type: LOAD_PROFILE_INFO, payload: data };
 }
+
+export function getVeriCode(data) {
+  return { type: VERI_CODE, payload: data };
+}
+
+
 export function LoadProfileDataByUser(data) {
   return { type: LOAD_PROFILE_INFO_BY_USER, payload: data };
 }
@@ -526,6 +540,7 @@ export function getSmsShortCode(data) {
     dispatch(submitting());
     return agent.Account.getSmsShortCode(data).then(
       (response) => {
+        // dispatch(getVeriCode(response))
         dispatch(
           showMessage({
             type: MESSAGE_TYPE.SUCCESS,
@@ -533,6 +548,7 @@ export function getSmsShortCode(data) {
             message: "SMS Verification Code sent successfully",
           })
         );
+        dispatch(getVeriCode(response))
         console.log({ response })
       },
       (error) => {
@@ -551,7 +567,6 @@ export function verifyPhoneNumber(userRes) {
       dispatch(showMessage({ type: MESSAGE_TYPE.SUCCESS, message: "Phone verification successful" }));
       dispatch(loading(false))
       dispatch(push(`/profile`));
-      console.log({ response })
     }, error => {
       // handle error
       dispatch(loading(false));
