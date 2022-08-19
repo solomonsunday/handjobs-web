@@ -26,10 +26,13 @@ const TIME_OUT = 10000;
 // Reducer
 export default function reducer(state = notification, action = {}) {
     switch (action.type) {
-        case MESSAGE_DISPLAYED: return {
-            ...state,
-            ...action.payload,
-            fetching: false
+        case MESSAGE_DISPLAYED: {
+            console.log('Notificiation display called from reducer')
+            return {
+                ...state,
+                ...action.payload,
+                fetching: false
+            }
         };
 
         case MESSAGE_CLEARED: return {
@@ -67,6 +70,7 @@ export function messageDisplayed(data) {
         return;
     }
 
+    console.log('notification action creator')
     return { type: MESSAGE_DISPLAYED, payload: data, notificationType: data.type };
 }
 

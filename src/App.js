@@ -22,6 +22,7 @@ const notificationSocket = io(`${API_ROOT}/notigateway`);
 function App() {
   const dispatch = useDispatch();
 
+
   useEffect(() => {
     if (agent.Auth.isAuth()) {
       //dispatch(loadApp())
@@ -74,10 +75,11 @@ function App() {
   //   return () => chatSocket.disconnect();
   // }, []);
 
+  const notification = useSelector(state => state.notification);
 
   return (
     <React.Suspense fallback={<AppLoading />}>
-      <AppAlert />
+      <AppAlert notification={notification} />
       <AppRouter />
     </React.Suspense>
   )
