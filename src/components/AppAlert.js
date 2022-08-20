@@ -1,14 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Toast } from 'primereact/toast';
 import './AppAlert.css';
 import { messageCleared } from 'store/modules/notification';
 
 
-const AppAlertWidget = ({ notification }) => {
+const AppAlertWidget = memo(({ notification }) => {
     const toast = useRef(null);
-
-    console.log('NOTIFICATION WIDGET')
+    console.log('NOTIFICATION IN APP aalert', notification)
     return (
         <div>
             <Toast ref={toast} />
@@ -18,14 +17,6 @@ const AppAlertWidget = ({ notification }) => {
             {notification.type === 'warning' && toast.current.show({ severity: 'warn', summary: notification.title, detail: notification.message, life: 5000 })}
         </div>
     );
-}
+})
 
-const isEqual = (prevProps, nextProps) => {
-    if (prevProps.type === nextProps && prevProps.title === nextProps.title) {
-        return true;//this should not re-render
-    }
-    return false;// this will cause ti to re-render
-
-}
-
-export default React.memo(AppAlertWidget, isEqual);
+export default AppAlertWidget

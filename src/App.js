@@ -56,25 +56,6 @@ function App() {
     return () => notificationSocket.disconnect();
   }, [notificationSocket]);
 
-  // useEffect(() => {
-  //   const chatSocket = io(`${API_ROOT}/chatgateway`);
-  //   chatSocket.on('connect to', () => {
-  //     if (user && user.id) {
-  //       chatSocket.emit('chat_msg_to_server', {
-  //         socketId: user.id,
-  //       })
-  //     }
-
-  //     chatSocket.on("chat_msg_to_client", (data) => {
-  //       console.log("chat message sent to clients");
-  //       if (data && data?.recieverId === user?.id) {
-  //         dispatch(getConversationWithPartnerId(user?.recieverId));
-  //       }
-  //     });
-  //   })
-  //   return () => chatSocket.disconnect();
-  // }, []);
-
   const notification = useSelector(state => state.notification);
 
   return (

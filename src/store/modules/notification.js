@@ -121,13 +121,12 @@ export function successMessageDisplayed(data) {
 // actions
 export function showMessage(data) {
     if (data && data.type === 'error') {
-        return dispatch => {
-            dispatch(messageDisplayed({
-                type: 'error',
-                message: serializeError(data.message),
-                title: data.title || "An error occured"
-            }))
-        }
+        return dispatch => dispatch(messageDisplayed({
+            type: 'error',
+            message: serializeError(data.message),
+            title: data.title || "An error occured"
+        }))
+
     }
 
     return dispatch => {

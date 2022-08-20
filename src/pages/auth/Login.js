@@ -11,6 +11,8 @@ import { Password } from 'primereact/password';
 import { currentApp } from 'services/agent.service';
 
 import './Login.css'
+import { showMessage } from 'store/modules/notification';
+import { MESSAGE_TYPE } from 'store/constant';
 
 const Login = ({ props }) => {
     const isRequestLoading = useSelector(state => state.auth.loading);
@@ -28,12 +30,12 @@ const Login = ({ props }) => {
 
     useEffect(() => {
         console.log(pass)
+
     }, [pass])
     // console.log({ checked })
 
 
     const onSubmit = (user) => {
-
         user.type = 'artisan'; // Not required but needed to login successfully
         user.app = currentApp;
         dispatch(loginUser(user));
