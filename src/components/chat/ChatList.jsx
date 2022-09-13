@@ -97,7 +97,6 @@ const ChatList = () => {
             </div>
           )}
           {conversations.map((item) => {
-            console.log("item chat", item);
             return (
               <div
                 key={item.id}

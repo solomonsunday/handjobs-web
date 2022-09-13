@@ -1,0 +1,11 @@
+export const ME = "me";
+export const AUDIO_VIDEO_CALL_TO_SERVER = "audio_video_call_to_server";
+export const CALL_USER = "callUser";
+export const UPDATE_MY_MEDIA = "updateMyMedia";
+export const ANSWER_CALL = "answerCall";
+export const CALL_ACCEPTED = "callAccepted"; //server emits
+export const END_CALL = "";
+export const CONNECTED = "connected";
+export const CONNECTED_USER = "connected-users";
+export const UPDATE_USER_MEDIA = "updateUserMedia";
+export const JOINED = "joined";

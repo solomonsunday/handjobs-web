@@ -74,15 +74,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 NODE_PATH=src
 NODE_ENV=production
 REACT_APP_NOT_SECRET_CODE
-API_ROOT_PROD=https://jobplicant-api-pyfpg.ondigitalocean.app
+API_ROOT_PROD=https://jobplicant-api.herokuapp.com
 API_ROOT_LOCAL=http://localhost:8080
 API_ROOT_LIVE=https://jobplicant-api.herokuapp.com
 PORT=3010
 
+### STEPS HOW TO SET UP DEVELOPEMENT ENVIRONMENT FOR FRONT-END
 
-# HOW TO SET UP DEVELOPEMENT ENVIRONMENT FOR FRONT-END
+- clone the repo
+- cd in the folder
+- run yarn to install all the dependencies
+- you will require the content in .evn file to connect to the back end, kindly reach out for the .env content as this project is privite.
 
-1. Go to the .env file and update the value at 
-REACT_APP_CURRENT_APP=artisan
+## FOR THE DEVs ON THE TEAM
+
+- Go to the .env file and add the code below the value at
+  _REACT_APP_CURRENT_APP=artisan_
 
 to either artisan or jobplicant.
