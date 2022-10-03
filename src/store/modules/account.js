@@ -49,6 +49,7 @@ const DELETE_EXPERIENCE = "DELETE_EXPERIENCE";
 const DELETE_EDUCATION = "DELETE_EDUCATION";
 const REMOVE_PORTFOLIO = "REMOVE_PORTFOLIO"
 const SUBMITTING = "SUBMITTING";
+
 // Reducer
 export default function reducer(state = account, action = {}) {
   switch (action.type) {
@@ -519,3 +520,4 @@ export function deactivateAccount() {
     });
   }
 }
+

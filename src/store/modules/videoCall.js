@@ -8,7 +8,7 @@ import { deleteProfileExperience, loadProfileInfo, submitting } from "./account"
 
 // initial values
 const socketId = {
-    sockeiid: "",
+    socketId: "",
     loading: false,
     submitting: false,
     requesting: false,

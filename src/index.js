@@ -8,17 +8,20 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { ConnectedRouter } from "connected-react-router";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { VideoContextProvider } from "contexts/VideoContext";
 
 const store = configureStore();
 
 ReactDOM.render(
-    <Provider store={store}>
+  <Provider store={store}>
+    <VideoContextProvider>
       <Router>
         <ConnectedRouter history={history}>
           <Route component={App} />
         </ConnectedRouter>
       </Router>
-    </Provider>,
+    </VideoContextProvider>
+  </Provider>,
 
   document.getElementById("root")
 );

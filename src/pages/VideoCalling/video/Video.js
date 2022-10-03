@@ -34,30 +34,31 @@ import VideoIcon from "../../../../src/assets/images/video.svg"
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { useHistory } from "react-router";
+import { videoCallSocket } from "App";
 
 // const socket = io()
 
 const URL = "https://fathomless-tundra-67025.herokuapp.com/";
 // const SERVER_URL = "http://localhost:5000/";
 
-export const socket = io(URL);
+const socket = videoCallSocket;
 
 const Video = () => {
 
     // const [sendMsg, setSendMsg] = useState("");
 
     const [callAccepted, setCallAccepted] = useState(false);
+    const [userName, setUserName] = useState("");
     const [callEnded, setCallEnded] = useState(false);
     const [stream, setStream] = useState();
     const [chat, setChat] = useState([]);
     const [name, setName] = useState("");
     const [call, setCall] = useState({});
     const [me, setMe] = useState("");
-    const [userName, setUserName] = useState("");
     const [otherUser, setOtherUser] = useState("");
     const [myVdoStatus, setMyVdoStatus] = useState(true);
-    const [userVdoStatus, setUserVdoStatus] = useState();
     const [myMicStatus, setMyMicStatus] = useState(true);
+    const [userVdoStatus, setUserVdoStatus] = useState();
     const [userMicStatus, setUserMicStatus] = useState();
     const [msgRcv, setMsgRcv] = useState("");
     const [screenShare, setScreenShare] = useState(false)
@@ -73,7 +74,7 @@ const Video = () => {
 
     const [idToCall, setIdToCall] = useState("");
     const [isModalVisible, setIsModalVisible] = useState(false);
-    
+
     socket.on("msgRcv", ({ name, msg: value, sender }) => {
         let msg = {};
         msg.msg = value;
@@ -94,7 +95,7 @@ const Video = () => {
         if (localStorage.getItem("name")) {
             setName(localStorage.getItem("name"));
         }
-        socket.on("me", (id) => setMe(id));
+        // socket.on("me", (id) => setMe(id));
         socket.on("endCall", () => {
             window.location.reload();
         });
@@ -117,6 +118,7 @@ const Video = () => {
         });
 
         socket.on("callUser", ({ from, name: callerName, signal }) => {
+            console.log('on ringing', from, name)
             setCall({ isReceivingCall: true, from, name: callerName, signal });
         });
 
@@ -126,6 +128,10 @@ const Video = () => {
                 setMsgRcv({});
             }, 2000);
         });
+
+        return () => {
+            stream?.getTracks().forEach(track => track.stop())
+        }
     }, []);
 
     const dummy = useRef();
@@ -159,14 +165,14 @@ const Video = () => {
 
     const answerCall = () => {
         setCallAccepted(true);
-        setOtherUser(call.from);
+        setOtherUser(call.name);
         const peer = new Peer({ initiator: false, trickle: false, stream });
 
         peer.on("signal", (data) => {
             socket.emit("answerCall", {
                 signal: data,
                 to: call.from,
-                userName: name,
+                userName: call.name,
                 type: "both",
                 myMediaStatus: [myMicStatus, myVdoStatus],
             });
@@ -177,36 +183,6 @@ const Video = () => {
         });
 
         peer.signal(call.signal);
-
-        connectionRef.current = peer;
-        console.log(connectionRef.current);
-    };
-
-    const callUser = (id) => {
-        const peer = new Peer({ initiator: true, trickle: false, stream });
-        setOtherUser(id);
-        peer.on("signal", (data) => {
-            socket.emit("callUser", {
-                userToCall: id,
-                signalData: data,
-                from: me,
-                name,
-            });
-        });
-
-        peer.on("stream", (currentStream) => {
-            userVideo.current.srcObject = currentStream;
-        });
-
-        socket.on("callAccepted", ({ signal, userName }) => {
-            setCallAccepted(true);
-            setUserName(userName);
-            peer.signal(signal);
-            socket.emit("updateMyMedia", {
-                type: "both",
-                currentMediaStatus: [myMicStatus, myVdoStatus],
-            });
-        });
 
         connectionRef.current = peer;
         console.log(connectionRef.current);
@@ -304,11 +280,11 @@ const Video = () => {
     };
 
     const leaveCall = () => {
-        // setCallEnded(true);
+        setCallEnded(true);
 
-        // connectionRef.current.destroy();
-        // socket.emit("endCall", { id: otherUser });
-        // window.location.reload();
+        connectionRef.current.destroy();
+        socket.emit("endCall", { id: otherUser });
+        window.location.reload();
         history.goBack()
     };
 

@@ -26,6 +26,7 @@ import cv from "./cv";
 import profile from "./profile";
 import dashboard from "./dashboard";
 import notificationSettings from "./notificationSettings"
+import videoCall from './videoCall'
 
 const appReducer = (history) =>
   combineReducers({
@@ -56,6 +57,7 @@ const appReducer = (history) =>
     profile,
     dashboard,
     notificationSettings,
+    videoCall
   });
 
 export default appReducer;

@@ -136,8 +136,8 @@ const EmployeeDashboard = () => {
           <div className="p-card p-mt-2 p-rounded-lg activity-card">
             <div className="p-card-title cardtitle h6">Recent Activities</div>
             {/* <main style={{ overflowY: 'auto' }}> */}
-            {userActivities && userActivities.length > 0 && userActivities.map(activity =>
-              <div className="p-card-body p-card-body-Activity p-px-3">
+            {userActivities && userActivities.length > 0 && userActivities.map((activity, idx) =>
+              <div key={idx} className="p-card-body p-card-body-Activity p-px-3">
                 <i className='pi pi-paperclip pr-3  text-warning'></i><span className=' text-green'>{activity.message}</span>
                 <span className='px-3' style={{ fontWeight: 'bold' }}>
                   {/* {moment(activity.createdAt).fromNow('MMMM Do YYYY')} ago */}

@@ -53,13 +53,13 @@ const ConnectionRequestPanel = ({ setSelectedId, selectedId }) => {
           Connection Requests
         </div>
         {
-          requests.ids.map((requestId) => {
+          requests.ids.map((requestId, idx) => {
             const contact = requests.data[requestId];
             if (!contact) {
               return null;
             }
             return (
-              <div className="p-card-body d-flex justify-content-between">
+              <div key={idx} className="p-card-body d-flex justify-content-between">
                 <span className="d-flex align-items-center w-100">
                   {
                     contact.imageUrl &&

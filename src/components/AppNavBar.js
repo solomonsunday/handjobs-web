@@ -83,18 +83,18 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
       <Navbar
         collapseOnSelect
         expand="lg"
-        className="navbar-area brown-color text-light py-0"
+        className="navbar-area brown-color text-light py-2"
         style={{ borderRadius: "0px" }}
       >
         <Container className="d-flex justify-content-between">
           <div>
-            <Navbar.Brand href="#home">
-              <Link className="navbar-brand logo" to="/dashboard">
-                {/* <img className="logo1" src="/assets/images/logo/applogo.jpeg" alt="Logo" height="35" /> */}
-                <h3 className="text-white" style={{ fontFamily: "cursive" }}>
-                  HandJobs
-                </h3>
-              </Link>
+            <Navbar.Brand href="#home" className="navbar-brand logo" to="/dashboard">
+              {/* <Link> */}
+              {/* <img className="logo1" src="/assets/images/logo/applogo.jpeg" alt="Logo" height="35" /> */}
+              <h3 className="text-white" style={{ fontFamily: "cursive" }}>
+                HandJobs
+              </h3>
+              {/* </Link> */}
             </Navbar.Brand>
             <Navbar.Toggle
               aria-controls="responsive-navbar-nav"
@@ -128,13 +128,13 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                   />
                   <div className="itemTitle-appNavbar mx-3">Jobs</div>
                 </Nav.Link>
-                <Nav.Link className="text-white" href="/contacts">
+                <Link className="text-white" to="/contacts">
                   <i
                     className="pi pi-users itemIcon-appNavbar"
                     style={{ fontSize: "1.5em" }}
                   />
                   <div className="itemTitle-appNavbar mx-3">Contact</div>
-                </Nav.Link>
+                </Link>
                 {width <= 800 && (
                   <Nav.Link className="text-white" href="/instant-messaging">
                     <i
