@@ -106,9 +106,9 @@ export default function reducer(state = timeline, action = {}) {
           ? state.commentIds[postID] || []
           : [];
 
-      const ids = Array.from(
-        new Set([...idArray, ...commentDataInPost.map(({ id }) => id)])
-      );
+      const ids = []
+      // const ids = new Set([...idArray, ...commentDataInPost?.map(({ id }) => id)]) || [];
+      // console.log('new set ids ', ids)
       return {
         ...state,
         loading: "",

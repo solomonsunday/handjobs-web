@@ -128,13 +128,13 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                   />
                   <div className="itemTitle-appNavbar mx-3">Jobs</div>
                 </Nav.Link>
-                <Link className="text-white" to="/contacts">
+                <Nav.Link className="text-white" href="/contacts">
                   <i
                     className="pi pi-users itemIcon-appNavbar"
                     style={{ fontSize: "1.5em" }}
                   />
                   <div className="itemTitle-appNavbar mx-3">Contact</div>
-                </Link>
+                </Nav.Link>
                 {width <= 800 && (
                   <Nav.Link className="text-white" href="/instant-messaging">
                     <i

@@ -29,7 +29,7 @@ export const videoCallSocket = io(`${API_ROOT}/videocallgateway`);
 
 
 function App() {
-  const { answerCall, call, callAccepted, showCallRinging, setShowCallRinging } = useContext(SocketContext);
+  const { socket, me, answerCall, call, callAccepted, show, leaveCall } = useContext(SocketContext);
   const dispatch = useDispatch();
   const account = useSelector(state => state.account.profileInfo)
 
@@ -42,7 +42,12 @@ function App() {
   }, [dispatch])
 
   const user = agent.Auth.current();
-
+  // useEffect(() => {
+  //   if (user !== null && me !== '') {
+  //     console.log({ accountId: user.id, socketId: me })
+  //     socket.emit(JOINED, { accountId: user.id, socketId: me })
+  //   }
+  // }, [user])
 
   useEffect(() => {
     /**Notification socket */
@@ -85,12 +90,13 @@ function App() {
   };
 
   const onHideCallRinging = () => {
-    setShowCallRinging(false)
+    // setShowCallRinging(false)
   }
 
   useEffect(() => {
     if (call.isReceivingCall && !callAccepted) {
-      setShowCallRinging(true)
+      // setShowCallRinging(true)
+
     }
 
 
@@ -102,11 +108,10 @@ function App() {
       <AppAlert />
       <AppRouter />
 
-      <VideoCallRingingModal
+      {/* <VideoCallRingingModal
         openVideoCallRoom={openVideoCallRoom}
-        showCallRinging={showCallRinging}
-        onHideCallRinging={onHideCallRinging}
-      />
+        onHide={onHideCallRinging}
+      /> */}
 
     </React.Suspense>
   )
