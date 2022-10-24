@@ -34,7 +34,7 @@ const account = {
     skills: [],
     experiences: [],
     educations: [],
-    portfolios: []
+    portfolios: [],
   },
   artisanAccounts: [],
   verificationCode: "",
@@ -49,8 +49,9 @@ const LOAD_PROFILE_INFO_ERROR = "LOAD_PROFILE_INFO_ERROR";
 const LOAD_ARTISAN_ACCOUNT = "LOAD_ARTISAN_ACCOUNT";
 const DELETE_EXPERIENCE = "DELETE_EXPERIENCE";
 const DELETE_EDUCATION = "DELETE_EDUCATION";
-const REMOVE_PORTFOLIO = "REMOVE_PORTFOLIO"
+const REMOVE_PORTFOLIO = "REMOVE_PORTFOLIO";
 const SUBMITTING = "SUBMITTING";
+const VERI_CODE = "VERI_CODE";
 // Reducer
 export default function reducer(state = account, action = {}) {
   switch (action.type) {
@@ -60,10 +61,10 @@ export default function reducer(state = account, action = {}) {
       return {
         ...state,
         loading: true,
-        verificationCode: action.payload
+        verificationCode: action.payload,
       };
     case SUBMITTING:
-      return { ...state, submitting: true }
+      return { ...state, submitting: true };
     case LOAD_PROFILE_INFO:
       return {
         ...state,
@@ -82,49 +83,53 @@ export default function reducer(state = account, action = {}) {
       return {
         ...state,
         loading: false,
-        submitting: false
+        submitting: false,
       };
     case LOAD_ARTISAN_ACCOUNT:
       return {
         ...state,
         artisanAccounts: action.payload,
         loading: false,
-      }
+      };
     case REMOVE_PORTFOLIO:
-      const newPortfolios = state.profileInfo.portfolios.filter(image => {
+      const newPortfolios = state.profileInfo.portfolios.filter((image) => {
         const itemData = image.split("/");
-        const filename = itemData[itemData.length - 1]
+        const filename = itemData[itemData.length - 1];
         return filename !== action.payload;
-      })
+      });
       return {
         ...state,
         loading: false,
         submitting: false,
         profileInfo: {
           ...state.profileInfo,
-          portfolios: newPortfolios
-        }
-      }
+          portfolios: newPortfolios,
+        },
+      };
     case DELETE_EDUCATION:
-      const newEducations = state.profileInfo.educations.filter(edu => edu.id !== action.payload);
-      console.log('new education', newEducations);
+      const newEducations = state.profileInfo.educations.filter(
+        (edu) => edu.id !== action.payload
+      );
+      console.log("new education", newEducations);
       return {
         ...state,
         profileInfo: {
           ...state.profileInfo,
-          educations: [...newEducations]
-        }
-      }
+          educations: [...newEducations],
+        },
+      };
     case DELETE_EXPERIENCE:
-      const newExperiences = state.profileInfo.experiences.filter(exp => exp.id !== action.payload)
-      console.log('newExperiences', newExperiences);
+      const newExperiences = state.profileInfo.experiences.filter(
+        (exp) => exp.id !== action.payload
+      );
+      console.log("newExperiences", newExperiences);
       return {
         ...state,
         profileInfo: {
           ...state.profileInfo,
-          experiences: [...newExperiences]
-        }
-      }
+          experiences: [...newExperiences],
+        },
+      };
     default:
       return state;
   }
@@ -139,7 +144,6 @@ export function getVeriCode(data) {
   return { type: VERI_CODE, payload: data };
 }
 
-
 export function LoadProfileDataByUser(data) {
   return { type: LOAD_PROFILE_INFO_BY_USER, payload: data };
 }
@@ -151,39 +155,39 @@ export const loading = () => ({
   type: LOADING,
 });
 export const submitting = () => ({
-  type: SUBMITTING
-})
-export const removePortfolio = payload => ({
+  type: SUBMITTING,
+});
+export const removePortfolio = (payload) => ({
   type: REMOVE_PORTFOLIO,
-  payload
-})
+  payload,
+});
 //delete education action creator
-export const deleteProfileEducation = id => ({
+export const deleteProfileEducation = (id) => ({
   type: DELETE_EDUCATION,
-  payload: id
-})
+  payload: id,
+});
 //delete experience action creator
-export const deleteProfileExperience = id => ({
+export const deleteProfileExperience = (id) => ({
   type: DELETE_EXPERIENCE,
-  payload: id
-})
+  payload: id,
+});
 
 export const ArtisanAccount = (data) => {
   return {
     type: LOAD_ARTISAN_ACCOUNT,
-    payload: data
-  }
-}
+    payload: data,
+  };
+};
 
 // Actions
 export function updatePersonalProfile(data) {
   return (dispatch) => {
     dispatch(submitting());
-    console.log('dispatch is called to update profile')
+    console.log("dispatch is called to update profile");
     return agent.Account.updateProfile(data).then(
       (response) => {
         // dispatch(profileInfoLoaded(response));
-        dispatch(loadProfileInfo())
+        dispatch(loadProfileInfo());
         dispatch(closeModal());
         // dispatch(
         //   showMessage({
@@ -203,7 +207,7 @@ export function updatePersonalProfile(data) {
 }
 export function loadProfileInfo() {
   return (dispatch) => {
-    dispatch(loading())
+    dispatch(loading());
     return agent.Account.getProfileInfo().then((response) => {
       dispatch(profileInfoLoaded(response));
       // dispatch(
@@ -397,7 +401,7 @@ export function updateProfilePortfolio(images) {
       (response) => {
         // handle success
         dispatch(profileInfoLoaded(response));
-        dispatch(closeModal())
+        dispatch(closeModal());
         dispatch(
           showMessage({
             type: MESSAGE_TYPE.SUCCESS,
@@ -415,14 +419,14 @@ export function updateProfilePortfolio(images) {
 }
 
 export function deleteProfilePortfolio(filename) {
-  return dispatch => {
-    dispatch(loading())
+  return (dispatch) => {
+    dispatch(loading());
     return agent.Account.deleteProfilePortfolio(filename).then(
       (response) => {
         // handle success
         // dispatch(profileInfoLoaded(response));
-        dispatch(removePortfolio(filename))
-        dispatch(closeModal())
+        dispatch(removePortfolio(filename));
+        dispatch(closeModal());
         dispatch(
           showMessage({
             type: MESSAGE_TYPE.SUCCESS,
@@ -436,7 +440,7 @@ export function deleteProfilePortfolio(filename) {
         dispatch(showMessage({ type: "error", message: error }));
       }
     );
-  }
+  };
 }
 
 export function loadAccountByUser(id) {
@@ -444,7 +448,7 @@ export function loadAccountByUser(id) {
     return agent.Account.getByID(id).then(
       (response) => {
         // handle success
-        dispatch(LoadProfileDataByUser(response))
+        dispatch(LoadProfileDataByUser(response));
         // dispatch(profileInfoLoaded(response))
       },
       (error) => {
@@ -455,20 +459,19 @@ export function loadAccountByUser(id) {
   };
 }
 
-
 export function loadArtisanAccounts(page, limit, search) {
   return (dispatch) => {
-    dispatch(loading(true))
+    dispatch(loading(true));
     return agent.Account.loadArtisanAccounts(page, limit, search).then(
       (response) => {
         // handle success
-        dispatch(ArtisanAccount(response))
+        dispatch(ArtisanAccount(response));
         dispatch(loading(false));
       },
       (error) => {
         // handle error
         dispatch(showMessage({ type: "error", message: error }));
-        dispatch(loading(false))
+        dispatch(loading(false));
       }
     );
   };
@@ -498,11 +501,10 @@ export const deleteExperience = (id) => (dispatch) => {
 };
 //to delete education
 export const deleteEducation = (id) => (dispatch) => {
-
   // dispatch(loading());
   return agent.Education.delete(id).then(
     (response) => {
-      dispatch(deleteProfileEducation(id))
+      dispatch(deleteProfileEducation(id));
       dispatch(
         showMessage({
           type: MESSAGE_TYPE.SUCCESS,
@@ -521,17 +523,25 @@ export const deleteEducation = (id) => (dispatch) => {
 };
 
 export function deactivateAccount() {
-  return dispatch => {
-    dispatch(isRequestLoading(true))
-    return agent.Account.deactivateMyAccount().then(response => {
-      dispatch(isRequestLoading(false))
-      dispatch(showMessage({ type: MESSAGE_TYPE.SUCCESS, message: "Account successfully deactivated!" }));
-      dispatch(OnLogout());
-    }, error => {
-      dispatch(isRequestLoading(false))
-      dispatch(showMessage({ type: "error", message: error }));
-    });
-  }
+  return (dispatch) => {
+    dispatch(isRequestLoading(true));
+    return agent.Account.deactivateMyAccount().then(
+      (response) => {
+        dispatch(isRequestLoading(false));
+        dispatch(
+          showMessage({
+            type: MESSAGE_TYPE.SUCCESS,
+            message: "Account successfully deactivated!",
+          })
+        );
+        dispatch(OnLogout());
+      },
+      (error) => {
+        dispatch(isRequestLoading(false));
+        dispatch(showMessage({ type: "error", message: error }));
+      }
+    );
+  };
 }
 
 export function getSmsShortCode(data) {
@@ -547,8 +557,8 @@ export function getSmsShortCode(data) {
             message: "SMS Verification Code sent successfully",
           })
         );
-        dispatch(getVeriCode(response))
-        console.log({ response })
+        dispatch(getVeriCode(response));
+        console.log({ response });
       },
       (error) => {
         // handle error
@@ -559,17 +569,25 @@ export function getSmsShortCode(data) {
 }
 
 export function verifyPhoneNumber(userRes) {
-  return dispatch => {
-    dispatch(loading(true))
-    return agent.Account.verifyPhoneNumber(userRes).then(response => {
-      // handle success
-      dispatch(showMessage({ type: MESSAGE_TYPE.SUCCESS, message: "Phone verification successful" }));
-      dispatch(loading(false))
-      dispatch(push(`/profile`));
-    }, error => {
-      // handle error
-      dispatch(loading(false));
-      dispatch(showMessage({ type: "error", message: error }));
-    });
-  }
+  return (dispatch) => {
+    dispatch(loading(true));
+    return agent.Account.verifyPhoneNumber(userRes).then(
+      (response) => {
+        // handle success
+        dispatch(
+          showMessage({
+            type: MESSAGE_TYPE.SUCCESS,
+            message: "Phone verification successful",
+          })
+        );
+        dispatch(loading(false));
+        dispatch(push(`/profile`));
+      },
+      (error) => {
+        // handle error
+        dispatch(loading(false));
+        dispatch(showMessage({ type: "error", message: error }));
+      }
+    );
+  };
 }

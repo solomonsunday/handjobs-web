@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import React, { useEffect, useState, useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-=======
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
->>>>>>> origin/main
 import io from "socket.io-client";
 import agent, { API_ROOT } from "./services/agent.service";
 import { UserNotifications } from "./store/modules/appNotification";
@@ -24,28 +19,19 @@ import "./App.css";
 
 import AppLoading from "./components/AppLoading";
 import AppAlert from "components/AppAlert";
-<<<<<<< HEAD
-import { CALL_USER, CONNECTED, CONNECTED_USER, JOINED, ME } from "constants/video-call";
-import { socketIdSaved } from 'store/modules/videoCall';
-import VideoCallRingingModal from 'pages/VideoCalling/VideoCallModal';
-import { push } from 'connected-react-router';
-import VideoContext from 'contexts/VideoContext';
-import { SocketContext } from 'contexts/VideoContext'
-
-export const SET_CUSTOM_SOCKET_ID = "SET_CUSTOM_SOCKET_ID";
-=======
->>>>>>> origin/main
+import { SocketContext } from "./contexts/VideoContext";
 
 const AppRouter = React.lazy(() => import("./routes/app-router"));
 const notificationSocket = io(`${API_ROOT}/notigateway`);
 export const videoCallSocket = io(`${API_ROOT}/videocallgateway`);
 
 function App() {
-  const { socket, me, answerCall, call, callAccepted, show, leaveCall } = useContext(SocketContext);
+  const { socket, me, answerCall, call, callAccepted, show, leaveCall } =
+    useContext(SocketContext);
   const dispatch = useDispatch();
-  const account = useSelector(state => state.account.profileInfo)
+  const account = useSelector((state) => state.account.profileInfo);
 
-  const [connectedUsers, setConnectedUsers] = useState({})
+  const [connectedUsers, setConnectedUsers] = useState({});
 
   useEffect(() => {
     if (agent.Auth.isAuth()) {
@@ -62,10 +48,6 @@ function App() {
   // }, [user])
 
   useEffect(() => {
-<<<<<<< HEAD
-    /**Notification socket */
-=======
->>>>>>> origin/main
     notificationSocket.on("connect", () => {
       if (user && user.id) {
         notificationSocket.emit("notification_msg_to_server", {
@@ -88,35 +70,10 @@ function App() {
         }
       });
     });
-<<<<<<< HEAD
-    return () => {
-      notificationSocket.disconnect();
-
-    };
-  }, [notificationSocket, user]);
-
-
-
-  /**
-   * Ring when the current logged in user has a call to receive
-   * 
-   */
-  const openVideoCallRoom = () => {
-    dispatch(push("/videochat"))
-  };
-
-  const onHideCallRinging = () => {
-    // setShowCallRinging(false)
-  }
-
-
-
-=======
     return () => notificationSocket.disconnect();
   }, [notificationSocket]);
 
   const notification = useSelector((state) => state.notification);
->>>>>>> origin/main
 
   return (
     <React.Suspense fallback={<AppLoading />}>
@@ -127,7 +84,6 @@ function App() {
         openVideoCallRoom={openVideoCallRoom}
         onHide={onHideCallRinging}
       /> */}
-
     </React.Suspense>
   );
 }
