@@ -1,8 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { SocketContext } from "../../contexts/VideoContext";
 
 const VideoCallNotification = () => {
   const { answerCall, call, callAccepted } = useContext(SocketContext);
+
+  useEffect(() => {
+    if (call.isReceivingCall && !callAccepted) {
+      // setShowCallRinging(true)
+      console.log(
+        "VIDEO CALL NOTIFICATION",
+        call,
+        "call accepted",
+        callAccepted
+      );
+      console.log(`${call.name} is calling...`);
+    }
+  }, [call?.isReceivingCall, callAccepted]);
 
   return (
     <>

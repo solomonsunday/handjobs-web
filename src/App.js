@@ -93,14 +93,7 @@ function App() {
     // setShowCallRinging(false)
   }
 
-  useEffect(() => {
-    if (call.isReceivingCall && !callAccepted) {
-      // setShowCallRinging(true)
 
-    }
-
-
-  }, [call, callAccepted])
 
 
   return (

@@ -9,6 +9,8 @@ import ConnectionRequestPanel from "./ConnectionRequestPanel";
 
 
 import ContactListItem from "./ContactListItem";
+import VideoSidebar from "components/video-chat/video-sidebar";
+import VideoCallNotification from "components/video-chat/video-call-notification";
 
 
 const List = () => {
@@ -17,8 +19,8 @@ const List = () => {
   const error = useSelector((state) => state.contact.error);
   const meta = useSelector((state) => state.contact.contacts.meta);
 
-
   const [selectedId, setSelectedId] = useState(-1)
+  const [userToCallId, setUserToCallId] = useState(undefined);
 
   // for contact list
   const pageLimit = 10;
@@ -105,6 +107,16 @@ const List = () => {
                 </span>
               </div>
             </div>
+            {/** Video call sidebar */}
+            {/* {userToCallId && ( */}
+            <>
+              <VideoSidebar idToCall={userToCallId} setUserToCallId={setUserToCallId} >
+                <VideoCallNotification />
+
+              </VideoSidebar>
+            </>
+            {/* )} */}
+            {/* ./Video call sidebar */}
             {contacts.ids?.map((contactId) => {
               const contact = contacts.data[contactId];
               // console.log('CONTACT TO CALL', contact)
@@ -112,7 +124,7 @@ const List = () => {
                 return null;
               }
               return (
-                <ContactListItem key={contact.id} contact={contact} setSelectedId={setSelectedId} />
+                <ContactListItem key={contact.id} contact={contact} setSelectedId={setSelectedId} setUserToCallId={setUserToCallId} />
               );
             })}
             {contacts.ids.length > 0 && (

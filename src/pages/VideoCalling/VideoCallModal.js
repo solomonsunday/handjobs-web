@@ -6,12 +6,12 @@ import VideoSidebar from "components/video-chat/video-sidebar";
 import VideoCallNotification from "components/video-chat/video-call-notification";
 import VideoPlayer from "components/video-chat/video-player";
 
-const VideoCallRingingModal = ({ openVideoCallRoom, showCallRinging, onHideCallRinging }) => {
-  return <Dialog visible={showCallRinging} position={'bottom'} modal style={{ width: '50vw' }} onHide={() => onHideCallRinging()}
+const VideoCallRingingModal = ({ show, onHide, idToCall }) => {
+  return <Dialog visible={show} position={'bottom'} modal style={{ width: '50vw' }} onHide={() => onHide()}
     draggable={false} resizable={false}>
     <VideoPlayer />
 
-    <VideoSidebar>
+    <VideoSidebar idToCall={idToCall}>
       <VideoCallNotification />
     </VideoSidebar>
 

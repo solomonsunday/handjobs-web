@@ -15,13 +15,16 @@ import {
 } from "../../store/modules/contact";
 import { confirmDialog } from "primereact/confirmdialog";
 import { actionSetSelectedContact } from "store/modules/chat";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SocketContext } from "contexts/VideoContext";
 import { Link } from "react-router-dom";
 import { push } from "connected-react-router";
+import VideoSidebar from "components/video-chat/video-sidebar";
+import VideoCallNotification from "components/video-chat/video-call-notification";
 
-const ContactListItem = ({ contact, setSelectedId }) => {
+const ContactListItem = ({ contact, setSelectedId, setUserToCallId }) => {
   const {
+    socket,
     me,
     callAccepted,
     name,
@@ -30,24 +33,48 @@ const ContactListItem = ({ contact, setSelectedId }) => {
     leaveCall,
     callUser,
     onlineUsers,
+    currentOnlineUser,
   } = useContext(SocketContext);
   const [videoCallingUser, setVideoCallingUser] = useState(false);
   const dispatch = useDispatch();
 
-  const handleVideoCall = (id) => {
-    const onlineUser = onlineUsers[id];
-    if (!onlineUser) {
-      alert("this user is not available at the moment");
-      return;
-    }
-    const { socketId } = onlineUser;
-    //expect name and the usr to call ID
+  const profileInfo = useSelector((state) => state.account.profileInfo);
+  console.log(profileInfo);
 
-    console.log("socket id", socketId);
-    // and then route to the video call page
-    callUser(socketId);
-    setVideoCallingUser(true);
-    dispatch(push("/videochat"));
+  const handleVideoCall = (id) => {
+    setUserToCallId("xxxxxx");
+    return;
+    socket.emit("current-online-user", { accountId: id });
+
+    socket.on("current-online-user", (data) => {
+      if (data === null) {
+        alert("this user is not available at the moment");
+        return;
+      }
+
+      const { socketId } = data;
+      setUserToCallId(socketId);
+      // console.log("socket id", socketId);
+      // and then route to the video call page
+      // callUser(socketId);
+      // setName(`${contact.firstName} ${contact.lastName}`);
+      // setVideoCallingUser(true);
+    });
+    // return;
+    // const onlineUser = onlineUsers[id];
+    // if (!onlineUser) {
+    //   alert("this user is not available at the moment");
+    //   return;
+    // }
+    // const { socketId } = onlineUser;
+    // //expect name and the usr to call ID
+
+    // console.log("socket id", socketId);
+    // // and then route to the video call page
+    // callUser(socketId);
+    // setName(`${contact.firstName} ${contact.lastName}`);
+    // setVideoCallingUser(true);
+    // dispatch(push("/videochat"));
   };
 
   const handleOpenChatRoom = (contact) => {
@@ -185,16 +212,16 @@ const ContactListItem = ({ contact, setSelectedId }) => {
             handleVideoCall(contact.id);
             setName(
               `${formatter.capitalizeFirstLetter(
-                contact?.firstName
-              )} ${formatter.capitalizeFirstLetter(contact?.lastName)}`
+                profileInfo?.firstName
+              )} ${formatter.capitalizeFirstLetter(profileInfo?.lastName)}`
             );
           }}
         >
-          {videoCallingUser ? (
+          {/* {videoCallingUser ? (
             <h3>Calling...</h3>
           ) : (
-            <BsFillCameraVideoFill fontSize={30} />
-          )}
+            )} */}
+          <BsFillCameraVideoFill fontSize={30} />
         </div>
         {/* <i
         className="pi pi-comments p-pr-2"

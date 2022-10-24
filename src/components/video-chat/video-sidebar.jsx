@@ -1,11 +1,26 @@
 import { SocketContext } from "../../contexts/VideoContext";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 const VideoSidebar = ({ children, idToCall }) => {
-  const { me, callAccepted, name, setName, callEnded, leaveCall, callUser } =
-    useContext(SocketContext);
+  const {
+    me,
+    call,
+    callAccepted,
+    name,
+    setName,
+    callEnded,
+    leaveCall,
+    callUser,
+  } = useContext(SocketContext);
 
-  const [toCallId, setToCallId] = React.useState("");
+  useEffect(() => {
+    if (call?.Ended && !callAccepted) {
+      // setShowCallRinging(true)
+      console.log("answer call");
+    }
+  }, [call?.Ended, callAccepted]);
+
+  const [toCallId, setToCallId] = React.useState(idToCall);
   return (
     <div>
       <div>
