@@ -5,6 +5,7 @@ import { closeModal } from "./modal";
 import { loadError } from "./experience";
 import { isRequestLoading } from "./review";
 import { OnLogout } from "./auth";
+import { push } from "connected-react-router";
 
 // initial values
 const account = {
@@ -36,6 +37,7 @@ const account = {
     portfolios: []
   },
   artisanAccounts: [],
+  verificationCode: "",
 };
 
 // Action types
@@ -49,12 +51,17 @@ const DELETE_EXPERIENCE = "DELETE_EXPERIENCE";
 const DELETE_EDUCATION = "DELETE_EDUCATION";
 const REMOVE_PORTFOLIO = "REMOVE_PORTFOLIO"
 const SUBMITTING = "SUBMITTING";
-
 // Reducer
 export default function reducer(state = account, action = {}) {
   switch (action.type) {
     case LOADING:
       return { ...state, loading: true };
+    case VERI_CODE:
+      return {
+        ...state,
+        loading: true,
+        verificationCode: action.payload
+      };
     case SUBMITTING:
       return { ...state, submitting: true }
     case LOAD_PROFILE_INFO:
@@ -127,6 +134,12 @@ export default function reducer(state = account, action = {}) {
 export function profileInfoLoaded(data) {
   return { type: LOAD_PROFILE_INFO, payload: data };
 }
+
+export function getVeriCode(data) {
+  return { type: VERI_CODE, payload: data };
+}
+
+
 export function LoadProfileDataByUser(data) {
   return { type: LOAD_PROFILE_INFO_BY_USER, payload: data };
 }
@@ -521,3 +534,42 @@ export function deactivateAccount() {
   }
 }
 
+export function getSmsShortCode(data) {
+  return (dispatch) => {
+    dispatch(submitting());
+    return agent.Account.getSmsShortCode(data).then(
+      (response) => {
+        // dispatch(getVeriCode(response))
+        dispatch(
+          showMessage({
+            type: MESSAGE_TYPE.SUCCESS,
+            title: "SMS Verification Code",
+            message: "SMS Verification Code sent successfully",
+          })
+        );
+        dispatch(getVeriCode(response))
+        console.log({ response })
+      },
+      (error) => {
+        // handle error
+        dispatch(showMessage({ type: "error", message: error }));
+      }
+    );
+  };
+}
+
+export function verifyPhoneNumber(userRes) {
+  return dispatch => {
+    dispatch(loading(true))
+    return agent.Account.verifyPhoneNumber(userRes).then(response => {
+      // handle success
+      dispatch(showMessage({ type: MESSAGE_TYPE.SUCCESS, message: "Phone verification successful" }));
+      dispatch(loading(false))
+      dispatch(push(`/profile`));
+    }, error => {
+      // handle error
+      dispatch(loading(false));
+      dispatch(showMessage({ type: "error", message: error }));
+    });
+  }
+}

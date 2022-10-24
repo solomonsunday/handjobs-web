@@ -144,6 +144,7 @@ export function loginUser({ email, password, type, app }) {
           dispatch(push("/profile"));
         }
         dispatch(isRequestLoading(false))
+
       }, error => {
         // handle error
         dispatch(showMessage({ type: "error", message: error }));

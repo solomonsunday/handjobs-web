@@ -365,7 +365,7 @@ export function editInstantJob(id, data) {
         dispatch(
           showMessage({
             type: MESSAGE_TYPE.SUCCESS,
-            message: "Instant Job successfully udated",
+            message: "Instant Job successfully updated",
             title: "Instant job successfully updated ",
           })
         );

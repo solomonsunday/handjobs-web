@@ -22,6 +22,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { deactivateAccount, loadProfileInfo } from "store/modules/account";
 import { ConfirmDialog } from 'primereact/confirmdialog'; // To use <ConfirmDialog> tag
 import { confirmDialog } from 'primereact/confirmdialog';
+import { Button } from 'primereact/button';
 
 // import BreadCrumbPane from 'helpers/BreadCrumb';
 
@@ -34,7 +35,7 @@ const UserProfile = ({ match }) => {
   const [, setMode] = useState("");
   const accountType = agentService.Auth.current().accountType;
   const userID = agentService.Auth.current().id;
-  console.log({userID})
+  console.log({ userID })
 
 
 
@@ -49,19 +50,19 @@ const UserProfile = ({ match }) => {
     dispatch(openModal(name));
   };
 
-  const handleDeleteAccount =()=> {
+  const handleDeleteAccount = () => {
     confirmDialog({
       header: 'Confirmation',
       message: 'Are you sure you want to Delete your account? all your data will be completely lost and this is irreversible',
       icon: 'pi pi-info-circle',
       acceptClassName: 'p-button-danger',
       accept: () => {
-        dispatch(deactivateAccount())       
+        dispatch(deactivateAccount())
       },
       reject: () => {
-          return;
+        return;
       },
-  });
+    });
   }
 
   // useEffect(() => {
@@ -92,7 +93,9 @@ const UserProfile = ({ match }) => {
             />
 
           </div>
-
+          <div>
+            {/* <Button onClick={testNotification} type="submit" label="Test" className="appcolor rounded-pill on-hover" /> */}
+          </div>
           <div className="p-grid">
             <div className="p-col-12 p-md-9 content-smallscreen">
               <div className="content-tab" style={{ borderRadius: "1rem" }}>
@@ -108,7 +111,7 @@ const UserProfile = ({ match }) => {
                 <Route path={`${match.path}/contacts`} component={ContactsTab} />
                 <Route path={`${match.path}/groups`} component={GroupsTab} />
                 <Route path={`${match.path}/review`} component={ReviewTab} />
-              <p>Click <span className="text-danger font-weight-bold finger" onClick={handleDeleteAccount}>Here</span> if you wish to delete your account </p>
+                <p>Click <span className="text-danger font-weight-bold finger" onClick={handleDeleteAccount}>Here</span> if you wish to delete your account </p>
 
 
               </div>
