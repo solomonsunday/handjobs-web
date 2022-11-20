@@ -5,9 +5,9 @@ import Peer from 'simple-peer';
 const SocketContext = createContext();
 
 // const socket = io('http://localhost:5000');
-const socket = io('https://warm-wildwood-81069.herokuapp.com');
+// const socket = io('https://warm-wildwood-81069.herokuapp.com');
 // const socket = io('http://localhost:8080/videocallgateway')
-// const socket = io('https://jobplicant-api.herokuapp.com/videocallgateway')
+const socket = io('https://jobplicant-api.herokuapp.com/videocallgateway')
 const VideoContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
