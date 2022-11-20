@@ -1,0 +1,13 @@
+
+// const mapUsersToObject = (users) => {
+//   let obj = {};
+//   Object.values(users).forEach((user) => {
+//     obj[user.accountId] = user;
+//   })
+//   return obj;
+// }
+
+// socket.on("connected-users", (users) => {
+//   console.log('connected-users', users)
+//   setOnlineUsers(mapUsersToObject(users));
+// })

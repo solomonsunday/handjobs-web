@@ -20,6 +20,9 @@ import "./App.css";
 import AppLoading from "./components/AppLoading";
 import AppAlert from "components/AppAlert";
 import { SocketContext } from "./contexts/VideoContext";
+import Sidebar from "components/video-chat/call-components/Sidebar";
+import Notifications from "components/video-chat/call-components/Notifications";
+import VideoCallDialog from "components/video-chat/call-components/VideoCallDialog";
 
 const AppRouter = React.lazy(() => import("./routes/app-router"));
 const notificationSocket = io(`${API_ROOT}/notigateway`);
@@ -80,10 +83,10 @@ function App() {
       <AppAlert notification={notification} />
       <AppRouter />
 
-      {/* <VideoCallRingingModal
-        openVideoCallRoom={openVideoCallRoom}
-        onHide={onHideCallRinging}
-      /> */}
+      <Sidebar>
+        <Notifications />
+        <VideoCallDialog />
+      </Sidebar>
     </React.Suspense>
   );
 }

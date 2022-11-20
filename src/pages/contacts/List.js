@@ -107,16 +107,7 @@ const List = () => {
                 </span>
               </div>
             </div>
-            {/** Video call sidebar */}
-            {/* {userToCallId && ( */}
-            <>
-              <VideoSidebar idToCall={userToCallId} setUserToCallId={setUserToCallId} >
-                <VideoCallNotification />
 
-              </VideoSidebar>
-            </>
-            {/* )} */}
-            {/* ./Video call sidebar */}
             {contacts.ids?.map((contactId) => {
               const contact = contacts.data[contactId];
               // console.log('CONTACT TO CALL', contact)

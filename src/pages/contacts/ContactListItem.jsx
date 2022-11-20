@@ -42,23 +42,18 @@ const ContactListItem = ({ contact, setSelectedId, setUserToCallId }) => {
   console.log(profileInfo);
 
   const handleVideoCall = (id) => {
-    setUserToCallId("xxxxxx");
-    return;
     socket.emit("current-online-user", { accountId: id });
 
     socket.on("current-online-user", (data) => {
+      console.log("online luser data", data);
       if (data === null) {
         alert("this user is not available at the moment");
         return;
       }
 
       const { socketId } = data;
-      setUserToCallId(socketId);
-      // console.log("socket id", socketId);
-      // and then route to the video call page
-      // callUser(socketId);
-      // setName(`${contact.firstName} ${contact.lastName}`);
-      // setVideoCallingUser(true);
+
+      console.log("socket id", socketId);
     });
     // return;
     // const onlineUser = onlineUsers[id];
@@ -184,7 +179,7 @@ const ContactListItem = ({ contact, setSelectedId, setUserToCallId }) => {
           <small>
             <b>Email:</b> {contact?.email || "Unavailable"}
           </small>
-          <div>
+          {/* <div>
             {onlineUsers !== null && onlineUsers[contact?.id] !== undefined && (
               <span
                 style={{
@@ -197,7 +192,7 @@ const ContactListItem = ({ contact, setSelectedId, setUserToCallId }) => {
                 Online
               </span>
             )}
-          </div>
+          </div> */}
         </span>
       </span>
       <div className="contacts-actionIcons d-flex">

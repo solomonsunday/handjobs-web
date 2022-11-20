@@ -16,6 +16,7 @@ const VideoCallNotification = () => {
       console.log(`${call.name} is calling...`);
     }
   }, [call?.isReceivingCall, callAccepted]);
+  console.log("call?.isReceivingCall", call?.isReceivingCall);
 
   return (
     <>
