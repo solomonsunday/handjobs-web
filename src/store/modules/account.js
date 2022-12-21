@@ -110,7 +110,6 @@ export default function reducer(state = account, action = {}) {
       const newEducations = state.profileInfo.educations.filter(
         (edu) => edu.id !== action.payload
       );
-      console.log("new education", newEducations);
       return {
         ...state,
         profileInfo: {
@@ -122,7 +121,6 @@ export default function reducer(state = account, action = {}) {
       const newExperiences = state.profileInfo.experiences.filter(
         (exp) => exp.id !== action.payload
       );
-      console.log("newExperiences", newExperiences);
       return {
         ...state,
         profileInfo: {
@@ -183,7 +181,6 @@ export const ArtisanAccount = (data) => {
 export function updatePersonalProfile(data) {
   return (dispatch) => {
     dispatch(submitting());
-    console.log("dispatch is called to update profile");
     return agent.Account.updateProfile(data).then(
       (response) => {
         // dispatch(profileInfoLoaded(response));
@@ -554,11 +551,9 @@ export function getSmsShortCode(data) {
           showMessage({
             type: MESSAGE_TYPE.SUCCESS,
             title: "SMS Verification Code",
-            message: "SMS Verification Code sent successfully",
+            message: "SMS verification code sent successfully",
           })
         );
-        dispatch(getVeriCode(response));
-        console.log({ response });
       },
       (error) => {
         // handle error
@@ -581,7 +576,8 @@ export function verifyPhoneNumber(userRes) {
           })
         );
         dispatch(loading(false));
-        dispatch(push(`/profile`));
+        // dispatch(push("/profile"));
+        window.location.href = "/profile";
       },
       (error) => {
         // handle error
