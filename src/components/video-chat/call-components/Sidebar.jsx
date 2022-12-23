@@ -15,36 +15,37 @@ const Sidebar = ({ children }) => {
   };
 
   return (
-    <div>
-      <div>
-        <form>
-          <div>
-            <div>
-              <h6>Account Info</h6>
-              <input
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-            <div>
-              <h6>Make a call</h6>
-              <input
-                label="ID to call"
-                value={idToCall}
-                onChange={(e) => setIdToCall(e.target.value)}
-              />
-              {callAccepted && !callEnded ? (
-                <button onClick={leaveCall}>Hang Up</button>
-              ) : (
-                <button onClick={handleCall}>Call</button>
-              )}
-            </div>
-          </div>
-        </form>
-        {children}
-      </div>
-    </div>
+    // <div>
+    //   <div>
+    //     <form>
+    //       <div>
+    //         <div>
+    //           <h6>Account Info</h6>
+    //           <input
+    //             placeholder="Name"
+    //             value={name}
+    //             onChange={(e) => setName(e.target.value)}
+    //           />
+    //         </div>
+    //         <div>
+    //           <h6>Make a call</h6>
+    //           <input
+    //             label="ID to call"
+    //             value={idToCall}
+    //             onChange={(e) => setIdToCall(e.target.value)}
+    //           />
+    //           {callAccepted && !callEnded ? (
+    //             <button onClick={leaveCall}>Hang Up</button>
+    //           ) : (
+    //             <button onClick={handleCall}>Call</button>
+    //           )}
+    //         </div>
+    //       </div>
+    //     </form>
+    //     {children}
+    //   </div>
+    // </div>
+    <></>
   );
 };
 

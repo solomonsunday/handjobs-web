@@ -58,8 +58,6 @@ const ApplicantProfile = () => {
     "request-connection"
   );
 
-
-
   const handleInfoTab = () => {
     setIsHideReview(true);
     setIsShowInfo(true);
@@ -128,7 +126,7 @@ const ApplicantProfile = () => {
             <ConnectionConfirm
               contactId={profileInfo.id}
               contactDetails={profileInfo}
-              title= "Do you accept connection request?"
+              title="Do you accept connection request?"
               application="connection request"
             />
           )}
@@ -137,7 +135,7 @@ const ApplicantProfile = () => {
             <ConnectionConfirm
               contactId={profileInfo.id}
               contactDetails={profileInfo}
-              title= "Do you want to connect with this user?"
+              title="Do you want to connect with this user?"
               application="send request"
             />
           )}
@@ -145,7 +143,7 @@ const ApplicantProfile = () => {
             <ConnectionConfirm
               contactId={profileInfo.id}
               contactDetails={profileInfo}
-              title= "Do you want to accept applicant?"
+              title="Do you want to accept applicant?"
               application="accept applicant"
             />
           )}
@@ -196,7 +194,7 @@ const ApplicantProfile = () => {
             </div>
 
             <div className="content-body" hidden={!isShowInfo}>
-              {loading ? (
+              {/* {loading ? (
                 <BiographySkeleton />
               ) : (
                 <Biography
@@ -205,7 +203,7 @@ const ApplicantProfile = () => {
                   profileInfo={profileInfo}
                   isViewApplicant={true}
                 />
-              )}
+              )} */}
 
               <div className="p-grid">
                 <div className="p-col-12 p-md-8 content-leftPanel">
@@ -265,7 +263,7 @@ const ApplicantProfile = () => {
                       isViewApplicant={true}
                     />
                   )}
-                  {accountType !== ACCOUNT_TYPE.ARTISAN && loading ? (
+                  {/* {accountType !== ACCOUNT_TYPE.ARTISAN && loading ? (
                     <HobbiesSkeleton />
                   ) : (
                     <Hobbies
@@ -274,8 +272,8 @@ const ApplicantProfile = () => {
                       profileInfo={profileInfo}
                       isViewApplicant={true}
                     />
-                  )}
-                  {accountType !== ACCOUNT_TYPE.ARTISAN && loading ? (
+                  )} */}
+                  {/* {accountType !== ACCOUNT_TYPE.ARTISAN && loading ? (
                     <ProfessionOfInterestSkeleton />
                   ) : (
                     <ProfessionsOfInterest
@@ -284,8 +282,8 @@ const ApplicantProfile = () => {
                       profileInfo={profileInfo}
                       isViewApplicant={true}
                     />
-                  )}
-                  {loading ? (
+                  )} */}
+                  {/* {loading ? (
                     <LocationOfInterestSkeleton />
                   ) : (
                     <LocationOfInterest
@@ -294,7 +292,7 @@ const ApplicantProfile = () => {
                       profileInfo={profileInfo}
                       isViewApplicant={true}
                     />
-                  )}
+                  )} */}
                 </div>
               </div>
               <ModalForm
