@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SectionHeader from "./SectionHeader";
 import { PROFILE } from "constants/profile";
 import "./UserProfile.css";

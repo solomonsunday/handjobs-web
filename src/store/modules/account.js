@@ -37,7 +37,7 @@ const account = {
     portfolios: [],
   },
   artisanAccounts: [],
-  verificationCode: "",
+  verificationCode: null,
 };
 
 // Action types
@@ -546,7 +546,7 @@ export function getSmsShortCode(data) {
     dispatch(submitting());
     return agent.Account.getSmsShortCode(data).then(
       (response) => {
-        // dispatch(getVeriCode(response))
+        alert(response.data);
         dispatch(
           showMessage({
             type: MESSAGE_TYPE.SUCCESS,
