@@ -180,7 +180,11 @@ const Account = {
   updateProfilePortfolio: (images) =>
     requests.put("/accounts/upload-portfolios", images),
   load: (email) => requests.get(`/account/getbyemail/${email}`),
-  loadArtisanAccounts: () => requests.get("/accounts/nearest-artisans"),
+  loadArtisanAccounts: (page, limit, search, service) =>
+    requests.get(
+      `/accounts/nearest-artisans?page=${page}&limit=${limit}&search=${(search =
+        "")}&service=${service}`
+    ),
   getByID: (id) => requests.get(`/accounts/${id}`),
   verifyAccount: (id) => requests.get(`/account/${id}`),
   deactivateMyAccount: () => requests.put("/accounts/deactivate-account"),

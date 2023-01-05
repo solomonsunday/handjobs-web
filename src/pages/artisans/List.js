@@ -50,7 +50,7 @@ const Applicant = (props) => {
   };
 
   useEffect(() => {
-    dispatch(loadArtisanAccounts());
+    dispatch(loadArtisanAccounts(page, limit, search));
   }, [dispatch]);
 
   return (

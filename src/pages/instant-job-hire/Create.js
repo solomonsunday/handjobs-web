@@ -28,8 +28,6 @@ const New = ({ mode }) => {
   const loading = useSelector((state) => state.instantJob.loading);
   const services = useSelector((state) => state.admin.services).data;
 
-  console.log({ services });
-
   const toast = useRef(null);
 
   const {
