@@ -456,12 +456,7 @@ export function loadAccountByUser(id) {
   };
 }
 
-export function loadArtisanAccounts(
-  page,
-  limit,
-  search,
-  service = "Security Guard"
-) {
+export function loadArtisanAccounts(page, limit, search, service) {
   return (dispatch) => {
     dispatch(loading(true));
     return agent.Account.loadArtisanAccounts(page, limit, search, service).then(

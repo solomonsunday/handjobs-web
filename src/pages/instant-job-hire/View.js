@@ -9,6 +9,7 @@ import { confirmDialog } from "primereact/confirmdialog";
 import { Tag } from "primereact/tag";
 import AppNavBar from "components/AppNavBar";
 import agent from "../../services/agent.service";
+import Applicants from "pages/artisans/List";
 
 const View = () => {
   const dispatch = useDispatch();
@@ -175,6 +176,7 @@ const View = () => {
               </button>
             )}{" "}
           </div>
+
           <div className="col-md-3">
             {/* <div className="p-card p-4 mt-3">
                             <h4 className="p-title">Overview</h4>
@@ -213,6 +215,9 @@ const View = () => {
                             </ul>
                         </div>)} */}
           </div>
+          <div className="col-md-2">
+            <Applicants service={instantJobDetail?.service} />
+          </div>
         </div>
       </div>
     </>
@@ -224,7 +229,7 @@ const styles = {
     backgroundImage: `url(${BackgroundImage})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    width: "100%",
+    width: "100vw",
     height: "160px",
     position: "relative",
   },

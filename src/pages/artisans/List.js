@@ -16,8 +16,9 @@ import { InputText } from "primereact/inputtext";
 import "./Artisans.css";
 import { actionSetSelectedContact } from "store/modules/chat";
 
-const Applicant = (props) => {
+const Applicants = ({ service }) => {
   const dispatch = useDispatch();
+  console.log("service", service);
 
   const ArtisanAccounts = useSelector((state) => state.account.artisanAccounts);
   const loading = useSelector((state) => state.account.loading);
@@ -50,8 +51,10 @@ const Applicant = (props) => {
   };
 
   useEffect(() => {
-    dispatch(loadArtisanAccounts(page, limit, search));
-  }, [dispatch]);
+    if (service) {
+      dispatch(loadArtisanAccounts(page, limit, search, service));
+    }
+  }, [dispatch, service]);
 
   return (
     <>
@@ -64,17 +67,6 @@ const Applicant = (props) => {
             >
               <div className="card-body p-pt-0 ">
                 <div className="p-4">
-                  {/* <InstantHeader
-                                        title="Available Hand-Worker(s) near you"
-                                        showCreateButton={false}
-                                        showBack={true}
-                                        showSearchBar={true}
-                                        placeholder='Search  by occupation'
-                                        value={inputValue}
-                                        onChange={handleSearch}
-
-                                    /> */}
-
                   <header className="instant row">
                     <div className="title-container col-md-7 col-sm-12">
                       <h2 className="title sm-screen ">
@@ -100,7 +92,6 @@ const Applicant = (props) => {
                         {inputValue && loading !== "searchUsers" && (
                           <i className="pi pi-times p-mr-2" name="clear"></i>
                         )}
-
                         {inputValue && loading !== "searchUsers" && (
                           <i
                             className="pi pi-times p-mr-2"
@@ -108,14 +99,14 @@ const Applicant = (props) => {
                             name="clear"
                           />
                         )}
-                        <div className="flex-shrink-0">
+                        {/* <div className="flex-shrink-0">
                           <Link
                             to="/instant-hires"
                             className="bk-btn p-pt-2 app-color"
                           >
                             <i className="pi pi-arrow-left"></i>
                           </Link>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </header>
@@ -165,7 +156,7 @@ const Applicant = (props) => {
                                   <span className="font-weight-bold">
                                     Location :
                                   </span>{" "}
-                                  {artisan.locations}
+                                  {artisan.locations || artisan.address}
                                 </p>
                                 <p className="card-text">
                                   <span className="font-weight-bold">
@@ -224,15 +215,15 @@ const Applicant = (props) => {
             )}
           </div>
           {/* Job Component*/}
-          {userAccountType === ACCOUNT_TYPE.ARTISAN ? (
+          {/* {userAccountType === ACCOUNT_TYPE.ARTISAN ? (
             <RecentInstantJobs />
           ) : (
             <JobSidePanel data={allJobs} />
-          )}{" "}
+          )}{" "} */}
         </div>
       </div>
     </>
   );
 };
 
-export default Applicant;
+export default Applicants;
