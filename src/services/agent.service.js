@@ -104,7 +104,7 @@ const Auth = {
   current: () => JSON.parse(window.localStorage.getItem("auth")),
   isAdmin: () => {
     const user = Auth.current();
-    return user?.role === ("Super-admin" || "Developer");
+    return user?.role === ("Superadmin" || "Developer");
   },
   login: (email, password, type, app) =>
     requests.post("/auth/signIn", { email, password, type, app }),
