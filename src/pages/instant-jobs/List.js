@@ -30,10 +30,8 @@ const InstantJobs = () => {
   const err = useSelector((state) => state.instantJob.error);
 
   console.log(err, "err");
-  const requestedId = agent.Auth.current().id;
+  const requestedId = agent.Auth.current();
   let isApplicantHasPhoneNumber = agent.Auth.current().phoneNumber;
-
-  console.log({ requestedId });
 
   useEffect(() => {
     dispatch(fetchAllInstantJobs(page, take));
@@ -196,7 +194,7 @@ const InstantJobs = () => {
                                 hidden={false}
                               >
                                 <div className="p-pr-2 d-flex">
-                                  {requestedId !== instantjob.accountId &&
+                                  {requestedId?.id !== instantjob.accountId && requestedId?.accountType === 'Artisan' &&
                                     instantjob.company.id && (
                                       <p>
                                         {" "}
@@ -207,7 +205,7 @@ const InstantJobs = () => {
                                       </p>
                                     )}
                                 </div>
-                                {requestedId !== instantjob.company.id && (
+                                {requestedId?.id !== instantjob.company.id && requestedId?.accountType === 'Artisan' && (
                                   <div>
                                     <Button
                                       label="Yes"

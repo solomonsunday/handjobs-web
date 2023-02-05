@@ -116,8 +116,8 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                 </Nav.Link>
                 <Nav.Link className="text-white" href="/posts">
                   <i
-                    className="pi pi-comments itemIcon-appNavbar"
-                    style={{ fontSize: "1.5em" }}
+                    className="pi pi-plus border border-2 rounded itemIcon-appNavbar"
+                    style={{ fontSize: "1.2em",padding:'2px' }}
                   />
                   <div className="itemTitle-appNavbar mx-3">Posts</div>
                 </Nav.Link>
