@@ -23,6 +23,10 @@ const InstantJobs = () => {
   const servicesResults = useSelector(
     (state) => state.service.serviceByServiceGroup
   ).data;
+
+  const meta = useSelector(
+    (state) => state.service?.serviceByServiceGroup?.meta
+  );
   const busy = useSelector((state) => state.service?.busy);
 
   const selectedServiceName = useSelector(
@@ -34,6 +38,7 @@ const InstantJobs = () => {
   const [limit, setLimit] = useState(10);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
+  const [take] = useState(10);
 
   useEffect(() => {
     if (!selectedServiceName) return;
@@ -46,6 +51,7 @@ const InstantJobs = () => {
       getServicesByServiceGroupId(page, limit, search, sort, serviceName)
     );
   }, []);
+  console.log(servicesResults, "servicesResults");
 
   const handleApply = (id, i) => {
     confirmDialog({
@@ -66,6 +72,13 @@ const InstantJobs = () => {
     });
   };
 
+  const loadMoreHandler = () => {
+    let serviceName = localStorage.getItem("selectedServiceName");
+    dispatch(
+      getServicesByServiceGroupId(page + 1, limit, search, sort, serviceName)
+    );
+  };
+
   return (
     <>
       <div className="background">
@@ -73,7 +86,7 @@ const InstantJobs = () => {
         <div className="">
           <div className="search-result-content-container">
             <div
-              className="p-col-12 p-md-9 mt-5"
+              className="p-col-12 mt-5"
               style={{ marginLeft: "auto", marginRight: "auto" }}
             >
               <div
@@ -247,7 +260,7 @@ const InstantJobs = () => {
             </div>
           </div>
         </div>
-        {/* {!servicesResults?.length === meta?.itemCount && (
+        {!servicesResults?.length === meta?.itemCount && (
           <div className="p-grid">
             <div className="col-12">
               <div className="pagination center p-mb-1">
@@ -259,7 +272,7 @@ const InstantJobs = () => {
               </div>
             </div>
           </div>
-        )} */}
+        )}
       </div>
     </>
   );
