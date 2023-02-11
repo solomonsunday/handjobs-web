@@ -14,3 +14,13 @@
 .navbar-brand img {
   width: 200px;
 }
+
+
+.card-max-size-list {
+  width: 76vw;
+  margin: auto;
+  padding: 18px;
+}
+.search-result-content-container {
+  padding-top: 30px;
+}

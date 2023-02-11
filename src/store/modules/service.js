@@ -2,6 +2,7 @@ import { showMessage } from "./notification";
 import agent from "../../services/agent.service";
 import { MESSAGE_TYPE } from "../constant";
 import { closeModal } from "./modal";
+import { push } from "connected-react-router";
 
 // initial values
 const initialState = {
@@ -9,11 +10,13 @@ const initialState = {
   description: "",
   updatedOrDeleted: false,
   loading: false,
+  busy: false,
   service: null,
   services: [],
   servicesById: [],
   servicesGroup: [],
-  servicesByServicesName: [],
+  serviceByServiceGroup: [],
+  serviceValue: "",
 };
 
 // Action types
@@ -26,6 +29,8 @@ const DELETE_USER_SERVICE = "DELETE_USER_SERVICE";
 const LOADING = "LOADING";
 const USER_SERVICE_ERROR = "USER_SERVICE_ERROR";
 const GET_SERVICES = "app/services/GET_SERVICES";
+const LOADINGSTATE = "LOADINGSTATE";
+const SERVICE_NAME = "SERVICE_NAME";
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
@@ -49,7 +54,7 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD_SERVICES_BY_SERVICE_NAME:
       return {
         ...state,
-        servicesByServicesName: action.payload,
+        serviceByServiceGroup: action.payload,
       };
     case LOAD_USER_SERVICE:
       return {
@@ -67,11 +72,22 @@ export default function reducer(state = initialState, action = {}) {
         updatedOrDeleted: true,
         loading: false,
       };
+    case SERVICE_NAME:
+      return {
+        ...state,
+        serviceValue: action.payload,
+      };
     case LOADING:
       return {
         ...state,
         updatedOrDeleted: false,
         loading: false,
+      };
+
+    case LOADINGSTATE:
+      return {
+        ...state,
+        busy: action.payload,
       };
     case USER_SERVICE_ERROR:
       return {
@@ -87,6 +103,13 @@ export default function reducer(state = initialState, action = {}) {
 // Action Creators
 export function loading() {
   return { type: LOADING };
+}
+
+export function isRequestLoading(data) {
+  return {
+    type: LOADINGSTATE,
+    payload: data,
+  };
 }
 export function serviceLoaded(data) {
   return { type: LOAD_USER_SERVICE, payload: data };
@@ -116,6 +139,10 @@ export function actionDeleteService() {
 }
 export function serviceError() {
   return { type: USER_SERVICE_ERROR };
+}
+
+export function storeServiceName(data) {
+  return { type: SERVICE_NAME, payload: data };
 }
 
 // Actions
@@ -150,6 +177,7 @@ export function getServicesByServiceGroupId(
   serviceName
 ) {
   return (dispatch) => {
+    dispatch(isRequestLoading(true));
     return agent.InstantJob.getInstantJobsByServices(
       page,
       limit,
@@ -158,6 +186,9 @@ export function getServicesByServiceGroupId(
       serviceName
     ).then((response) => {
       dispatch(servicesByServiceName(response));
+      dispatch(isRequestLoading(false));
+      dispatch(storeServiceName(serviceName));
+      dispatch(push("/job-search-results"));
     });
   };
 }

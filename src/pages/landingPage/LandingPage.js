@@ -11,16 +11,19 @@ import {
 } from "store/modules/service";
 import { Button } from "primereact/button";
 import { BsSortAlphaDown } from "react-icons/bs";
+import LandingHeader from "components/LandingHeader/LandingHeader";
 
 const LandingPage = () => {
   const dispatch = useDispatch();
+
   const servicesbyGroupID = useSelector(
     (state) => state.service?.servicesById
   ).data;
-  const loading = useSelector((state) => state.service.loading);
   const serviceGroups = useSelector(
     (state) => state.service.servicesGroup
   ).data;
+
+  const busy = useSelector((state) => state.service?.busy);
 
   const {
     register,
@@ -37,24 +40,26 @@ const LandingPage = () => {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
   const [services, setServices] = useState([]);
-  console.log({ services });
 
   useEffect(() => {
     if (servicesbyGroupID) {
       setServices(servicesbyGroupID);
     }
-    dispatch(loadServiceGroups());
   }, [servicesbyGroupID]);
 
-  let groupID = selectedGroup?.id;
+  useEffect(() => {
+    dispatch(loadServiceGroups());
+  }, [dispatch]);
+
   useEffect(() => {
     if (selectedGroup) {
+      let groupID = selectedGroup?.id;
       console.log({ groupID });
       dispatch(loadServicesById(groupID));
     }
-  }, [selectedGroup, groupID]);
+  }, [selectedGroup]);
 
-  const handleChange = (e) => {
+  const handleServiceType = (e) => {
     const { name, value } = e.target;
     setSelectedCategory(e.value);
     setValue(name, value, { shouldValidate: true });
@@ -62,12 +67,14 @@ const LandingPage = () => {
 
   const handleServiceGroupChange = (e) => {
     const { name, value } = e.target;
+    console.log("val", name);
     setSelectedGroup(e.value);
     setValue(name, value, { shouldValidate: true });
   };
 
   const onSubmit = (data) => {
     let serviceName = data.service.name;
+    // return console.log(serviceName, "serviceName");
     dispatch(
       getServicesByServiceGroupId(page, limit, search, sort, serviceName)
     );
@@ -75,63 +82,7 @@ const LandingPage = () => {
 
   return (
     <>
-      <header className="header">
-        <div className="navbar-area">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-lg-12">
-                <nav className="navbar navbar-expand-lg py-2">
-                  <Link className="navbar-brand logo" to="index.html">
-                    {/* <img className="logo1" src="assets/images/logo/applogo.jpeg" height="40px" alt="Logo" /> */}
-                    <h3
-                      className="app-pri-text-color"
-                      style={{ fontFamily: "cursive" }}
-                    >
-                      HandJobs
-                    </h3>
-                  </Link>
-                  <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                  >
-                    <span className="toggler-icon"></span>
-                    <span className="toggler-icon"></span>
-                    <span className="toggler-icon"></span>
-                  </button>
-                  <div
-                    className="collapse navbar-collapse sub-menu-bar"
-                    id="navbarSupportedContent"
-                  ></div>
-
-                  <div className="button">
-                    <div className="d-flex">
-                      <Link to="/login" className="login">
-                        {" "}
-                        <span>
-                          <i className="lni lni-lock-alt"></i>
-                        </span>
-                        Login
-                      </Link>
-                    </div>
-                    <div>
-                      {" "}
-                      <Link to="/register" className="btn">
-                        Sign Up
-                      </Link>
-                    </div>
-                  </div>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
+      <LandingHeader />
       <section className="hero-area style2">
         <div className="hero-inner">
           <div className="home-slider">
@@ -335,7 +286,7 @@ const LandingPage = () => {
                           {...register("service", {
                             required: ` Please Select a service`,
                           })}
-                          onChange={handleChange}
+                          onChange={handleServiceType}
                         />
 
                         {errors.service && (
@@ -362,14 +313,11 @@ const LandingPage = () => {
                     <Button
                       icon="pi pi-check"
                       iconPos="left"
-                      label={loading ? "Please wait..." : "Search"}
+                      label={busy ? "Searching..." : "Search"}
                       id="saveButton"
-                      disabled={loading}
+                      disabled={busy}
                       type="submit"
                     />
-                    {/* <Link className="btn green-back" to="#">
-                      Search
-                    </Link> */}
                   </div>
                 </form>
               </div>

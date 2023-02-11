@@ -22,6 +22,9 @@ const UserProfile = React.lazy(() => import("pages/profile/UserProfile"));
 const LandingPage = React.lazy(() =>
   import("../pages/landingPage/LandingPage")
 );
+const JobSearchResults = React.lazy(() =>
+  import("../pages/landingPage/JobSearchResults")
+);
 const Login = React.lazy(() => import("../pages/auth/Login"));
 const Register = React.lazy(() => import("../pages/auth/Register"));
 const ConfirmationPage = React.lazy(() =>
@@ -127,6 +130,11 @@ const AppRouter = () => {
     <React.Suspense fallback={<AppLoading />}>
       <Switch>
         <AnonymousRoute exact path="/" component={LandingPage} />
+        <AnonymousRoute
+          exact
+          path="/job-search-results"
+          component={JobSearchResults}
+        />
         <AnonymousRoute path="/login" exact component={Login} />
         <AnonymousRoute path="/register" exact component={Register} />
         <AnonymousRoute
