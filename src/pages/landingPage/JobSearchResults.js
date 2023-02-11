@@ -97,7 +97,7 @@ const InstantJobs = () => {
                   title="All Instant Jobs"
                   showCreateButton={false}
                   count={servicesResults?.length}
-                  showSearchBar={true}
+                  showSearchBar={false}
                   showGoBack={true}
                 />
                 {busy ? (
