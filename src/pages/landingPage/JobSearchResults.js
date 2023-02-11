@@ -16,39 +16,36 @@ import "../instant-jobs/Instant-Jobs.css";
 import LandingHeader from "components/LandingHeader/LandingHeader";
 import { getServicesByServiceGroupId } from "store/modules/service";
 import { push } from "connected-react-router";
+import Spinner from "components/spinner/spinner.component";
 
 const InstantJobs = () => {
   const dispatch = useDispatch();
   const servicesResults = useSelector(
     (state) => state.service.serviceByServiceGroup
   ).data;
+  const busy = useSelector((state) => state.service?.busy);
 
   const selectedServiceName = useSelector(
     (state) => state.service.serviceValue
   );
-  console.log(servicesResults, "servicesResults");
+  console.log(servicesResults, "selectedServiceName");
 
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
-  const toast = useRef(null);
-  const [isApplied, setIsApplied] = useState(false);
-  const [availableServices, setAvailableServices] = useState([]);
-  const [serviceName, setServiceName] = useState(null);
 
   useEffect(() => {
-    setServiceName(selectedServiceName);
+    if (!selectedServiceName) return;
+    localStorage.setItem("selectedServiceName", selectedServiceName);
   }, [selectedServiceName]);
 
-  console.log("selectedServiceName", selectedServiceName, serviceName);
-
   useEffect(() => {
-    getServicesByServiceGroupId(page, limit, search, sort, selectedServiceName);
+    let serviceName = localStorage.getItem("selectedServiceName");
+    dispatch(
+      getServicesByServiceGroupId(page, limit, search, sort, serviceName)
+    );
   }, []);
-
-  //   const requestedId = agent.Auth.current().id;
-  //   let isApplicantHasPhoneNumber = agent.Auth.current().phoneNumber;
 
   const handleApply = (id, i) => {
     confirmDialog({
@@ -90,7 +87,12 @@ const InstantJobs = () => {
                   showSearchBar={true}
                   showGoBack={true}
                 />
-                {servicesResults && servicesResults.length > 0 ? (
+                {busy ? (
+                  <div>
+                    {" "}
+                    <Spinner />
+                  </div>
+                ) : servicesResults && servicesResults.length > 0 ? (
                   servicesResults.map((instantjob, i) => (
                     <div className="" key={i}>
                       <div className="panel-login text-center"></div>
