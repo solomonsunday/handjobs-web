@@ -21,7 +21,7 @@ const View = () => {
     (state) => state.job.jobApplicationRequest
   );
   const loading = useSelector((state) => state.job.loading);
-  const requestedId = agent.Auth.current()?.id;
+  const requestedId = agent.Auth.current();
 
   useEffect(() => {
     dispatch(loadInstantJob(param.id));
@@ -160,7 +160,7 @@ const View = () => {
                 </div>
               </div>
             </div>
-            {requestedId !== instantJobDetail?.accountId && (
+            {requestedId?.id !== instantJobDetail?.accountId && requestedId?.accountType === 'Artisan' && (
               <button
                 onClick={() => handleApply(instantJobDetail.id)}
                 className="btn btn-block on-hover"

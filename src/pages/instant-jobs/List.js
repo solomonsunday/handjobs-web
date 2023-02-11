@@ -193,7 +193,8 @@ const InstantJobs = () => {
                                 hidden={false}
                               >
                                 <div className="p-pr-2 d-flex">
-                                  {requestedId !== instantjob.accountId &&
+                                  {requestedId?.id !== instantjob.accountId &&
+                                    requestedId?.accountType === "Artisan" &&
                                     instantjob.company.id && (
                                       <p>
                                         {" "}
@@ -204,18 +205,19 @@ const InstantJobs = () => {
                                       </p>
                                     )}
                                 </div>
-                                {requestedId !== instantjob.company.id && (
-                                  <div>
-                                    <Button
-                                      label="Yes"
-                                      id="saveButton"
-                                      className="p-button-sm"
-                                      onClick={() =>
-                                        handleApply(instantjob.id, i)
-                                      }
-                                    />
-                                  </div>
-                                )}
+                                {requestedId?.id !== instantjob.company.id &&
+                                  requestedId?.accountType === "Artisan" && (
+                                    <div>
+                                      <Button
+                                        label="Yes"
+                                        id="saveButton"
+                                        className="p-button-sm"
+                                        onClick={() =>
+                                          handleApply(instantjob.id, i)
+                                        }
+                                      />
+                                    </div>
+                                  )}
                                 <div className="p-pr-1 px-2">
                                   {" "}
                                   <Link
