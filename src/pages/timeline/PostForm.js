@@ -293,14 +293,14 @@ const CreatePostModal = ({ post, clearModalInput }) => {
                   {`${formatter.capitalizeFirstLetter(profileInfo?.firstName)} ${formatter.capitalizeFirstLetter(profileInfo?.lastName)}`}
                 </h6>
             }
-            <div>
+            {/* <div>
               <Dropdown
                 value={selectedViewerGroup}
                 options={viewerGroups}
                 onChange={onViewerGroupChange}
                 optionLabel="name"
                 className="viewerGroups-dropdown" />
-            </div>
+            </div> */}
           </span>
         </div>
         <div className="p-mt-3">

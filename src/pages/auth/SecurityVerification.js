@@ -81,7 +81,10 @@ const SecurityVerification = () => {
                                                         <hr className="p-mb-3" />
                                                     </div>
 
-                                                    <Button type={`${isRequestLoading? "Verifying...": "Submit"}`} label="Submit" className="appcolor continue-btn rounded-pill on-hover" />
+                                                    <Button
+                                                        type={`${isRequestLoading ? "Verifying..." : "Submit"}`} label="Submit"
+                                                        className="appcolor continue-btn rounded-pill on-hover"
+                                                        loading={isRequestLoading} />
                                                 </form>
                                             </div>
                                         </div>
