@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import CommentList from './CommentList';
-import CommentForm from './CommentForm';
-import { formatter } from '../../helpers/converter';
-import { openModal } from "store/modules/modal";
-import { deletePost, likePost } from "../../store/modules/timeline";
-import { loadComments } from "../../store/modules/comment";
-import { TIMELINE } from "constants/timeline";
-import agent from "../../services/agent.service";
-import moment from "moment";
-import ThumbsDown from "../../components/ThumbDown";
-import ThumbsUp from "../../components/ThumbUp";
-import "./Timeline.css";
-
-import "./Timeline.css";
 import { ACCOUNT_TYPE } from 'constants/accountType';
-import { Link } from 'react-router-dom';
 import { MEDIATYPES } from 'constants/setup';
+import { TIMELINE } from "constants/timeline";
+import moment from "moment";
+import { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from 'react-router-dom';
+import { openModal } from "store/modules/modal";
+import ThumbsUp from "../../components/ThumbUp";
+import { formatter } from '../../helpers/converter';
+import agent from "../../services/agent.service";
+import { loadComments } from "../../store/modules/comment";
+import { deletePost, dislikePost, likePost } from "../../store/modules/timeline";
+import CommentForm from './CommentForm';
+import CommentList from './CommentList';
+import "./Timeline.css";
 const Post = ({ profileInfo, post, isAuthenticated, expandProfileImage, onShow, commentCount, setImageToDisplay, viewPage = false }) => {
   const dispatch = useDispatch();
   const loading = useSelector(state => state.timeline.loadingPosts);
@@ -24,6 +21,7 @@ const Post = ({ profileInfo, post, isAuthenticated, expandProfileImage, onShow, 
   const [currentPostId, setCurrentPostId] = useState(null);
   const isCorporate = post?.author?.accountType === ACCOUNT_TYPE.CORPORATE ? true : false;
   const postId = post?.id;
+  const history = useHistory();
 
   const expandPostImage = (e) => {
     setImageToDisplay(e.target.src);
@@ -33,6 +31,11 @@ const Post = ({ profileInfo, post, isAuthenticated, expandProfileImage, onShow, 
   const handleLike = (e) => {
     const postId = e.currentTarget.dataset.id
     dispatch(likePost(postId));
+  }
+
+  const handleUnLike = (e) => {
+    const postId = e.currentTarget.dataset.id
+    dispatch(dislikePost(postId));
   }
 
 
@@ -58,7 +61,8 @@ const Post = ({ profileInfo, post, isAuthenticated, expandProfileImage, onShow, 
 
   return (
     <div className="p-card p-py-3 p-py-sm-5 p-pl-3 p-pl-sm-5 p-pr-4 p-pr-sm-6 p-mb-2 timeline-posts">
-      <span className="d-flex justify-content-between">
+      <span className="d-flex justify-content-between"
+        onClick={() => history.push(`/applicant/${post.author.id}`)}>
         <span className="d-flex">
           {
             post?.author?.imageUrl ?
@@ -144,7 +148,7 @@ const Post = ({ profileInfo, post, isAuthenticated, expandProfileImage, onShow, 
                 </ul>
               </>
             }
-            {viewPage && <Link to={"/posts"} className='text-dark'> back</Link>}
+            {viewPage && <Link to="/posts" className="bk-btn p-pt-2 app-color pr-4" ><i className="pi pi-arrow-left"></i></Link>}
           </div>
 
         }
@@ -167,7 +171,7 @@ const Post = ({ profileInfo, post, isAuthenticated, expandProfileImage, onShow, 
         {post?.postMedia?.length > 0 && post?.postMedia.map(media =>
           <>
             {
-               media?.mediaType?.toLowerCase() == MEDIATYPES.IMAGE.toLowerCase()
+              media?.mediaType?.toLowerCase() == MEDIATYPES.IMAGE.toLowerCase()
               && <img
                 width="80%"
                 alt={post.title}
@@ -195,13 +199,13 @@ const Post = ({ profileInfo, post, isAuthenticated, expandProfileImage, onShow, 
               isAuthenticated ?
                 <span
                   data-id={post.id}
-                  onClick={(e) => handleLike(e)}
+                  onClick={(e) => { post.liked ? handleUnLike(e) : handleLike(e) }}
                   className="post-statusbar-content p-pr-2 align-items-start"
                 >
                   <ThumbsUp
                     width="23"
                     height="23"
-                    liked={false}
+                    liked={post.liked}
                     className="p-mr-1"
                   />
 
