@@ -294,12 +294,12 @@ const CreatePostModal = ({ post, clearModalInput }) => {
                 </h6>
             }
             <div>
-              <Dropdown
+              {/* <Dropdown
                 value={selectedViewerGroup}
                 options={viewerGroups}
                 onChange={onViewerGroupChange}
                 optionLabel="name"
-                className="viewerGroups-dropdown" />
+                className="viewerGroups-dropdown" /> */}
             </div>
           </span>
         </div>
