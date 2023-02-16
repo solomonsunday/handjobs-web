@@ -95,7 +95,6 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
       const stateObj = data.state
         ? states.find((state) => state.name === data.state)
         : null;
-      console.log(data, "data");
 
       setPersonalProfile({
         ...personalProfile,
@@ -128,12 +127,11 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
         dateOfBirth: new Date(data.dateOfBirth),
         city: data.city,
         country: countries.find((country) => country.name === data.country),
-        state: states.find((state) => state.name === data.state),
-        lga: lgas.find((lga) => lga.name === data.lga),
+        state: data?.state,
+        lga: data.lga,
         address: data.address,
         profession: data.profession,
       });
-
       setValue("firstName", data.firstName);
       setValue("lastName", data.lastName);
       setValue("otherName", data.otherName || "Berner");
@@ -343,7 +341,6 @@ const PersonalInfoForm = ({ data, closeEditMode }) => {
                     </span>
                   )}
                 </label>
-
                 <Dropdown
                   options={countries}
                   optionLabel="name"

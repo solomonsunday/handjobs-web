@@ -29,7 +29,7 @@ const InstantJobs = () => {
   const applicants = useSelector((state) => state.instantJob.applicants);
   const err = useSelector((state) => state.instantJob.error);
 
-  const requestedId = agent.Auth.current().id;
+  const requestedId = agent.Auth.current();
   let isApplicantHasPhoneNumber = agent.Auth.current().phoneNumber;
 
   useEffect(() => {
@@ -78,7 +78,6 @@ const InstantJobs = () => {
       },
     });
   };
-
   return (
     <div className="background">
       <div className="instant">
@@ -193,20 +192,17 @@ const InstantJobs = () => {
                                 hidden={false}
                               >
                                 <div className="p-pr-2 d-flex">
-                                  {requestedId?.id !== instantjob.accountId &&
-                                    requestedId?.accountType === "Artisan" &&
-                                    instantjob.company.id && (
+                                  {(requestedId?.email !== instantjob.createdBy &&
+                                    requestedId?.accountType === "Artisan") && (
                                       <p>
-                                        {" "}
                                         <span className="font-weight-bold app-color p-mt-2 interest-tx">
-                                          {" "}
                                           Interested ? &nbsp;{" "}
                                         </span>{" "}
                                       </p>
                                     )}
                                 </div>
-                                {requestedId?.id !== instantjob.company.id &&
-                                  requestedId?.accountType === "Artisan" && (
+                                {(requestedId?.email !== instantjob.createdBy &&
+                                    requestedId?.accountType === "Artisan") && (
                                     <div>
                                       <Button
                                         label="Yes"

@@ -6,6 +6,7 @@ import { formatter } from "../../helpers/converter";
 import { openModal } from "store/modules/modal";
 import {
   deletePost,
+  dislikePost,
   likePost,
   likePostAsync,
   postLiked,
@@ -20,7 +21,7 @@ import "./Timeline.css";
 
 import "./Timeline.css";
 import { ACCOUNT_TYPE } from "constants/accountType";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { MEDIATYPES } from "constants/setup";
 import AppLoading from "components/AppLoading";
 import Spinner from "components/spinner/spinner.component";
@@ -42,6 +43,7 @@ const Post = ({
   const loadingStatus = useSelector((state) => state.timeline.loadingStatus);
   const [copyAlert, setCopyAlert] = useState(null);
   const [currentPostId, setCurrentPostId] = useState(null);
+  const history = useHistory();
   const isCorporate =
     post?.author?.accountType === ACCOUNT_TYPE.CORPORATE ? true : false;
   const postId = post?.id;
@@ -74,6 +76,11 @@ const Post = ({
     }
   };
 
+  const handleUnLike = (e) => {
+    const postId = e.currentTarget.dataset.id
+    dispatch(dislikePost(postId));
+  }
+
   const handleShareButton = (e) => {
     const postId = e.currentTarget.dataset.id;
     const el = document.createElement("input");
@@ -100,7 +107,8 @@ const Post = ({
 
   return (
     <div className="p-card p-py-3 p-py-sm-5 p-pl-3 p-pl-sm-5 p-pr-4 p-pr-sm-6 p-mb-2 timeline-posts">
-      <span className="d-flex justify-content-between">
+      <span className="d-flex justify-content-between"
+        onClick={() => history.push(`/applicant/${post.author.id}`)}>
         <span className="d-flex">
           {post?.author?.imageUrl ? (
             <img
@@ -191,12 +199,7 @@ const Post = ({
                 </ul>
               </>
             )}
-            {viewPage && (
-              <Link to={"/posts"} className="text-dark">
-                {" "}
-                back
-              </Link>
-            )}
+            {viewPage && <Link to="/posts" className="bk-btn p-pt-2 app-color pr-4" ><i className="pi pi-arrow-left"></i></Link>}
           </div>
         }
       </span>
@@ -221,23 +224,23 @@ const Post = ({
             <>
               {media?.mediaType?.toLowerCase() ==
                 MEDIATYPES.IMAGE.toLowerCase() && (
-                <img
-                  width="80%"
-                  alt={post.title}
-                  className="timeline-postImage text-white"
-                  src={`${media.url}`}
-                  onClick={expandPostImage}
-                />
-              )}
+                  <img
+                    width="80%"
+                    alt={post.title}
+                    className="timeline-postImage text-white"
+                    src={`${media.url}`}
+                    onClick={expandPostImage}
+                  />
+                )}
 
               {media?.mediaType?.toLowerCase() ==
                 MEDIATYPES.VIDEO.toLowerCase() && (
-                <video wwidth="80%" height="240" controls>
-                  <source src={media?.url} type="video/mp4" />
-                  <source src={media?.url} type="video/ogg" />
-                  Your browser does not support the video tag.
-                </video>
-              )}
+                  <video wwidth="80%" height="240" controls>
+                    <source src={media?.url} type="video/mp4" />
+                    <source src={media?.url} type="video/ogg" />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
             </>
           ))}
       </div>
@@ -247,7 +250,7 @@ const Post = ({
             {isAuthenticated ? (
               <span
                 data-id={post.id}
-                onClick={(e) => handleLike(e)}
+                onClick={(e) => { post.liked ? handleUnLike(e) : handleLike(e) }}
                 className="post-statusbar-content p-pr-2 align-items-start"
               >
                 {likeLoading ? (
@@ -256,7 +259,7 @@ const Post = ({
                   <ThumbsUp
                     width="23"
                     height="23"
-                    liked={false}
+                    liked={post.liked}
                     className="p-mr-1"
                   />
                 )}
