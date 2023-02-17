@@ -107,8 +107,7 @@ const Post = ({
 
   return (
     <div className="p-card p-py-3 p-py-sm-5 p-pl-3 p-pl-sm-5 p-pr-4 p-pr-sm-6 p-mb-2 timeline-posts">
-      <span className="d-flex justify-content-between"
-        onClick={() => history.push(`/applicant/${post.author.id}`)}>
+      <span className="d-flex justify-content-between">
         <span className="d-flex">
           {post?.author?.imageUrl ? (
             <img
@@ -129,7 +128,8 @@ const Post = ({
           <span>
             <>
               {!isCorporate ? (
-                <span className="p-card-title cardtitle-posts p-mb-0">
+                <span className="p-card-title cardtitle-posts p-mb-0 user-select-none"
+                  onClick={() => history.push(`/applicant/${post.author.id}`)}>
                   {`${formatter.capitalizeFirstLetter(
                     post?.author?.firstName
                   )} ${formatter.capitalizeFirstLetter(
@@ -139,7 +139,8 @@ const Post = ({
               ) : (
                 isCorporate &&
                 post?.author?.companyName && (
-                  <span className="p-card-title cardtitle-posts p-mb-0">
+                  <span className="p-card-title cardtitle-posts p-mb-0 user-select-none"
+                    onClick={() => history.push(`/applicant/${post.author.id}`)}>
                     {formatter.capitalizeFirstLetter(post?.author?.companyName)}
                   </span>
                 )
