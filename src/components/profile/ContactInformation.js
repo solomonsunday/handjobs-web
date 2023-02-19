@@ -40,9 +40,9 @@ const ContactInformation = ({
   };
 
   const onSubmit = (code) => {
+    document.getElementById("closeModal")?.click();
     let userResponse = code.code;
     dispatch(verifyPhoneNumber(userResponse));
-    document.getElementById("closeModal")?.click();
   };
 
   return (
@@ -72,8 +72,8 @@ const ContactInformation = ({
               ></Tag>
             )}
             {profileInfo.phoneNumber &&
-            !profileInfo?.phoneNumberVerified &&
-            loggedInUserID === profileInfo?.id ? (
+              !profileInfo?.phoneNumberVerified &&
+              loggedInUserID === profileInfo?.id ? (
               <span
                 className="text-warning p-ml-2 font-weight-bolder"
                 style={{ cursor: "pointer" }}

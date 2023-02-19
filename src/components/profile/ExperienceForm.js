@@ -35,6 +35,7 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
   const [experience, setExperience] = useState({});
   const [checkedCurrent, setCheckedCurrent] = useState(false);
   const [checkStartDate, setCheckStartDate] = useState(null);
+  const [checkEndDate, setCheckEndDate] = useState(null);
 
   useEffect(() => {
     if (itemToEdit !== null) {
@@ -178,9 +179,8 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
                 />
               </div>
               <div
-                className={`p-field p-col-12 ${
-                  checkedCurrent ? "p-md-12" : "p-md-6"
-                }`}
+                className={`p-field p-col-12 ${checkedCurrent ? "p-md-12" : "p-md-6"
+                  }`}
               >
                 <label className="inputLabel" htmlFor="startDate">
                   Start Date
@@ -212,6 +212,7 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
                   dateFormat="mm/yy"
                   yearNavigator
                   yearRange="2010:2030"
+                  maxDate={checkEndDate}
                 />
               </div>
               {!checkedCurrent && (
@@ -238,6 +239,7 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
                       const inputName = "endDate";
                       const value = e.value.toISOString();
                       setValue(inputName, value, { shouldValidate: true });
+                      setCheckEndDate(e.value); //set the end date
                     }}
                     monthNavigatorTemplate={monthNavigatorTemplate}
                     yearNavigatorTemplate={yearNavigatorTemplate}

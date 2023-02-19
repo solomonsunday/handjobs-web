@@ -16,8 +16,8 @@ const Hobbies = ({ openCreate, openEdit, profileInfo, isViewApplicant }) => {
           id="hobbyEdit"
           showAddButton="true"
           showEditButton="true"
-          showAddButton="true"
-          showEditButton="true"
+          // showAddButton="true"
+          // showEditButton="true"
           openModalOnCreate={() => openEdit(PROFILE.HOBBY)}
           openModalOnEdit={() => openCreate(PROFILE.HOBBY)}
           hasData={profileInfo?.profile}
@@ -25,9 +25,9 @@ const Hobbies = ({ openCreate, openEdit, profileInfo, isViewApplicant }) => {
         />
         <div className="p-card-body p-text-secondary">
           <ul className="listStyle p-grid">
-            {profileInfo.hobbies !== null
-              ? (profileInfo?.hobbies.map(hobby => <span><Tag>{hobby}</Tag>&nbsp;&nbsp;</span>))
-              : "No hobbies"}
+            {profileInfo.hobbies !== null && profileInfo.hobbies[0] !== ''
+              && (profileInfo?.hobbies.map(hobby => <span><Tag>{hobby}</Tag>&nbsp;&nbsp;</span>))
+            }
           </ul>
         </div>
       </div>

@@ -583,6 +583,8 @@ export function verifyPhoneNumber(userRes) {
         // handle error
         dispatch(loading(false));
         dispatch(showMessage({ type: "error", message: error }));
+        window.location.href = "/profile";
+
       }
     );
   };

@@ -109,7 +109,7 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
 
   useEffect(() => {
     if (profileInfo) {
-      console.log({profileInfo})
+      console.log({ profileInfo })
       setContactInfo({
         ...profileInfo,
         // country: profileInfo.country ? countries.find(c => c.name === profileInfo.country) : countries[0].name,
@@ -170,6 +170,7 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
                 <InputText
                   id="phoneNumber"
                   name="phoneNumber"
+                  type="number"
                   {...register("phoneNumber",
                     {
                       required: true,
@@ -229,7 +230,6 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
                 <label htmlFor="lga" className="inputLabel p-pr-3">LGA  <span className='text-danger'> *</span>
                   {errors?.lga?.type === 'required' && <small className="text-danger font-weight-bold">&nbsp; {errors.lga.message}</small>}
                 </label>
-
                 <Dropdown
                   options={lgas}
                   optionLabel="name"
