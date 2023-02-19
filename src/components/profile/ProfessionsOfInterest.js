@@ -16,7 +16,7 @@ const ProfessionsOfInterest = ({ openCreate, openEdit, profileInfo, isViewApplic
           sectionTitle="Professions of Interest"
           id="POIEdit"
           showAddButton="true"
-          showAddButton="true"
+          // showAddButton="true"
           showEditButton="true"
           openModalOnCreate={() => openEdit(PROFILE.PROFESSION)}
           openModalOnEdit={() => openCreate(PROFILE.PROFESSION)}
@@ -25,7 +25,11 @@ const ProfessionsOfInterest = ({ openCreate, openEdit, profileInfo, isViewApplic
         />
         <div className="p-card-body p-text-secondary">
           <ul className="listStyle">
-            {formatInterest(profileInfo.interests)}
+            {profileInfo.interests[0] !== '' &&
+              <>
+                {formatInterest(profileInfo.interests)}
+              </>
+            }
             {/* {interests !== null ?
                               interests?.map((interest, index) => (
                                 <li key={index}>{interest}</li>
