@@ -77,9 +77,9 @@ const Post = ({
   };
 
   const handleUnLike = (e) => {
-    const postId = e.currentTarget.dataset.id
+    const postId = e.currentTarget.dataset.id;
     dispatch(dislikePost(postId));
-  }
+  };
 
   const handleShareButton = (e) => {
     const postId = e.currentTarget.dataset.id;
@@ -106,7 +106,10 @@ const Post = ({
   };
 
   return (
-    <div className="p-card p-py-3 p-py-sm-5 p-pl-3 p-pl-sm-5 p-pr-4 p-pr-sm-6 p-mb-2 timeline-posts">
+    <div
+      className="p-card p-py-3 p-py-sm-5 p-pl-3 p-pl-sm-5 p-pr-4 p-pr-sm-6 p-mb-2 timeline-posts"
+      style={{ borderRadius: "0.5rem" }}
+    >
       <span className="d-flex justify-content-between">
         <span className="d-flex">
           {post?.author?.imageUrl ? (
@@ -128,8 +131,10 @@ const Post = ({
           <span>
             <>
               {!isCorporate ? (
-                <span className="p-card-title cardtitle-posts p-mb-0 user-select-none"
-                  onClick={() => history.push(`/applicant/${post.author.id}`)}>
+                <span
+                  className="p-card-title cardtitle-posts p-mb-0 user-select-none"
+                  onClick={() => history.push(`/applicant/${post.author.id}`)}
+                >
                   {`${formatter.capitalizeFirstLetter(
                     post?.author?.firstName
                   )} ${formatter.capitalizeFirstLetter(
@@ -139,8 +144,10 @@ const Post = ({
               ) : (
                 isCorporate &&
                 post?.author?.companyName && (
-                  <span className="p-card-title cardtitle-posts p-mb-0 user-select-none"
-                    onClick={() => history.push(`/applicant/${post.author.id}`)}>
+                  <span
+                    className="p-card-title cardtitle-posts p-mb-0 user-select-none"
+                    onClick={() => history.push(`/applicant/${post.author.id}`)}
+                  >
                     {formatter.capitalizeFirstLetter(post?.author?.companyName)}
                   </span>
                 )
@@ -200,7 +207,11 @@ const Post = ({
                 </ul>
               </>
             )}
-            {viewPage && <Link to="/posts" className="bk-btn p-pt-2 app-color pr-4" ><i className="pi pi-arrow-left"></i></Link>}
+            {viewPage && (
+              <Link to="/posts" className="bk-btn p-pt-2 app-color pr-4">
+                <i className="pi pi-arrow-left"></i>
+              </Link>
+            )}
           </div>
         }
       </span>
@@ -225,23 +236,24 @@ const Post = ({
             <>
               {media?.mediaType?.toLowerCase() ==
                 MEDIATYPES.IMAGE.toLowerCase() && (
-                  <img
-                    width="80%"
-                    alt={post.title}
-                    className="timeline-postImage text-white"
-                    src={`${media.url}`}
-                    onClick={expandPostImage}
-                  />
-                )}
+                <img
+                  width="100%"
+                  height="400px"
+                  alt={post.title}
+                  className="timeline-postImage text-white"
+                  src={`${media.url}`}
+                  onClick={expandPostImage}
+                />
+              )}
 
               {media?.mediaType?.toLowerCase() ==
                 MEDIATYPES.VIDEO.toLowerCase() && (
-                  <video wwidth="80%" height="240" controls>
-                    <source src={media?.url} type="video/mp4" />
-                    <source src={media?.url} type="video/ogg" />
-                    Your browser does not support the video tag.
-                  </video>
-                )}
+                <video width="100%" height="300px" controls>
+                  <source src={media?.url} type="video/mp4" />
+                  <source src={media?.url} type="video/ogg" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
             </>
           ))}
       </div>
@@ -251,7 +263,9 @@ const Post = ({
             {isAuthenticated ? (
               <span
                 data-id={post.id}
-                onClick={(e) => { post.liked ? handleUnLike(e) : handleLike(e) }}
+                onClick={(e) => {
+                  post.liked ? handleUnLike(e) : handleLike(e);
+                }}
                 className="post-statusbar-content p-pr-2 align-items-start"
               >
                 {likeLoading ? (

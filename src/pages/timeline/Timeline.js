@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from 'primereact/button';
+import React, { useState, useEffect } from "react";
+import { Button } from "primereact/button";
 import { useDispatch, useSelector } from "react-redux";
-import ModalMode from './ModalMode';
+import ModalMode from "./ModalMode";
 import { openModal, closeModal } from "store/modules/modal";
 import { loadProfileInfo } from "store/modules/account";
 import { closeEmojiPicker } from "store/modules/emojiPicker";
@@ -11,15 +11,15 @@ import { TIMELINE } from "constants/timeline";
 import agent from "../../services/agent.service";
 import TimelineLeftPanel from "./TimelineLeftPanel";
 import JobSidePanel from "../../components/JobSidePanel";
-import Post from './Post';
+import Post from "./Post";
 
 import "./Timeline.css";
 
 const Timeline = () => {
   const dispatch = useDispatch();
-  const posts = useSelector(state => state.timeline.posts);
-  const loading = useSelector(state => state.timeline.loadingPosts);
-  const allJobs = useSelector(state => state.job.allJobs);
+  const posts = useSelector((state) => state.timeline.posts);
+  const loading = useSelector((state) => state.timeline.loadingPosts);
+  const allJobs = useSelector((state) => state.job.allJobs);
   const profileInfo = useSelector((state) => state.account.profileInfo);
   const [post, setPost] = useState({});
   const [pageNumber, setPageNumber] = useState(1);
@@ -31,28 +31,27 @@ const Timeline = () => {
     if (id) {
       setPost(posts.data[id]);
       dispatch(openModal(TIMELINE.EDITPOST));
-    }
-    else {
+    } else {
       dispatch(openModal(TIMELINE.CREATEPOST));
     }
-  }
+  };
 
   const expandProfileImage = (src) => {
-    setImageToDisplay(src)
+    setImageToDisplay(src);
     dispatch(openModal(TIMELINE.ACTIVEUSERPICTURE));
-  }
+  };
 
   const onHide = (name) => {
     dispatch(closeModal(name));
     dispatch(closeEmojiPicker());
     setImageToDisplay("");
     setPost({});
-  }
+  };
 
   const loadmorePosts = () => {
-    setPageNumber(pageNumber + 1)
+    setPageNumber(pageNumber + 1);
     dispatch(loadPosts(pageNumber + 1, pageLimit, "loadMore"));
-  }
+  };
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -70,20 +69,25 @@ const Timeline = () => {
 
   return (
     <>
-      <div className="timeline-container" >
+      <div className="timeline-container">
         <div className="timeline-content">
           <div className="p-grid p-mt-2 p-m-0">
-            {
-              isAuthenticated &&
+            {isAuthenticated && (
               <TimelineLeftPanel
                 profileInfo={profileInfo}
                 expandProfileImage={expandProfileImage}
               />
-            }
-            <div className={`p-col-12 p-px-0 ${isAuthenticated ? "p-md-6" : "p-md-9"}`}>
-              {
-                isAuthenticated &&
-                <div className="p-card p-grid p-mb-2 p-mt-0 p-mx-0 p-p-3 align-items-center">
+            )}
+            <div
+              className={`p-col-12 p-px-0 ${
+                isAuthenticated ? "p-md-6" : "p-md-9"
+              }`}
+            >
+              {isAuthenticated && (
+                <div
+                  className="p-card p-grid p-mb-2 p-mt-0 p-mx-0 p-p-3 align-items-center"
+                  style={{ borderRadius: "0.5rem" }}
+                >
                   <div className="p-col-10">
                     <Button
                       label="Start a Post"
@@ -97,76 +101,65 @@ const Timeline = () => {
                     />
                   </div>
                 </div>
-              }
-              {
-                loading === "loadPosts" &&
-                posts.ids.length === 0 &&
+              )}
+              {loading === "loadPosts" && posts.ids.length === 0 && (
                 <div className="p-p-5 d-flex justify-content-center">
                   <i
                     className="pi pi-spin pi-spinner"
-                    style={{ 'fontSize': '2em', color: "#357C3C" }} />
+                    style={{ fontSize: "2em", color: "#357C3C" }}
+                  />
                 </div>
-              }
-              {
-                isAuthenticated &&
+              )}
+              {isAuthenticated &&
                 loading !== "loadPosts" &&
-                posts.ids.length === 0 &&
-                <div className="p-card p-p-3 p-mb-1 timeline-posts">
-                  <div className="p-mb-6 p-p-4 text-center">
-                    <h3 className="p-card-title">
-                      Create a post
-                    </h3>
-                    <h6>
-                      Hello there, create your first post.
-                    </h6>
+                posts.ids.length === 0 && (
+                  <div className="p-card p-p-3 p-mb-1 timeline-posts">
+                    <div className="p-mb-6 p-p-4 text-center">
+                      <h3 className="p-card-title">Create a post</h3>
+                      <h6>Hello there, create your first post.</h6>
+                    </div>
                   </div>
-                </div>
-              }
+                )}
 
-              {
-                posts?.ids?.length > 0 &&
+              {posts?.ids?.length > 0 && (
                 <div className="timeline-postsContainer">
-                  {
-                    posts.ids.map((postId) => {
-                      const post = posts.data[postId];
-                      if (!post) {
-                        return null;
-                      }
-                      return (
-                        <Post
-                          post={post}
-                          key={postId}
-                          onShow={onShow}
-                          profileInfo={profileInfo}
-                          isAuthenticated={isAuthenticated}
-                          expandProfileImage={expandProfileImage}
-                          commentCount={posts.data[postId].commentCount}
-                        />
-                      )
+                  {posts.ids.map((postId) => {
+                    const post = posts.data[postId];
+                    if (!post) {
+                      return null;
                     }
+                    return (
+                      <Post
+                        post={post}
+                        key={postId}
+                        onShow={onShow}
+                        profileInfo={profileInfo}
+                        isAuthenticated={isAuthenticated}
+                        expandProfileImage={expandProfileImage}
+                        commentCount={posts.data[postId].commentCount}
+                      />
+                    );
+                  })}
+                  {posts.ids.length > 0 &&
+                    posts.meta.total > posts.ids.length &&
+                    loading !== "loadMore" && (
+                      <Button
+                        onClick={loadmorePosts}
+                        className="p-mr-2 w-100"
+                        label="Load More"
+                      />
                     )}
-                  {
-                    posts.ids.length > 0 &&
+                  {posts.ids.length > 0 &&
                     posts.meta.total > posts.ids.length &&
-                    loading !== "loadMore" &&
-                    <Button
-                      onClick={loadmorePosts}
-                      className="p-mr-2 w-100"
-                      label='Load More'
-                    />
-                  }
-                  {
-                    posts.ids.length > 0 &&
-                    posts.meta.total > posts.ids.length &&
-                    loading === "loadMore" &&
-                    <Button
-                      className="p-mr-2 w-100"
-                      loading={loading === "loadMore"}
-                      disabled={loading === "loadMore"}
-                    />
-                  }
+                    loading === "loadMore" && (
+                      <Button
+                        className="p-mr-2 w-100"
+                        loading={loading === "loadMore"}
+                        disabled={loading === "loadMore"}
+                      />
+                    )}
                 </div>
-              }
+              )}
             </div>
             <JobSidePanel data={allJobs} />
           </div>
@@ -174,6 +167,6 @@ const Timeline = () => {
       </div>
     </>
   );
-}
+};
 
 export default Timeline;

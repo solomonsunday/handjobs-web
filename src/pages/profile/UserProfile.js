@@ -20,24 +20,20 @@ import { ACCOUNT_TYPE } from "constants/accountType";
 import CustomError from "pages/error-page/CustomError";
 import { ErrorBoundary } from "react-error-boundary";
 import { deactivateAccount, loadProfileInfo } from "store/modules/account";
-import { ConfirmDialog } from 'primereact/confirmdialog'; // To use <ConfirmDialog> tag
-import { confirmDialog } from 'primereact/confirmdialog';
-import { Button } from 'primereact/button';
+import { ConfirmDialog } from "primereact/confirmdialog"; // To use <ConfirmDialog> tag
+import { confirmDialog } from "primereact/confirmdialog";
+import { Button } from "primereact/button";
 
 // import BreadCrumbPane from 'helpers/BreadCrumb';
 
-
 const UserProfile = ({ match }) => {
-
   const profileInfo = useSelector((state) => state.account.profileInfo);
 
   const dispatch = useDispatch();
   const [, setMode] = useState("");
   const accountType = agentService.Auth.current().accountType;
   const userID = agentService.Auth.current().id;
-  console.log({ userID })
-
-
+  console.log({ userID });
 
   const openCreate = (name) => {
     setMode("create");
@@ -50,28 +46,13 @@ const UserProfile = ({ match }) => {
     dispatch(openModal(name));
   };
 
-  const handleDeleteAccount = () => {
-    confirmDialog({
-      header: 'Confirmation',
-      message: 'Are you sure you want to Delete your account? all your data will be completely lost and this is irreversible',
-      icon: 'pi pi-info-circle',
-      acceptClassName: 'p-button-danger',
-      accept: () => {
-        dispatch(deactivateAccount())
-      },
-      reject: () => {
-        return;
-      },
-    });
-  }
-
   // useEffect(() => {
   //   dispatch(loadProfileInfo());
   // }, [])
 
   return (
     // <ErrorBoundary
-    //   FallbackComponent={CustomError} 
+    //   FallbackComponent={CustomError}
     //   onReset={() => {
     //     //reset the state of your app state
     //     console.log('reset the app state')
@@ -82,8 +63,7 @@ const UserProfile = ({ match }) => {
         <div className="">
           <CustomBreadCrumb />
         </div>
-        <div className="content-container" style={{ width: '87%' }}>
-
+        <div className="content-container" style={{ width: "87%" }}>
           {/* personal info */}
           <div className="d-flex justify-content-center">
             <PersonalInfo
@@ -91,7 +71,6 @@ const UserProfile = ({ match }) => {
               openEdit={openEdit}
               data={profileInfo}
             />
-
           </div>
           <div>
             {/* <Button onClick={testNotification} type="submit" label="Test" className="appcolor rounded-pill on-hover" /> */}
@@ -108,21 +87,21 @@ const UserProfile = ({ match }) => {
                 <Route path={`${match.path}/`} exact component={InfoTab} />
                 <Route path={`${match.path}/info`} component={InfoTab} />
                 <Route path={`${match.path}/jobs`} component={JobsTab} />
-                <Route path={`${match.path}/contacts`} component={ContactsTab} />
+                <Route
+                  path={`${match.path}/contacts`}
+                  component={ContactsTab}
+                />
                 <Route path={`${match.path}/groups`} component={GroupsTab} />
                 <Route path={`${match.path}/review`} component={ReviewTab} />
-                <p>Click <span className="text-danger font-weight-bold finger" onClick={handleDeleteAccount}>Here</span> if you wish to delete your account </p>
-
-
               </div>
             </div>
             {/* portfolio */}
-            {accountType === ACCOUNT_TYPE.ARTISAN && <Portfolio openCreate={openCreate} openEdit={openEdit} />}
+            {accountType === ACCOUNT_TYPE.ARTISAN && (
+              <Portfolio openCreate={openCreate} openEdit={openEdit} />
+            )}
           </div>
         </div>
-
       </div>
-
     </>
     // </ErrorBoundary>
   );

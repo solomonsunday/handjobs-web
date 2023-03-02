@@ -1,39 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { useDispatch, useSelector } from "react-redux";
-import ModeFooter from './ModeFooter';
-import { loadCountry, loadLga, loadStates } from 'store/modules/location';
-import { updateContactInfo } from 'store/modules/account';
-import SectionHeader from './SectionHeader';
-import { Dropdown } from 'primereact/dropdown';
-import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId, getLatLng, } from 'react-places-autocomplete';
-import { FaMapMarkerAlt } from 'react-icons/fa';
-
+import ModeFooter from "./ModeFooter";
+import { loadCountry, loadLga, loadStates } from "store/modules/location";
+import { updateContactInfo } from "store/modules/account";
+import SectionHeader from "./SectionHeader";
+import { Dropdown } from "primereact/dropdown";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from "react-places-autocomplete";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 const ContactInfoForm = ({ closeEditMode, data }) => {
-  const { register, handleSubmit, setValue, trigger, clearErrors, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    trigger,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
     mode: "onChange",
-    reValidateMode: "all"
+    reValidateMode: "all",
   });
   const dispatch = useDispatch();
-  const countries = useSelector(state => state.location.countries);
-  const states = useSelector(state => state.location.states);
-  const lgas = useSelector(state => state.location.lgas);
+  const countries = useSelector((state) => state.location.countries);
+  const states = useSelector((state) => state.location.states);
+  const lgas = useSelector((state) => state.location.lgas);
 
   const [contactInfo, setContactInfo] = useState({
-    phoneNumber: '',
+    phoneNumber: "",
     country: "",
     email: "",
     city: "",
     postalCode: "",
     address: "",
     state: "",
-    lga: ""
+    lga: "",
   });
-  const profileInfo = useSelector(state => state.account.profileInfo);
-  const loading = useSelector(state => state.account.submitting);
+  const profileInfo = useSelector((state) => state.account.profileInfo);
+  const loading = useSelector((state) => state.account.submitting);
   const [selectCountry, setSelectedCountry] = useState(null);
   const [newSelectedState, setNewSelectedState] = useState("");
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
@@ -54,81 +64,76 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
     if (location) {
       let results = location.split(",");
 
-      setRegion(results[1])
-      console.log({ results })
+      setRegion(results[1]);
+      console.log({ results });
     }
-  }, [location])
-
-
+  }, [location]);
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
     setLocation(value);
-    setValue("location", location, { shouldValidate: true })
-  }
+    setValue("location", location, { shouldValidate: true });
+  };
   console.log({ location });
 
   const handleSelectAddress = async (value) => {
     const results = await geocodeByAddress(value);
     const ll = await getLatLng(results[0]);
     setLocation(value);
-    setValue("address", address, { shouldValidate: true })
+    setValue("address", address, { shouldValidate: true });
     setCoordinates(ll);
-  }
+  };
 
   console.log({ location });
   console.log({ coordinates });
 
-
-
-
   let stateObj;
   useEffect(() => {
     if (states) {
-      stateObj = contactInfo.state ? states.find(state => state.name === contactInfo.state.name) : null
+      stateObj = contactInfo.state
+        ? states.find((state) => state.name === contactInfo.state.name)
+        : null;
 
       setContactInfo({
         ...contactInfo,
-        state: stateObj
-      })
-      setValue("state", stateObj?.name)
-      setContactInfo(stateObj)
+        state: stateObj,
+      });
+      setValue("state", stateObj?.name);
+      setContactInfo(stateObj);
     }
-  }, [states])
+  }, [states]);
 
   //fetech LGA useing selected state
   useEffect(() => {
     if (contactInfo.state.id) {
-      setNewSelectedState(contactInfo.state.id)
-      dispatch(loadLga(newSelectedState))
-
+      setNewSelectedState(contactInfo.state.id);
+      dispatch(loadLga(newSelectedState));
     }
-
-  }, [contactInfo?.state?.id, newSelectedState])
-
+  }, [contactInfo?.state?.id, newSelectedState]);
 
   useEffect(() => {
     if (profileInfo) {
-      console.log({ profileInfo })
+      console.log({ profileInfo });
       setContactInfo({
         ...profileInfo,
         // country: profileInfo.country ? countries.find(c => c.name === profileInfo.country) : countries[0].name,
-        state: profileInfo.state ? states.find(state => state.name === profileInfo.state) : states[0]?.name,
+        state: profileInfo.state
+          ? states.find((state) => state.name === profileInfo.state)
+          : states[0]?.name,
         phoneNumber: profileInfo.contactPhoneNumber || "",
         email: profileInfo.email || "",
-        lga: profileInfo.lga || "",
+        lga: profileInfo?.lga || "",
         postalCode: profileInfo.postalCode || "",
-        address: profileInfo.address || ""
+        address: profileInfo.address || "",
       });
 
       for (const [key, value] of Object.entries(profileInfo)) {
         setValue(key, value);
       }
-      setValue('phoneNumber', profileInfo.contactPhoneNumber); //`contactPhoneNumber` is variable to bind to `phoneNumber`
-      setValue('state', profileInfo.state);
-      setValue('lga', profileInfo.lga);
+      setValue("phoneNumber", profileInfo.contactPhoneNumber); //`contactPhoneNumber` is variable to bind to `phoneNumber`
+      setValue("state", profileInfo.state);
+      setValue("lga", profileInfo.lga);
     }
-
   }, [profileInfo, states]);
 
   const handleChange = (e) => {
@@ -136,8 +141,8 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
     const contactData = { ...contactInfo, [name]: value };
 
     setContactInfo(contactData);
-    setValue(name, value)
-  }
+    setValue(name, value);
+  };
 
   const contactInfoSubmit = () => {
     let data = {};
@@ -149,10 +154,10 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
     data.stateId = contactInfo.state.id;
     data.lgaId = contactInfo.lga.id;
     data.phoneNumber = contactInfo.phoneNumber;
-    data.email = contactInfo.email
+    data.email = contactInfo.email;
     console.log({ data });
     dispatch(updateContactInfo(data));
-  }
+  };
 
   const { phoneNumber, email, state, lga, postalCode, address } = contactInfo;
 
@@ -164,50 +169,90 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
           <form onSubmit={handleSubmit(contactInfoSubmit)}>
             <span className="skillInput p-mb-4 p-fluid p-formgrid p-grid">
               <div className="p-field p-col-12 p-md-6">
-                <label htmlFor="phoneNumber" className="inputLabel p-pr-3">Phone Number  <span className='text-danger'> * {errors.phoneNumber && <span className="text-danger font-weight-bold"> Phone number is required</span>}</span>
-                  {errors?.phoneNumber?.type === 'required' && <small className="text-danger font-weight-bold">&nbsp; {errors.phoneNumber.message}</small>}
+                <label htmlFor="phoneNumber" className="inputLabel p-pr-3">
+                  Phone Number{" "}
+                  <span className="text-danger">
+                    {" "}
+                    *{" "}
+                    {errors.phoneNumber && (
+                      <span className="text-danger font-weight-bold">
+                        {" "}
+                        Phone number is required
+                      </span>
+                    )}
+                  </span>
+                  {errors?.phoneNumber?.type === "required" && (
+                    <small className="text-danger font-weight-bold">
+                      &nbsp; {errors.phoneNumber.message}
+                    </small>
+                  )}
                 </label>
                 <InputText
                   id="phoneNumber"
                   name="phoneNumber"
                   type="number"
-                  {...register("phoneNumber",
-                    {
-                      required: true,
-                      pattern: /(^[0]\d{10}$)|(^[\+]?[234]\d{12}$)/,
-                      validate: value => value?.length > 0 || phoneNumber?.length > 0 || "* Phone Number is required"
-                    }
-                  )}
+                  {...register("phoneNumber", {
+                    required: true,
+                    pattern: /(^[0]\d{10}$)|(^[\+]?[234]\d{12}$)/,
+                    validate: (value) =>
+                      value?.length > 0 ||
+                      phoneNumber?.length > 0 ||
+                      "* Phone Number is required",
+                  })}
                   onChange={handleChange}
                   value={phoneNumber}
                 />
               </div>
               <div className="p-field p-col-12 p-md-6">
-                <label htmlFor="email" className="inputLabel p-pr-3">Email Address  <span className='text-danger'> * {errors.email && <span className="text-danger font-weight-bold"> Email is required</span>}</span>
-                  {errors?.email?.type === 'required' && <small className="text-danger font-weight-bold">&nbsp;
-                    {errors?.email?.message}</small>}
+                <label htmlFor="email" className="inputLabel p-pr-3">
+                  Email Address{" "}
+                  <span className="text-danger">
+                    {" "}
+                    *{" "}
+                    {errors.email && (
+                      <span className="text-danger font-weight-bold">
+                        {" "}
+                        Email is required
+                      </span>
+                    )}
+                  </span>
+                  {errors?.email?.type === "required" && (
+                    <small className="text-danger font-weight-bold">
+                      &nbsp;
+                      {errors?.email?.message}
+                    </small>
+                  )}
                 </label>
                 <InputText
+                  disabled
                   name="email"
                   id="email"
                   type="email"
-                  {...register("email",
-                    {
-                      required: true,
-                      validate: value => value?.length > 0 || email?.length > 0 || "* Email is required",
-                      pattern: {
-                        value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                        message: "* Entered value does not match email format"
-                      }
-                    })}
+                  {...register("email", {
+                    required: true,
+                    validate: (value) =>
+                      value?.length > 0 ||
+                      email?.length > 0 ||
+                      "* Email is required",
+                    pattern: {
+                      value:
+                        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      message: "* Entered value does not match email format",
+                    },
+                  })}
                   onChange={handleChange}
                   value={email}
                 />
               </div>
 
               <div className="p-field p-col-12 p-md-6 p-py-0 p-pl-2 p-pr-2">
-                <label htmlFor="state" className="inputLabel p-pr-3">State  <span className='text-danger'> *</span>
-                  {errors?.state?.type === 'required' && <small className="text-danger font-weight-bold">&nbsp; {errors.state.message}</small>}
+                <label htmlFor="state" className="inputLabel p-pr-3">
+                  State <span className="text-danger"> *</span>
+                  {errors?.state?.type === "required" && (
+                    <small className="text-danger font-weight-bold">
+                      &nbsp; {errors.state.message}
+                    </small>
+                  )}
                 </label>
 
                 <Dropdown
@@ -219,16 +264,20 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
                   icon="pi pi-plus"
                   id="state"
                   name="stateId"
-                  {...register("state", { required: 'state is required' })}
+                  {...register("state", { required: "state is required" })}
                   value={state}
                   onChange={handleChange}
-
                 />
               </div>
 
               <div className="p-field p-col-12 p-md-6 p-py-0 p-pl-2 p-pr-2">
-                <label htmlFor="lga" className="inputLabel p-pr-3">LGA  <span className='text-danger'> *</span>
-                  {errors?.lga?.type === 'required' && <small className="text-danger font-weight-bold">&nbsp; {errors.lga.message}</small>}
+                <label htmlFor="lga" className="inputLabel p-pr-3">
+                  LGA <span className="text-danger"> *</span>
+                  {errors?.lga?.type === "required" && (
+                    <small className="text-danger font-weight-bold">
+                      &nbsp; {errors.lga.message}
+                    </small>
+                  )}
                 </label>
                 <Dropdown
                   options={lgas}
@@ -239,10 +288,9 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
                   icon="pi pi-plus"
                   id="lga"
                   name="lgaId"
-                  {...register("lga", { required: 'lga is required' })}
+                  {...register("lga", { required: "lga is required" })}
                   value={lga}
                   onChange={handleChange}
-
                 />
               </div>
 
@@ -283,32 +331,54 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
               </div> */}
               <div className="p-fluid p-md-12 p-sm-12">
                 <div className="p-field">
-                  <label htmlFor="location">Address <span className='text-danger'>*</span></label>
+                  <label htmlFor="location">
+                    Address <span className="text-danger">*</span>
+                  </label>
                   <PlacesAutocomplete
                     value={location}
                     onChange={setLocation}
                     onSelect={handleSelectAddress}
                   >
-                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                      <div style={{ position: 'relative' }}>
+                    {({
+                      getInputProps,
+                      suggestions,
+                      getSuggestionItemProps,
+                      loading,
+                    }) => (
+                      <div style={{ position: "relative" }}>
                         <InputText
                           {...getInputProps({
                             // placeholder: 'Enter Location ...',
-                            className: 'location-search-input',
-                            name: "location"
+                            className: "location-search-input",
+                            name: "location",
                           })}
-
                         />
-                        <div className="autocomplete-dropdown-container" style={{ position: 'absolute', top: '40px', boxShadow: '1px 3px 2px #eee', width: '100%' }}>
+                        <div
+                          className="autocomplete-dropdown-container"
+                          style={{
+                            position: "absolute",
+                            top: "40px",
+                            boxShadow: "1px 3px 2px #eee",
+                            width: "100%",
+                          }}
+                        >
                           {loading && <div>Loading...</div>}
-                          {suggestions.map(suggestion => {
+                          {suggestions.map((suggestion) => {
                             const className = suggestion.active
-                              ? 'suggestion-item--active'
-                              : 'suggestion-item';
+                              ? "suggestion-item--active"
+                              : "suggestion-item";
                             // inline style for demonstration purpose
                             const style = suggestion.active
-                              ? { backgroundColor: '#fafafa', cursor: 'pointer', padding: '4px', }
-                              : { backgroundColor: '#ffffff', cursor: 'pointer', padding: '4px', };
+                              ? {
+                                  backgroundColor: "#fafafa",
+                                  cursor: "pointer",
+                                  padding: "4px",
+                                }
+                              : {
+                                  backgroundColor: "#ffffff",
+                                  cursor: "pointer",
+                                  padding: "4px",
+                                };
                             return (
                               <div
                                 {...getSuggestionItemProps(suggestion, {
@@ -316,7 +386,8 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
                                   style,
                                 })}
                               >
-                                <FaMapMarkerAlt /> <span>{suggestion.description}</span>
+                                <FaMapMarkerAlt />{" "}
+                                <span>{suggestion.description}</span>
                               </div>
                             );
                           })}
@@ -324,8 +395,12 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
                       </div>
                     )}
                   </PlacesAutocomplete>
-                  {errors.location && <span className="text-danger font-weight-bold "> <p>{errors.location.message}</p>
-                  </span>}
+                  {errors.location && (
+                    <span className="text-danger font-weight-bold ">
+                      {" "}
+                      <p>{errors.location.message}</p>
+                    </span>
+                  )}
                   {/* <InputText
                                                     type="text"
                                                     placeholder="Location"
@@ -337,13 +412,17 @@ const ContactInfoForm = ({ closeEditMode, data }) => {
                 </div>
               </div>
             </span>
-            <div>
-            </div>
-            <ModeFooter id="contactInfoEdit" loading={loading} onCancel={closeEditMode} />
+            <div></div>
+            <ModeFooter
+              id="contactInfoEdit"
+              loading={loading}
+              onCancel={closeEditMode}
+            />
           </form>
         </div>
       </div>
-    </>);
-}
+    </>
+  );
+};
 
 export default ContactInfoForm;
