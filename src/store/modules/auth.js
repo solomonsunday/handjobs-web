@@ -105,7 +105,7 @@ export function registerUser(user) {
           })
         );
         dispatch(push(`/security-verification?email=${response.email}`));
-        dispatch(isRequestLoading(true));
+        dispatch(isRequestLoading(false));
       },
       (error) => {
         // handle error
