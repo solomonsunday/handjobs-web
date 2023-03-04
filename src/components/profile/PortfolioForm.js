@@ -88,6 +88,9 @@ const PortfolioForm = ({ data, closeEditMode }) => {
   }
 
   const portfolioSubmit = () => {
+    if (selectedFiles && selectedFiles.length < 1) {
+      return window.alert("Choose a file")
+    }
     const formData = new FormData();
 
     selectedFiles.forEach(({ file }) => {
@@ -116,11 +119,12 @@ const PortfolioForm = ({ data, closeEditMode }) => {
         <div className="p-card-body">
           <form onSubmit={handleSubmit(portfolioSubmit)}>
             {selectedFiles.length > 0 && (<><SectionSelectedFiles selectedFiles={selectedFiles} removeFile={removeFile} />
-              <ModeFooter
-                loading={loading}
-                id="portfolioEdit"
-                onCancel={closeEditMode}
-              /></>)}
+            </>)}
+            <ModeFooter
+              loading={loading}
+              id="portfolioEdit"
+              onCancel={closeEditMode}
+            />
             <br />
             <span className="width-100 p-mb-4">
               <div className="p-grid">
