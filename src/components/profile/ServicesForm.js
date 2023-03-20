@@ -75,8 +75,12 @@ const ServicesForm = ({ data, closeEditMode }) => {
 
   const serviceSubmit = (data) => {
     console.log("services", services, "data", data);
+    if (services.length > 0) {
+      dispatch(createService({ services }));
+    } else {
+      return window.alert("Service must be more than one")
+    }
 
-    dispatch(createService({ services }));
   };
 
   const componentStatus = { services: "add" };
@@ -101,7 +105,7 @@ const ServicesForm = ({ data, closeEditMode }) => {
             {services.map((service, index) => (
               <button
                 key={index}
-                onClick={(e) => services?.length > 1 && handleServiceDelete(service)}
+                onClick={(e) => handleServiceDelete(service)}
                 type="button"
                 className="p-mr-2 p-p-0 p-mb-1 tag-container"
                 id={service?.id}
@@ -111,7 +115,7 @@ const ServicesForm = ({ data, closeEditMode }) => {
                 ) : (
                   <span></span>
                 )}
-                <Tag value={service} icon={` ${services?.length > 1 && 'pi pi-times'}`} className="p-p-2"></Tag>
+                <Tag value={service} icon={`pi pi-times`} className="p-p-2"></Tag>
               </button>
             ))}
             <span className="serviceInput">

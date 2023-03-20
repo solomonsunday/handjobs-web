@@ -458,7 +458,7 @@ const Contact = {
   add: (id) => requests.post("/contact", id),
   delete: (id) => requests.del(`/contact/${id}`),
   accept: (data) => requests.post("/contact/accept", data),
-  reject: (id) => requests.del(`/contact/reject/${id}`),
+  reject: (id) => requests.del(`/contact/cancel-request/${id}`),
   cancelConnectionRequest: (accountId) =>
     requests.del(`/contact/cancel-request/${accountId}`),
   block: (id) => requests.put(`/contact/block-contact/${id}`),

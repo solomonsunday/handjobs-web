@@ -36,6 +36,7 @@ const New = ({ mode }) => {
     formState: { errors },
     setValue,
     watch,
+    getValues,
   } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -194,6 +195,11 @@ const New = ({ mode }) => {
         } else {
           data.now = false;
         }
+
+        if (data.startDate > data.endDate) {
+          return window.alert("Start date must be behind end date");
+        }
+
         data.service = data.service.name;
         // data.requesterLocation = locateUserHandler();
         data.requesterLocation = {
@@ -297,15 +303,15 @@ const New = ({ mode }) => {
                                   // inline style for demonstration purpose
                                   const style = suggestion.active
                                     ? {
-                                        backgroundColor: "#fafafa",
-                                        cursor: "pointer",
-                                        padding: "4px",
-                                      }
+                                      backgroundColor: "#fafafa",
+                                      cursor: "pointer",
+                                      padding: "4px",
+                                    }
                                     : {
-                                        backgroundColor: "#ffffff",
-                                        cursor: "pointer",
-                                        padding: "4px",
-                                      };
+                                      backgroundColor: "#ffffff",
+                                      cursor: "pointer",
+                                      padding: "4px",
+                                    };
                                   return (
                                     <div
                                       {...getSuggestionItemProps(suggestion, {
@@ -381,15 +387,15 @@ const New = ({ mode }) => {
                                   // inline style for demonstration purpose
                                   const style = suggestion.active
                                     ? {
-                                        backgroundColor: "#fafafa",
-                                        cursor: "pointer",
-                                        padding: "4px",
-                                      }
+                                      backgroundColor: "#fafafa",
+                                      cursor: "pointer",
+                                      padding: "4px",
+                                    }
                                     : {
-                                        backgroundColor: "#ffffff",
-                                        cursor: "pointer",
-                                        padding: "4px",
-                                      };
+                                      backgroundColor: "#ffffff",
+                                      cursor: "pointer",
+                                      padding: "4px",
+                                    };
                                   return (
                                     <div
                                       {...getSuggestionItemProps(suggestion, {
@@ -527,7 +533,8 @@ const New = ({ mode }) => {
                           type="date"
                           value={startDate}
                           disabled={isJobDateNow}
-                          // maxDate={endDate}
+                          minDate={new Date()}
+                          maxDate={endDate}
                           name="startDate"
                           {...register("startDate", {
                             required: ` Start Date is required`,
@@ -536,17 +543,18 @@ const New = ({ mode }) => {
                             const inputName = "startDate";
                             const value = new Date(e.value).toISOString();
 
-                            setStartDate(value);
+                            setStartDate(e.value);
                             setValue(inputName, value, {
                               shouldValidate: true,
                             });
                           }}
-                          // min={new Date().toISOString().split('T')[0]}
+                        // maxDate={endDate}
+                        // min={new Date().toISOString().split('T')[0]}
 
-                          // name="startDate"
-                          // {...register("startDate", {
-                          //     required: `Start date is required`,
-                          // })}
+                        // name="startDate"
+                        // {...register("startDate", {
+                        //     required: `Start date is required`,
+                        // })}
                         />
                         {errors.startDate && (
                           <span className="text-danger font-weight-bold ">
@@ -575,7 +583,7 @@ const New = ({ mode }) => {
                           onSelect={(e) => {
                             const inputName = "endDate";
                             const value = e.value.toISOString();
-                            setEndDate(value);
+                            setEndDate(e.value);
                             setValue(inputName, value, {
                               shouldValidate: true,
                             });
@@ -588,6 +596,7 @@ const New = ({ mode }) => {
                               value > startdate ||
                               "End date cannot be less than Start date",
                           })}
+                          minDate={isJobDateNow ? new Date() : startDate}
                         />
                         {errors.endDate && (
                           <span className="text-danger font-weight-bold">
