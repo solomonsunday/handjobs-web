@@ -1,3 +1,4 @@
+import { ROLE } from "constants/accountType";
 import request from "superagent";
 import _superagent from "superagent";
 import superagentPromise from "superagent-promise";
@@ -104,7 +105,7 @@ const Auth = {
   current: () => JSON.parse(window.localStorage.getItem("auth")),
   isAdmin: () => {
     const user = Auth.current();
-    return user?.role === ("Superadmin" || "Developer");
+    return user?.role === (ROLE.SUPER_ADMIN || ROLE.DEVELOPER);
   },
   login: (email, password, type, app) =>
     requests.post("/auth/signIn", { email, password, type, app }),

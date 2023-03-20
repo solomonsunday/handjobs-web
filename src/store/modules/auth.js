@@ -2,7 +2,7 @@ import { showMessage } from "./notification";
 import { push } from "connected-react-router";
 import agent from "../../services/agent.service";
 import { MESSAGE_TYPE } from "store/constant";
-import { ACCOUNT_TYPE } from "constants/accountType";
+import { ACCOUNT_TYPE, ROLE } from "constants/accountType";
 import { useDispatch } from "react-redux";
 
 // initial values
@@ -160,7 +160,7 @@ export function loginUser({ email, password, type, app }) {
           })
         );
 
-        if (response.role === ("Superadmin" || "developer")) {
+        if (response.role === (ROLE.SUPER_ADMIN || ROLE.DEVELOPER)) {
           onLogin(dispatch, response);
           dispatch(push("/admin"));
           return;
