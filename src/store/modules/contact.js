@@ -1,7 +1,9 @@
 import { showMessage } from "./notification";
 import agent from "../../services/agent.service";
 import { MESSAGE_TYPE } from "../constant";
-import { push } from "connected-react-router";
+import { loadProfileInfo } from "./account";
+import { loadAllJobs } from "./job";
+import { loadPosts } from "./timeline";
 
 // initial values
 const contact = {
@@ -330,6 +332,10 @@ export function sendContactRequest(id) {
         );
         dispatch(requestSent(id));
         dispatch(loadingContact(""));
+        dispatch(loadProfileInfo());
+        dispatch(loadAllJobs());
+        dispatch(loadPosts(1, 10, "loadPosts"));
+        dispatch(loadFreeUsers(1, 10, "loadingContacts"));
       },
       (error) => {
         // handle error
@@ -368,7 +374,6 @@ export function sendSuggestedContactRequest(id) {
     );
   };
 }
-
 export function cancelContactRequest(id) {
   return (dispatch) => {
     dispatch(loadingContact("cancelContactRequest"));
