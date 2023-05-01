@@ -117,16 +117,20 @@ const Applicants = ({ service }) => {
                       artisans?.length > 0 &&
                       artisans.map((artisan) => {
                         return (
-                          <div className="col-md-4 col-sm-12 highlight-card p-pb-3">
+                          <div className="col-md-3 col-sm-12 highlight-card p-pb-1">
                             <div
                               className="card"
                               style={{ borderRadius: "1rem" }}
                             >
                               <img
-                                src={artisan.imageUrl}
+                                src={
+                                  artisan?.imageUrl
+                                    ? artisan?.imageUrl
+                                    : "/assets/images/icon-user.png"
+                                }
                                 height="150px"
                                 className="card-img-top"
-                                alt="..."
+                                alt="UserImage"
                               />
                               <div
                                 className="card-body"

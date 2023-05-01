@@ -22,7 +22,7 @@ const View = () => {
   );
   const loading = useSelector((state) => state.job.loading);
   const requestedId = agent.Auth.current();
-console.log("hel",{requestedId})
+  console.log("hel", { requestedId });
   useEffect(() => {
     dispatch(loadInstantJob(param.id));
   }, []);
@@ -52,13 +52,18 @@ console.log("hel",{requestedId})
       <div style={styles.container}>
         <div className="container">
           <div className="d-flex" style={styles.topBarContainer}>
-            <div className="company-logo">
+            <div className="company-logo py-2">
               <img
-                src="https://source.unsplash.com/random/100x100"
+                src={
+                  instantJobDetail?.company?.imageUrl
+                    ? instantJobDetail?.company?.imageUrl
+                    : "/assets/images/logo/applogo.jpeg"
+                }
                 alt="company-logo"
                 style={{
-                  borderRadius: "50%",
-                  height: "75px",
+                  borderRadius: "16%",
+                  height: "140px",
+                  width: "140px",
                   justifyContent: "center",
                 }}
               />
@@ -160,21 +165,22 @@ console.log("hel",{requestedId})
                 </div>
               </div>
             </div>
-            {(requestedId?.id !== instantJobDetail?.accountId && requestedId?.accountType === 'Artisan') && (
-              <button
-                onClick={() => handleApply(instantJobDetail.id)}
-                className="btn btn-block on-hover"
-                style={styles.btnApply}
-              >
-                {jobApplicationRequest ? (
-                  <span>
-                    <i className="pi pi-spin pi-spinner"></i> Please wait...
-                  </span>
-                ) : (
-                  `Apply`
-                )}
-              </button>
-            )}{" "}
+            {requestedId?.id !== instantJobDetail?.accountId &&
+              requestedId?.accountType === "Artisan" && (
+                <button
+                  onClick={() => handleApply(instantJobDetail.id)}
+                  className="btn btn-block on-hover"
+                  style={styles.btnApply}
+                >
+                  {jobApplicationRequest ? (
+                    <span>
+                      <i className="pi pi-spin pi-spinner"></i> Please wait...
+                    </span>
+                  ) : (
+                    `Apply`
+                  )}
+                </button>
+              )}{" "}
           </div>
 
           <div className="col-md-3">
@@ -224,14 +230,25 @@ console.log("hel",{requestedId})
   );
 };
 
+// style="background-image: url("/static/media/artisan_color.4359e4f8.png"); background-size: cover; background-repeat: no-repeat; width: 100%; height: 310px; position: relative; border-radius: 1rem;
 const styles = {
+  // container: {
+  //   backgroundImage: `url(${BackgroundImage})`,
+  //   backgroundSize: "cover",
+  //   backgroundRepeat: "no-repeat",
+  //   width: "100vw",
+  //   height: "160px",
+  //   position: "relative",
+  // },
+
   container: {
-    backgroundImage: `url(${BackgroundImage})`,
+    backgroundImage: `url(${"/static/media/artisan_color.4359e4f8.png"})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     width: "100vw",
     height: "160px",
     position: "relative",
+    // borderRadius: "1rem",
   },
   topBarContainer: {
     width: "600px",

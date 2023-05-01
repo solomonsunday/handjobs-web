@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   loadContacts,
   loadFreeUsers,
-  sendContactRequest,
+  sendSuggestedContactRequest,
 } from "store/modules/contact";
 import agentService from "services/agent.service";
 
@@ -25,8 +25,6 @@ const TimelineLeftPanel = ({ profileInfo, expandProfileImage }) => {
   const [loadType, setLoadType] = useState("");
   const [selectedId, setSelectedId] = useState(null);
 
-  console.log(contactLength, "contacts");
-
   useEffect(() => {
     dispatch(loadFreeUsers(page, limit, loadType, search));
   }, []);
@@ -36,7 +34,7 @@ const TimelineLeftPanel = ({ profileInfo, expandProfileImage }) => {
 
   const handleConnectionRequest = (e) => {
     let id = e.currentTarget.dataset.id;
-    dispatch(sendContactRequest({ contactId: id }));
+    dispatch(sendSuggestedContactRequest({ contactId: id }));
     setSelectedId(id);
   };
 
@@ -168,7 +166,9 @@ const TimelineLeftPanel = ({ profileInfo, expandProfileImage }) => {
                 <img
                   width="40"
                   height="40"
-                  src={suggestion.imageUrl}
+                  src={
+                    suggestion.imageUrl ?? "/assets/images/logo/applogo.jpeg"
+                  }
                   className="rounded-circle profile-picture-timeline p-mr-2"
                 />
                 <span>

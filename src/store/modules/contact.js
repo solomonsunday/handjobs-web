@@ -1,6 +1,7 @@
 import { showMessage } from "./notification";
 import agent from "../../services/agent.service";
 import { MESSAGE_TYPE } from "../constant";
+import { push } from "connected-react-router";
 
 // initial values
 const contact = {
@@ -329,6 +330,34 @@ export function sendContactRequest(id) {
         );
         dispatch(requestSent(id));
         dispatch(loadingContact(""));
+      },
+      (error) => {
+        // handle error
+        dispatch(showMessage({ type: "error", message: error }));
+        dispatch(loadingContact(""));
+        dispatch(isError("requestFail"));
+      }
+    );
+  };
+}
+
+export function sendSuggestedContactRequest(id) {
+  return (dispatch) => {
+    dispatch(loadingContact("sendContactRequest"));
+    dispatch(isError(null));
+    return agent.Contact.add(id).then(
+      (response) => {
+        //handle success
+        dispatch(
+          showMessage({
+            type: MESSAGE_TYPE.SUCCESS,
+            title: "Send Connection Request",
+            message: "Request sent",
+          })
+        );
+        dispatch(requestSent(id));
+        dispatch(loadingContact(""));
+        window.location.reload();
       },
       (error) => {
         // handle error

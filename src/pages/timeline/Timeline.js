@@ -21,9 +21,12 @@ const Timeline = () => {
   const loading = useSelector((state) => state.timeline.loadingPosts);
   const allJobs = useSelector((state) => state.job.allJobs);
   const profileInfo = useSelector((state) => state.account.profileInfo);
+  const contacts = useSelector((state) => state.contact.contacts.data);
+  const contactLength = Object.keys(contacts).length;
   const [post, setPost] = useState({});
   const [pageNumber, setPageNumber] = useState(1);
   const [imageToDisplay, setImageToDisplay] = useState("");
+  const [postsCount, setPostsCount] = useState(null);
   const isAuthenticated = agent.Auth.isAuth();
   const pageLimit = 10;
 
@@ -35,6 +38,8 @@ const Timeline = () => {
       dispatch(openModal(TIMELINE.CREATEPOST));
     }
   };
+  let idsCount = postsCount?.ids?.length;
+  console.log(contactLength, "contactLength");
 
   const expandProfileImage = (src) => {
     setImageToDisplay(src);
@@ -52,6 +57,12 @@ const Timeline = () => {
     setPageNumber(pageNumber + 1);
     dispatch(loadPosts(pageNumber + 1, pageLimit, "loadMore"));
   };
+
+  useEffect(() => {
+    if (posts) {
+      setPostsCount(posts);
+    }
+  }, [posts]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -112,7 +123,8 @@ const Timeline = () => {
               )}
               {isAuthenticated &&
                 loading !== "loadPosts" &&
-                posts.ids.length === 0 && (
+                contactLength !== 0 &&
+                idsCount?.ids?.length === 0 && (
                   <div className="p-card p-p-3 p-mb-1 timeline-posts">
                     <div className="p-mb-6 p-p-4 text-center">
                       <h3 className="p-card-title">Create a post</h3>
