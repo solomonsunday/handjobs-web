@@ -87,7 +87,7 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
         <Container className="d-flex justify-content-between">
           <div>
             <Navbar.Brand
-              href="#home"
+              href="/dashboard"
               className="navbar-brand logo"
               to="/dashboard"
             >
