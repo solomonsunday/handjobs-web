@@ -59,7 +59,7 @@
 
 .timeline-emptyProfilePic-small {
   border: 4px #357c3c solid;
-  width: 30px;
+  width: fit-content;
   margin: auto;
   font-size: 1.87rem;
   border-radius: 50%;
