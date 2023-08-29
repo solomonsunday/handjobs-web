@@ -2,7 +2,7 @@ import { ACCOUNT_TYPE } from "constants/accountType";
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import agentService from "services/agent.service";
 import {
   loadContacts,
@@ -26,6 +26,7 @@ const TimelineLeftPanel = ({ profileInfo, expandProfileImage }) => {
   const [selectedId, setSelectedId] = useState(null);
 
   console.log(contactLength, "contacts");
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(loadFreeUsers(page, limit, loadType, search));
@@ -166,11 +167,15 @@ const TimelineLeftPanel = ({ profileInfo, expandProfileImage }) => {
             >
               <span className="d-flex align-items-end">
                 {!suggestion.imageUrl && (
-                  <i className="pi pi-user p-mt-2 p-mb-2 p-mr-sm-3 p-mr-2 timeline-emptyProfilePic-medium"></i>
+                  <i
+                    onClick={() => history.push(`/applicant/${suggestion.id}`)}
+                    className="pi pi-user p-mt-2 p-mb-2 p-mr-sm-3 p-mr-2 timeline-emptyProfilePic-medium"
+                  ></i>
                 )}
 
                 {suggestion.imageUrl && (
                   <img
+                    onClick={() => history.push(`/applicant/${suggestion.id}`)}
                     width="40"
                     height="40"
                     src={suggestion.imageUrl}
@@ -179,7 +184,8 @@ const TimelineLeftPanel = ({ profileInfo, expandProfileImage }) => {
                 )}
                 <span>
                   <div
-                    className={`p-card-title cardsubtitle-timeline ${
+                    onClick={() => history.push(`/applicant/${suggestion.id}`)}
+                    className={`p-card-title cardsubtitle-timeline  ${
                       suggestion.imageUrl ? "p-mb-0" : "p-mb-3"
                     }`}
                   >
