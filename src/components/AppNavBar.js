@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import agentService, { isArtisanApp } from "services/agent.service";
-import { loadProfileInfo } from "./../store/modules/account";
-import { forgotPassword, OnLogout } from "../store/modules/auth";
-
-import "./AppNavBar.css";
 import { ACCOUNT_TYPE } from "constants/accountType";
-import { Container, Nav, Navbar } from "react-bootstrap";
 import { ViewModuleFromNotification } from "helpers/viewModuleFromNotification";
 import useWindowSize from "hooks/use-window-size";
-import { toggleChatModal } from "store/modules/chat";
-import NotificationDropdown from "./notification/NotificationDropdown";
+import { useEffect, useState } from "react";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import agentService from "services/agent.service";
 import {
-  updateNotification,
   UserNotifications,
+  updateNotification,
 } from "store/modules/appNotification";
-import { push } from "connected-react-router";
+import { toggleChatModal } from "store/modules/chat";
+import { OnLogout } from "../store/modules/auth";
+import { loadProfileInfo } from "./../store/modules/account";
+import "./AppNavBar.css";
+import NotificationDropdown from "./notification/NotificationDropdown";
 
 const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
   const profileInfo = useSelector((state) => state.account.profileInfo);
@@ -88,12 +86,16 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
       >
         <Container className="d-flex justify-content-between">
           <div>
-            <Navbar.Brand href="#home" className="navbar-brand logo" to="/dashboard">
+            <Navbar.Brand
+              href="#home"
+              className="navbar-brand logo"
+              to="/dashboard"
+            >
               {/* <Link> */}
-              {/* <img className="logo1" src="/assets/images/logo/applogo.jpeg" alt="Logo" height="35" /> */}
-              <h3 className="text-white" style={{ fontFamily: "cursive" }}>
+              <img className="logo1" src="https://res.cloudinary.com/dfyj9xgw9/image/upload/v1692829900/handworker-assets/white-handworker-logo_ina43z.png" alt="Logo" height="45"/>
+              {/* <h3 className="text-white" style={{ fontFamily: "cursive" }}>
                 HandJobs
-              </h3>
+              </h3> */}
               {/* </Link> */}
             </Navbar.Brand>
             <Navbar.Toggle
@@ -117,7 +119,7 @@ const AppNavBar = ({ displaySearBar = false, instantJobAlert = false }) => {
                 <Nav.Link className="text-white" href="/posts">
                   <i
                     className="pi pi-plus border border-2 rounded itemIcon-appNavbar"
-                    style={{ fontSize: "1.2em",padding:'2px' }}
+                    style={{ fontSize: "1.2em", padding: "2px" }}
                   />
                   <div className="itemTitle-appNavbar mx-3">Posts</div>
                 </Nav.Link>
