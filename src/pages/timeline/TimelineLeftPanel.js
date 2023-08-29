@@ -165,20 +165,24 @@ const TimelineLeftPanel = ({ profileInfo, expandProfileImage }) => {
               className="p-card-body d-flex justify-content-between align-items-center"
             >
               <span className="d-flex align-items-end">
-                {/* {!suggestion.imageUrl && (
+                {!suggestion.imageUrl && (
                   <i className="pi pi-user p-mt-2 p-mb-2 p-mr-sm-3 p-mr-2 timeline-emptyProfilePic-medium"></i>
-                )} */}
+                )}
 
-                {/* {suggestion.imageUrl && ( */}
+                {suggestion.imageUrl && (
                   <img
                     width="40"
                     height="40"
                     src={suggestion.imageUrl}
                     className="rounded-circle profile-picture-timeline p-mr-2"
                   />
-                {/* )} */}
+                )}
                 <span>
-                  <div className="p-card-title cardsubtitle-timeline p-mb-3">
+                  <div
+                    className={`p-card-title cardsubtitle-timeline ${
+                      suggestion.imageUrl ? "p-mb-0" : "p-mb-3"
+                    }`}
+                  >
                     {suggestion.firstName.toUpperCase() +
                       " " +
                       suggestion.lastName.toUpperCase()}
