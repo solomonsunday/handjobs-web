@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import SectionHeader from "components/profile/SectionHeader";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchAllInstantJobs } from "store/modules/instantJob";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
 import "../profile/UserProfile.css";
-import SectionHeader from "components/profile/SectionHeader";
 
 import "./Instant-Jobs.css";
 
