@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { RadioButton } from "primereact/radiobutton";
-import { Link } from "react-router-dom";
-import { Button } from "primereact/button";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { registerUser } from "store/modules/auth";
 
-import "./Register.css";
 import { ACCOUNT_TYPE } from "constants/accountType";
 import { Dropdown } from "primereact/dropdown";
 import { useRef } from "react";
+import "./Register.css";
 // import { loadServices } from "store/modules/service";
 import { loadServices } from "store/modules/admin";
 
@@ -92,15 +92,11 @@ const RegisterStep = ({ goto, accountType }) => {
             style={{ borderRadius: "2rem" }}
           >
             <div className="logo-container finger" onClick={handleGoto}>
-              {/* <Link to="/"> */}
-              {/* <img src="/assets/images/logo/applogo.jpeg" width="150" alt="brand-logo" /> */}
-              <h3
-                className="app-pri-text-color"
-                style={{ fontFamily: "cursive" }}
-              >
-                HandJobs
-              </h3>
-              {/* </Link> */}
+              <img
+                src="https://res.cloudinary.com/dfyj9xgw9/image/upload/v1692829900/handworker-assets/green-handworker-logo_fnlmwt.png"
+                width="150"
+                alt="brand-logo"
+              />
             </div>
             <div className="">
               <div className="panel-login text-center"></div>

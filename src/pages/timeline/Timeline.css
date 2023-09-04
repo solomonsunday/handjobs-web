@@ -17,7 +17,7 @@
 .profile-picture-timeline {
   border: 3px #357c3c solid;
   object-fit: cover;
-  background-color: #357c3c;
+  /* background-color: #357c3c; */
   color: white;
   cursor: pointer;
 }
@@ -450,7 +450,7 @@ a .cardsubtitle-timeline {
 .timeline-postImage {
   object-fit: contain;
   height: 17rem;
-  background-color: #357c3c;
+  /* background-color: #357c3c; */
   cursor: pointer;
 }
 

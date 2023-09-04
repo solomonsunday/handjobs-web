@@ -78,6 +78,17 @@ const Timeline = () => {
     }
   }, [posts]);
 
+  if (loading === "loadPosts" || loading === '') {
+    return (
+      <div className="p-p-5 d-flex justify-content-center">
+        <i
+          className="pi pi-spin pi-spinner"
+          style={{ fontSize: "2em", color: "#357C3C" }}
+        />
+      </div>
+    )
+  }
+
   return (
     <>
       <div className="timeline-container">
@@ -90,9 +101,8 @@ const Timeline = () => {
               />
             )}
             <div
-              className={`p-col-12 p-px-0 ${
-                isAuthenticated ? "p-md-6" : "p-md-9"
-              }`}
+              className={`p-col-12 p-px-0 ${isAuthenticated ? "p-md-6" : "p-md-9"
+                }`}
             >
               {isAuthenticated && (
                 <div

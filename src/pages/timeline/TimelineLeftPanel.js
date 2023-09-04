@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "primereact/button";
-import { formatter } from "../../helpers/converter";
-import { Link } from "react-router-dom";
 import { ACCOUNT_TYPE } from "constants/accountType";
+import { Button } from "primereact/button";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import agentService from "services/agent.service";
 import {
   loadContacts,
   loadFreeUsers,
   sendSuggestedContactRequest,
 } from "store/modules/contact";
-import agentService from "services/agent.service";
+import { formatter } from "../../helpers/converter";
 
 const TimelineLeftPanel = ({ profileInfo, expandProfileImage }) => {
   const suggestedUsers = useSelector((state) => state.contact.freeUsers);
@@ -24,6 +24,8 @@ const TimelineLeftPanel = ({ profileInfo, expandProfileImage }) => {
   const [search, setSearch] = useState("");
   const [loadType, setLoadType] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(loadFreeUsers(page, limit, loadType, search));
@@ -160,19 +162,33 @@ const TimelineLeftPanel = ({ profileInfo, expandProfileImage }) => {
           return (
             <div
               key={suggestion.id}
-              className="p-card-body d-flex justify-content-between"
+              className="p-card-body d-flex justify-content-between align-items-center"
             >
               <span className="d-flex align-items-end">
-                <img
-                  width="40"
-                  height="40"
-                  src={
-                    suggestion.imageUrl ?? "/assets/images/logo/applogo.jpeg"
-                  }
-                  className="rounded-circle profile-picture-timeline p-mr-2"
-                />
+                {!suggestion.imageUrl && (
+                  <i
+                    onClick={() => history.push(`/applicant/${suggestion.id}`)}
+                    className="pi pi-user p-mt-2 p-mb-2 p-mr-sm-3 p-mr-2 timeline-emptyProfilePic-medium"
+                  ></i>
+                )}
+
+                {suggestion.imageUrl && (
+                  <img
+                    onClick={() => history.push(`/applicant/${suggestion.id}`)}
+                    width="40"
+                    height="40"
+                    alt="usericon"
+                    src={suggestion.imageUrl}
+                    className="rounded-circle profile-picture-timeline p-mr-2"
+                  />
+                )}
                 <span>
-                  <div className="p-card-title cardsubtitle-timeline p-mb-0">
+                  <div
+                    onClick={() => history.push(`/applicant/${suggestion.id}`)}
+                    className={`p-card-title cardsubtitle-timeline  ${
+                      suggestion.imageUrl ? "p-mb-0" : "p-mb-3"
+                    }`}
+                  >
                     {suggestion.firstName.toUpperCase() +
                       " " +
                       suggestion.lastName.toUpperCase()}

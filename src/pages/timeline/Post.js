@@ -1,32 +1,29 @@
-import React, { useState } from "react";
+import { TIMELINE } from "constants/timeline";
+import moment from "moment";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CommentList from "./CommentList";
-import CommentForm from "./CommentForm";
-import { formatter } from "../../helpers/converter";
 import { openModal } from "store/modules/modal";
+import ThumbsUp from "../../components/ThumbUp";
+import { formatter } from "../../helpers/converter";
+import agent from "../../services/agent.service";
+import { loadComments } from "../../store/modules/comment";
 import {
   deletePost,
   dislikePost,
-  likePost,
   likePostAsync,
   postLiked,
 } from "../../store/modules/timeline";
-import { loadComments } from "../../store/modules/comment";
-import { TIMELINE } from "constants/timeline";
-import agent from "../../services/agent.service";
-import moment from "moment";
-import ThumbsDown from "../../components/ThumbDown";
-import ThumbsUp from "../../components/ThumbUp";
+import CommentForm from "./CommentForm";
+import CommentList from "./CommentList";
 import "./Timeline.css";
 
-import "./Timeline.css";
-import { ACCOUNT_TYPE } from "constants/accountType";
-import { Link, useHistory } from "react-router-dom";
-import { MEDIATYPES } from "constants/setup";
-import AppLoading from "components/AppLoading";
 import Spinner from "components/spinner/spinner.component";
-import { showMessage } from "store/modules/notification";
+import { ACCOUNT_TYPE } from "constants/accountType";
+import { MEDIATYPES } from "constants/setup";
+import { Link, useHistory } from "react-router-dom";
 import { MESSAGE_TYPE } from "store/constant";
+import { showMessage } from "store/modules/notification";
+import "./Timeline.css";
 const Post = ({
   profileInfo,
   post,

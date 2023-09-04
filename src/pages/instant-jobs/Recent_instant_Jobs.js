@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import SectionHeader from "components/profile/SectionHeader";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchAllInstantJobs } from "store/modules/instantJob";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
 import "../profile/UserProfile.css";
-import SectionHeader from "components/profile/SectionHeader";
 
 import "./Instant-Jobs.css";
 
@@ -56,7 +56,7 @@ const RecentInstantJobs = () => {
           />
           <div
             className="p-card-body p-grid p-mt-1 overflow-auto"
-            style={{ height: 500 }}
+            style={{ maxHeight: 500 }}
           >
             {allCurrentInstantJobs &&
               allCurrentInstantJobs.length > 0 &&
@@ -78,8 +78,8 @@ const RecentInstantJobs = () => {
                           />
                         ) : (
                           <img
-                            src="../assets/images/logo/applogo.jpeg"
-                            className="img-fluid rounded-circle"
+                            src="https://res.cloudinary.com/dfyj9xgw9/image/upload/v1692829898/handworker-assets/Handworker-h-logo_lmyb3w.png"
+                            className="img-fluid rounded-circle border"
                             alt="user-image"
                             style={{ width: "50px", height: "50px" }}
                           />
@@ -145,11 +145,10 @@ const RecentInstantJobs = () => {
                           </div> */}
                         </small>
                       </div>
-                      <div className="col-3">
-                        </div>
+                      <div className="col-3"></div>
                       <div className="col-9">
                         <small>
-                        <div className="d-flex justify-content-between">
+                          <div className="d-flex justify-content-between">
                             <div>
                               <p className="p-pt-2 float-right">
                                 {" "}
@@ -178,8 +177,8 @@ const RecentInstantJobs = () => {
                               </span>
                             </div>
                           </div>
-</small>
-</div>
+                        </small>
+                      </div>
                       <hr />
                     </div>
                   </div>
