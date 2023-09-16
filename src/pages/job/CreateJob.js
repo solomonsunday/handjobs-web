@@ -1,34 +1,33 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import AppNavBar from "components/AppNavBar";
 import InputField from "components/InputField";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
+import { Dropdown } from "primereact/dropdown";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import BackgroundImage from '../../assets/bg.png'
-import avatarImage from '../../assets/avatar.png'
-import { Dropdown } from "primereact/dropdown";
-import { loadCountry, loadStates } from "store/modules/location";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { createJob } from "store/modules/job";
-import { Link, useHistory } from "react-router-dom";
+import { loadCountry, loadStates } from "store/modules/location";
+import avatarImage from "../../assets/avatar.png";
+import BackgroundImage from "../../assets/bg.png";
 
-import './CreateJob.css';
+import "./CreateJob.css";
 
 const contractTypeList = ["Full-Time", "Contact-Based", "Internship"];
 
 const CreateJob = () => {
   const loading = useSelector((state) => state.job.loading);
-  const jobs = useSelector(state => state.job.jobs)
-  const history = useHistory()
+  const jobs = useSelector((state) => state.job.jobs);
+  const history = useHistory();
   // const id = useSelector((state) => state.account.profileInfo.id);
-  const countries = useSelector(state => state.location.countries);
-  const states = useSelector(state => state.location.states);
+  const countries = useSelector((state) => state.location.countries);
+  const states = useSelector((state) => state.location.states);
   const dispatch = useDispatch();
   const [editorHtml, setEditorHtml] = useState("");
   const [companyInfo, setCompanyInfo] = useState({
-    minSalary: ''
+    minSalary: "",
   });
   const {
     register,
@@ -57,27 +56,28 @@ const CreateJob = () => {
 
   useEffect(() => {
     if (jobs.length) {
-      history.push('/company/jobs')
+      history.push("/company/jobs");
     }
-  }, [jobs.length])
-
+  }, [jobs.length]);
 
   const handleCountryChange = (e) => {
     let conuntryId = e.target.value.id;
     dispatch(loadStates(conuntryId));
-  }
+  };
 
   const onSubmit = () => {
     if (!editorHtml)
-      return setError('jobDescription', {
+      return setError("jobDescription", {
         type: "manual",
-        message: 'Job description is required'
-      })
-    const minSalary = parseInt(companyInfo.minSalary)
-    const maxSalary = parseInt(companyInfo.maxSalary)
+        message: "Job description is required",
+      });
+    const minSalary = parseInt(companyInfo.minSalary);
+    const maxSalary = parseInt(companyInfo.maxSalary);
 
     if (minSalary > maxSalary) {
-      window.alert('Minimum salary is not expected to be greater than maximum salary, please check your input.')
+      window.alert(
+        "Minimum salary is not expected to be greater than maximum salary, please check your input."
+      );
       return;
     }
     const dataToPost = {
@@ -97,11 +97,10 @@ const CreateJob = () => {
       country: companyInfo.country.name,
       state: companyInfo.state.name,
       minYearOfExperience: parseInt(companyInfo.minYearOfExperience),
-
-    }
+    };
 
     // console.log(dataToPost);
-    return dispatch(createJob(dataToPost))
+    return dispatch(createJob(dataToPost));
   };
 
   return (
@@ -310,7 +309,6 @@ const CreateJob = () => {
                                 id="contractTypeInput"
                                 className="form-control"
                               />
-
                             </div>
                             <div className="p-field p-col-6 p-md-6 p-sm-12">
                               <label className="inputLabel" htmlFor="course">
@@ -404,13 +402,11 @@ const CreateJob = () => {
                                 id="country"
                                 name="country"
                                 value={companyInfo.country}
-                                {...register("country",
-                                  {
-                                    required: ` Country is required`
-                                  }
-                                )}
+                                {...register("country", {
+                                  required: ` Country is required`,
+                                })}
                                 onChange={(e) => {
-                                  handleChange(e)
+                                  handleChange(e);
                                   handleCountryChange(e);
                                 }}
                                 className="form-control"
@@ -436,11 +432,9 @@ const CreateJob = () => {
                                 id="stateList"
                                 name="state"
                                 value={companyInfo.state}
-                                {...register("state",
-                                  {
-                                    required: ` State is required`
-                                  }
-                                )}
+                                {...register("state", {
+                                  required: ` State is required`,
+                                })}
                                 onChange={(e) => {
                                   handleChange(e);
                                 }}
@@ -450,7 +444,8 @@ const CreateJob = () => {
 
                             <div className="p-field p-col-6 p-md-6">
                               <label className="inputLabel" htmlFor="course">
-                                Minimum Year of Experience<span className="text-red">*</span>
+                                Minimum Year of Experience
+                                <span className="text-red">*</span>
                                 {errors.lga && (
                                   <span className="text-danger font-weight-bold">
                                     &nbsp; {errors.lga.message}
@@ -466,12 +461,12 @@ const CreateJob = () => {
                                 inputChange={handleChange}
                                 className="form-control"
                               />
-
                             </div>
 
                             <div className="p-field p-col-6 p-md-6">
                               <label className="inputLabel" htmlFor="course">
-                                Don't show company name?<span className="text-red">*</span>
+                                Don't show company name?
+                                <span className="text-red">*</span>
                                 {errors.hideCompanyName && (
                                   <span className="text-danger font-weight-bold">
                                     &nbsp; {errors.hideCompanyName.message}
@@ -479,7 +474,10 @@ const CreateJob = () => {
                                 )}
                               </label>
                               <Dropdown
-                                options={[{ name: 'Show', value: true }, { name: 'Hide', value: false }]}
+                                options={[
+                                  { name: "Show", value: true },
+                                  { name: "Hide", value: false },
+                                ]}
                                 optionLabel="name"
                                 filter
                                 showClear
@@ -491,12 +489,11 @@ const CreateJob = () => {
                                 {...register("hideCompanyName")}
                                 onChange={(e) => {
                                   handleChange(e);
-                                  console.log(e.target.value)
+                                  console.log(e.target.value);
                                 }}
                                 className="form-control"
                               />
                             </div>
-
                           </div>
                         </div>
                       </div>
@@ -519,15 +516,18 @@ const CreateJob = () => {
                               <div style={{ height: "200px" }} id="description">
                                 {/* Editor */}
                                 <ReactQuill
-                                  style={{ height: '100%' }}
-                                  bounds={document.querySelector('#description')}
+                                  style={{ height: "100%" }}
+                                  bounds={document.querySelector(
+                                    "#description"
+                                  )}
                                   theme="snow"
                                   onChange={(html) => {
                                     setEditorHtml(html);
-                                    setValue('jobDescription', html, { shouldValidate: true })
+                                    setValue("jobDescription", html, {
+                                      shouldValidate: true,
+                                    });
                                   }}
                                   value={editorHtml}
-
                                   modules={editorModules}
                                   formats={editorFormats}
                                   placeholder="Write something..."
@@ -625,7 +625,7 @@ const CreateJob = () => {
                       <Button
                         icon="pi pi-check"
                         iconPos="left"
-                        label={loading ? 'Please wait...' : "Create"}
+                        label={loading ? "Please wait..." : "Create"}
                         id="saveButton"
                         disabled={loading}
                         type="submit"

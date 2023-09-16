@@ -1,11 +1,11 @@
-import "./InstantMessagingDetail.css";
 import React, { useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   actionSetSelectedContact,
   createChat,
   getConversationWithPartnerId,
 } from "../../store/modules/chat";
+import "./InstantMessagingDetail.css";
 // import "./ChatContent.css";
 import moment from "moment";
 import { useHistory } from "react-router";
@@ -21,7 +21,7 @@ const sentStyle = {
   fontWeight: 400,
   boxShadow: "2px 1px 2px #eee",
   backgroundColor: "#357C3C4a",
-  color: "#000"
+  color: "#000",
 };
 const receivedStyle = {
   justifyContent: "flex-start",

@@ -1,21 +1,20 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import moment from "moment";
 import { confirmDialog } from "primereact/confirmdialog";
-import InstantHeader from "./instant-header";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   deleteInstantJob,
   loadInstantJobs,
 } from "../../store/modules/instantJob";
-import moment from "moment";
+import InstantHeader from "./instant-header";
 
-import "./InstantJobHire.css";
-import RecentInstantJobs from "pages/instant-jobs/Recent_instant_Jobs";
-import Spinner from "components/spinner/spinner.component";
 import JobSidePanel from "components/JobSidePanel";
+import { ACCOUNT_TYPE } from "constants/accountType";
+import RecentInstantJobs from "pages/instant-jobs/Recent_instant_Jobs";
 import agentService from "services/agent.service";
 import { loadAllJobs } from "store/modules/job";
-import { ACCOUNT_TYPE } from "constants/accountType";
+import "./InstantJobHire.css";
 
 const InstantHires = () => {
   const dispatch = useDispatch();

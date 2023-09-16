@@ -1,15 +1,12 @@
 import Spinner from "components/spinner/spinner.component";
-import React, { useEffect } from "react";
+import moment from "moment";
+import Applicants from "pages/artisans/List";
+import { confirmDialog } from "primereact/confirmdialog";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import BackgroundImage from "../../assets/bg.png";
 import { applyInstantJob, loadInstantJob } from "store/modules/instantJob";
-import moment from "moment";
-import { confirmDialog } from "primereact/confirmdialog";
-import { Tag } from "primereact/tag";
-import AppNavBar from "components/AppNavBar";
 import agent from "../../services/agent.service";
-import Applicants from "pages/artisans/List";
 
 const View = () => {
   const dispatch = useDispatch();

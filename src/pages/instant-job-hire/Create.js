@@ -1,25 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import RecentInstantJobs from "pages/instant-jobs/Recent_instant_Jobs";
 import { Button } from "primereact/button";
+import { Calendar } from "primereact/calendar";
+import { confirmDialog } from "primereact/confirmdialog";
+import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { Dropdown } from "primereact/dropdown";
-import InstantHeader from "./instant-header";
-import { confirmDialog } from "primereact/confirmdialog";
-import { useDispatch, useSelector } from "react-redux";
-import { createInstantJob } from "store/modules/instantJob";
-import { Calendar } from "primereact/calendar";
-import RecentInstantJobs from "pages/instant-jobs/Recent_instant_Jobs";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import PlacesAutocomplete, {
   geocodeByAddress,
-  geocodeByPlaceId,
   getLatLng,
 } from "react-places-autocomplete";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { createInstantJob } from "store/modules/instantJob";
+import InstantHeader from "./instant-header";
 
-import "./InstantJobHire.css";
 import { loadServices } from "store/modules/admin";
 import { loadLga, loadStates } from "store/modules/location";
+import "./InstantJobHire.css";
 
 const New = ({ mode }) => {
   const dispatch = useDispatch();
@@ -303,15 +302,15 @@ const New = ({ mode }) => {
                                   // inline style for demonstration purpose
                                   const style = suggestion.active
                                     ? {
-                                      backgroundColor: "#fafafa",
-                                      cursor: "pointer",
-                                      padding: "4px",
-                                    }
+                                        backgroundColor: "#fafafa",
+                                        cursor: "pointer",
+                                        padding: "4px",
+                                      }
                                     : {
-                                      backgroundColor: "#ffffff",
-                                      cursor: "pointer",
-                                      padding: "4px",
-                                    };
+                                        backgroundColor: "#ffffff",
+                                        cursor: "pointer",
+                                        padding: "4px",
+                                      };
                                   return (
                                     <div
                                       {...getSuggestionItemProps(suggestion, {
@@ -387,15 +386,15 @@ const New = ({ mode }) => {
                                   // inline style for demonstration purpose
                                   const style = suggestion.active
                                     ? {
-                                      backgroundColor: "#fafafa",
-                                      cursor: "pointer",
-                                      padding: "4px",
-                                    }
+                                        backgroundColor: "#fafafa",
+                                        cursor: "pointer",
+                                        padding: "4px",
+                                      }
                                     : {
-                                      backgroundColor: "#ffffff",
-                                      cursor: "pointer",
-                                      padding: "4px",
-                                    };
+                                        backgroundColor: "#ffffff",
+                                        cursor: "pointer",
+                                        padding: "4px",
+                                      };
                                   return (
                                     <div
                                       {...getSuggestionItemProps(suggestion, {
@@ -548,13 +547,13 @@ const New = ({ mode }) => {
                               shouldValidate: true,
                             });
                           }}
-                        // maxDate={endDate}
-                        // min={new Date().toISOString().split('T')[0]}
+                          // maxDate={endDate}
+                          // min={new Date().toISOString().split('T')[0]}
 
-                        // name="startDate"
-                        // {...register("startDate", {
-                        //     required: `Start date is required`,
-                        // })}
+                          // name="startDate"
+                          // {...register("startDate", {
+                          //     required: `Start date is required`,
+                          // })}
                         />
                         {errors.startDate && (
                           <span className="text-danger font-weight-bold ">

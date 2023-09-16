@@ -1,18 +1,12 @@
 import Spinner from "components/spinner/spinner.component";
-import React, { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useParams } from "react-router-dom";
-import {
-  apply,
-  applyJob,
-  applyWithCV,
-  loadAppliedJobs,
-  viewJob,
-} from "store/modules/job";
-import BackgroundImage from "../../assets/bg.png";
 import parser from "html-react-parser";
 import { SplitButton } from "primereact/splitbutton";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import { fetchCV } from "store/modules/cv";
+import { loadAppliedJobs, viewJob } from "store/modules/job";
+import BackgroundImage from "../../assets/bg.png";
 import JobCvModal from "./JobCvModal";
 
 const ListJobDetail = () => {

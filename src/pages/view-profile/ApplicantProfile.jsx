@@ -1,38 +1,32 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "store/modules/modal";
-import Biography from "components/profile/Biography";
-import Experience from "components/profile/Experience";
-import Education from "components/profile/Education";
-import Skills from "components/profile/Services";
-import Hobbies from "components/profile/Hobbies";
-import ProfessionsOfInterest from "components/profile/ProfessionsOfInterest";
-import LocationOfInterest from "components/profile/LocationOfInterest";
 import ContactInformation from "components/profile/ContactInformation";
+import Education from "components/profile/Education";
+import Experience from "components/profile/Experience";
 import ModalForm from "components/profile/ModalForm";
+import PersonalInfo from "components/profile/PersonalInfo";
+import Portfolio from "components/profile/Portfolio";
+import {
+  default as Services,
+  default as Skills,
+} from "components/profile/Services";
+import ContactInfoSkeleton from "components/skeletons/ContactInfoSkeleton";
+import EducationSkeleton from "components/skeletons/EducationSkeleton";
+import ExperienceSkeleton from "components/skeletons/ExperienceSkeleton";
+import PersonalInfoSkeleton from "components/skeletons/PersonalInfoSkeleton";
+import SkillSkeleton from "components/skeletons/SkillSkeleton";
+import Spinner from "components/spinner/spinner.component";
+import { ACCOUNT_TYPE } from "constants/accountType";
+import moment from "moment";
+import { Button } from "primereact/button";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation, useParams } from "react-router";
 import agentService from "services/agent.service";
 import { loadCountry } from "store/modules/location";
-import PersonalInfo from "components/profile/PersonalInfo";
-import { useHistory, useLocation, useParams } from "react-router";
-import { ACCOUNT_TYPE } from "constants/accountType";
-import { loadApplicantReviews } from "store/modules/review";
-import Portfolio from "components/profile/Portfolio";
-import { Button } from "primereact/button";
-import "./ApplicantProfile.css";
-import moment from "moment";
-import PersonalInfoSkeleton from "components/skeletons/PersonalInfoSkeleton";
-import ExperienceSkeleton from "components/skeletons/ExperienceSkeleton";
-import EducationSkeleton from "components/skeletons/EducationSkeleton";
-import ContactInfoSkeleton from "components/skeletons/ContactInfoSkeleton";
-import SkillSkeleton from "components/skeletons/SkillSkeleton";
-import HobbiesSkeleton from "components/skeletons/HobbiesSkeleton";
-import ProfessionOfInterestSkeleton from "components/skeletons/ProfessionOfInterestSkeleton";
-import LocationOfInterestSkeleton from "components/skeletons/LocationOfInterestSkeleton";
-import BiographySkeleton from "components/skeletons/BiographySkeleton";
+import { openModal } from "store/modules/modal";
 import { loadUserProfileById } from "store/modules/profile";
+import { loadApplicantReviews } from "store/modules/review";
+import "./ApplicantProfile.css";
 import ConnectionConfirm from "./components/ConnectionConfirm";
-import Services from "components/profile/Services";
-import Spinner from "components/spinner/spinner.component";
 
 // const ApplicantContext  = useContext(false);
 
@@ -57,6 +51,10 @@ const ApplicantProfile = () => {
   const isRequestConnection = new URLSearchParams(search).get(
     "request-connection"
   );
+  const isAccepted = new URLSearchParams(search).get("isAccepted");
+  const isPendingApplicantAcceptance = new URLSearchParams(search).get(
+    "isPendingApplicantAcceptance"
+  );
 
   const handleInfoTab = () => {
     setIsHideReview(true);
@@ -70,8 +68,6 @@ const ApplicantProfile = () => {
 
   const [mode, setMode] = useState("create");
   const [itemToEdit, setItemToEdit] = useState({});
-
-  console.log("loading", loading, "data", profileInfo);
 
   useEffect(() => {
     dispatch(loadCountry());
@@ -98,16 +94,11 @@ const ApplicantProfile = () => {
 
     return year + "/" + month + "/" + day;
   };
-  // if (loading)
-  // return <Spinner />
 
-  //     return <Spinner />
   const currentUserInfo = useSelector((state) => state.account.profileInfo); //currently logged in user
 
-  // const isProfile = currentUserInfo.id === profileInfo.id;
-  // console.log('connection reqeust', isRequestConnection, typeof isRequestConnection)
   if (loading || !profileInfo) return <Spinner />;
-  // return <h3>Hello</h3>;
+
   return (
     <div className="container">
       <div className="pt-5">
@@ -139,7 +130,7 @@ const ApplicantProfile = () => {
               application="send request"
             />
           )}
-          {isRequestConnection === "3" && (
+          {isPendingApplicantAcceptance === "true" && (
             <ConnectionConfirm
               contactId={profileInfo.id}
               contactDetails={profileInfo}
@@ -251,6 +242,7 @@ const ApplicantProfile = () => {
                       openEdit={openEdit}
                       profileInfo={profileInfo}
                       isViewApplicant={true}
+                      isApplicantAccepted={isAccepted}
                     />
                   )}
                   {loading ? (

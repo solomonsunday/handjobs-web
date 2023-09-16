@@ -1,17 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import moment from "moment";
 import InstantHeader from "pages/instant-job-hire/instant-header";
 import { Button } from "primereact/button";
-import { applyInstantJob, fetchAllInstantJobs } from "store/modules/instantJob";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
 import { confirmDialog } from "primereact/confirmdialog";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { applyInstantJob, fetchAllInstantJobs } from "store/modules/instantJob";
 
-import "./Instant-Jobs.css";
-import RecentInstantJobs from "./Recent_instant_Jobs";
 import { Tag } from "primereact/tag";
-import agent from "../../services/agent.service";
 import { showMessage } from "store/modules/notification";
+import agent from "../../services/agent.service";
+import "./Instant-Jobs.css";
 
 const InstantJobs = () => {
   const dispatch = useDispatch();
@@ -192,8 +191,9 @@ const InstantJobs = () => {
                                 hidden={false}
                               >
                                 <div className="p-pr-2 d-flex">
-                                  {(requestedId?.email !== instantjob.createdBy &&
-                                    requestedId?.accountType === "Artisan") && (
+                                  {requestedId?.email !==
+                                    instantjob.createdBy &&
+                                    requestedId?.accountType === "Artisan" && (
                                       <p>
                                         <span className="font-weight-bold app-color p-mt-2 interest-tx">
                                           Interested ? &nbsp;{" "}
@@ -201,8 +201,8 @@ const InstantJobs = () => {
                                       </p>
                                     )}
                                 </div>
-                                {(requestedId?.email !== instantjob.createdBy &&
-                                    requestedId?.accountType === "Artisan") && (
+                                {requestedId?.email !== instantjob.createdBy &&
+                                  requestedId?.accountType === "Artisan" && (
                                     <div>
                                       <Button
                                         label="Yes"

@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { Accordion, AccordionTab } from "primereact/accordion";
-import "./settings.css";
 import NotificationSettings from "pages/notification/settings";
-import { useHistory } from "react-router-dom";
+import { Accordion, AccordionTab } from "primereact/accordion";
 import { confirmDialog } from "primereact/confirmdialog";
-import { deactivateAccount } from "store/modules/account";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { deactivateAccount } from "store/modules/account";
+import "./settings.css";
 
 export default function Settings() {
   const history = useHistory();

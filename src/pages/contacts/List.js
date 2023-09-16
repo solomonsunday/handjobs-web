@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { loadContacts } from "../../store/modules/contact";
 
 import { Button } from "primereact/button";
-import "./Contacts.css";
 import ConnectionRequestPanel from "./ConnectionRequestPanel";
+import "./Contacts.css";
 
 
 import ContactListItem from "./ContactListItem";
-import VideoSidebar from "components/video-chat/video-sidebar";
-import VideoCallNotification from "components/video-chat/video-call-notification";
 
 
 const List = () => {

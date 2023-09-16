@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import InputField from "components/InputField";
+import { Calendar } from "primereact/calendar";
+import { Dropdown } from "primereact/dropdown";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { InputText } from "primereact/inputtext";
+import { useDispatch, useSelector } from "react-redux";
+import { createExperience, updateExperience } from "store/modules/experience";
 import ModeFooter from "./ModeFooter";
 import SectionHeader from "./SectionHeader";
-import { Dropdown } from "primereact/dropdown";
-import { createExperience, updateExperience } from "store/modules/experience";
-import { Calendar } from "primereact/calendar";
-import InputField from "components/InputField";
 
 import { Checkbox } from "primereact/checkbox";
 import LimitedTextarea from "../LimitedTextarea";
@@ -179,8 +178,9 @@ const ExperienceForm = ({ closeEditMode, itemToEdit, mode }) => {
                 />
               </div>
               <div
-                className={`p-field p-col-12 ${checkedCurrent ? "p-md-12" : "p-md-6"
-                  }`}
+                className={`p-field p-col-12 ${
+                  checkedCurrent ? "p-md-12" : "p-md-6"
+                }`}
               >
                 <label className="inputLabel" htmlFor="startDate">
                   Start Date

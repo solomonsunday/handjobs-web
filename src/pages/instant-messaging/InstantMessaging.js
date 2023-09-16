@@ -1,15 +1,11 @@
-import ChatList from "components/chat/ChatList";
 import React, { useEffect } from "react";
-import { useLocation } from "react-router";
-import chatJSON from "components/chat/chat.json";
 
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import ChatAvatar from "../../assets/avatar-chat.png";
+import { actionSetSelectedContact } from "../../store/modules/chat";
 import "./InstantMessaging.css";
 import InstantMessagingDetail from "./InstantMessagingDetail";
-import { useDispatch, useSelector } from "react-redux";
-import { Avatar } from "primereact/avatar";
-import { actionSetSelectedContact } from "../../store/modules/chat";
-import moment from "moment";
-import ChatAvatar from "../../assets/avatar-chat.png";
 
 export default () => {
   const dispatch = useDispatch();

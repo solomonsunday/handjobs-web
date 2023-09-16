@@ -1,18 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
-import { InputText } from "primereact/inputtext";
-import { Checkbox } from "primereact/checkbox";
-import { Link } from "react-router-dom";
 import { Button } from "primereact/button";
-import { loginUser } from "store/modules/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
-import { Toast } from "primereact/toast";
+import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
+import { Toast } from "primereact/toast";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { currentApp } from "services/agent.service";
+import { loginUser } from "store/modules/auth";
 
 import "./Login.css";
-import { showMessage } from "store/modules/notification";
-import { MESSAGE_TYPE } from "store/constant";
 
 const Login = ({ props }) => {
   const isRequestLoading = useSelector((state) => state.auth.loading);

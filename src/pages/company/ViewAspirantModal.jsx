@@ -1,17 +1,15 @@
 import Spinner from "components/spinner/spinner.component";
-import { useEffect, useReducer, useRef } from "react";
-import agent from "../../services/agent.service";
 import { Dialog } from "primereact/dialog";
+import { Menu } from "primereact/menu";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import {
   acceptCorporateApplicant,
   rejectCorporateApplicant,
   suspendApplicant,
   viewApplicant,
 } from "store/modules/job";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import { Menu } from "primereact/menu";
-import { Button } from "primereact/button";
 
 const ViewAspirantModal = ({ showModal, onHide, jobId }) => {
   const dispatch = useDispatch();

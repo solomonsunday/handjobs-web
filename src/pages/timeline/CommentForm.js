@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { InputTextarea } from "primereact/inputtextarea";
-import { useForm } from "react-hook-form";
-import { Button } from "primereact/button";
 import "emoji-mart/css/emoji-mart.css";
-import { Picker } from "emoji-mart";
-import { Emoji } from "emoji-mart";
+import { Button } from "primereact/button";
+import { InputTextarea } from "primereact/inputtextarea";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { closeEmojiPicker, openEmojiPicker } from "store/modules/emojiPicker";
 import { postComment } from "../../store/modules/comment";
-import { openEmojiPicker, closeEmojiPicker } from "store/modules/emojiPicker";
 import "./CommentSection.css";
-import { loading } from "store/modules/notification";
 
 const CommentForm = ({ postId, imageUrl, expandProfileImage }) => {
   const dispatch = useDispatch();

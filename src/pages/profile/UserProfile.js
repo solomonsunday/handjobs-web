@@ -1,28 +1,18 @@
-import React, { useEffect, useState } from "react";
-import AppNavBar from "components/AppNavBar";
-
+import { useState } from "react";
+import PersonalInfo from "components/profile/PersonalInfo";
 import Portfolio from "components/profile/Portfolio";
 import ProfileTab from "components/profile/ProfileTab";
-import InfoTab from "./tabs/InfoTab";
+import { ACCOUNT_TYPE } from "constants/accountType";
+import CustomBreadCrumb from "helpers/BreadCrumb";
+import { useDispatch, useSelector } from "react-redux";
 import { Route } from "react-router";
-import JobsTab from "./tabs/JobsTab";
+import agentService from "services/agent.service";
+import { openModal } from "store/modules/modal";
 import ContactsTab from "./tabs/ContactsTab";
 import GroupsTab from "./tabs/GroupsTab";
+import InfoTab from "./tabs/InfoTab";
+import JobsTab from "./tabs/JobsTab";
 import ReviewTab from "./tabs/ReviewTab";
-import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "store/modules/modal";
-import PersonalInfo from "components/profile/PersonalInfo";
-import CustomBreadCrumb from "helpers/BreadCrumb";
-import agentService from "services/agent.service";
-import ChatContainer from "components/chat/ChatContainer";
-import ChatContent from "components/chat/ChatContent";
-import { ACCOUNT_TYPE } from "constants/accountType";
-import CustomError from "pages/error-page/CustomError";
-import { ErrorBoundary } from "react-error-boundary";
-import { deactivateAccount, loadProfileInfo } from "store/modules/account";
-import { ConfirmDialog } from "primereact/confirmdialog"; // To use <ConfirmDialog> tag
-import { confirmDialog } from "primereact/confirmdialog";
-import { Button } from "primereact/button";
 
 // import BreadCrumbPane from 'helpers/BreadCrumb';
 

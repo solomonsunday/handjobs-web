@@ -1,11 +1,10 @@
-import { showMessage } from "./notification";
 import agent from "../../services/agent.service";
 import { MESSAGE_TYPE } from "../constant";
-import { closeModal } from "./modal";
-import { loadError } from "./experience";
-import { isRequestLoading } from "./review";
 import { OnLogout } from "./auth";
-import { push } from "connected-react-router";
+import { loadError } from "./experience";
+import { closeModal } from "./modal";
+import { showMessage } from "./notification";
+import { isRequestLoading } from "./review";
 
 // initial values
 const account = {
@@ -584,7 +583,6 @@ export function verifyPhoneNumber(userRes) {
         dispatch(loading(false));
         dispatch(showMessage({ type: "error", message: error }));
         window.location.href = "/profile";
-
       }
     );
   };
