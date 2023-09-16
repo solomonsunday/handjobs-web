@@ -29,7 +29,6 @@ const LandingPage = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
   } = useForm({ mode: "onChange", reValidateMode: "onChange" });
 
   const [selectedCategory, setSelectedCategory] = useState("");

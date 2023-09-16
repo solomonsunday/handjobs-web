@@ -1,9 +1,9 @@
-import { useState } from "react";
 import PersonalInfo from "components/profile/PersonalInfo";
 import Portfolio from "components/profile/Portfolio";
 import ProfileTab from "components/profile/ProfileTab";
 import { ACCOUNT_TYPE } from "constants/accountType";
 import CustomBreadCrumb from "helpers/BreadCrumb";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route } from "react-router";
 import agentService from "services/agent.service";
