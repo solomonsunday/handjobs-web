@@ -1,25 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { InputText } from 'primereact/inputtext';
-import { InputNumber } from 'primereact/inputnumber';
-import { Dropdown } from 'primereact/dropdown';
-import { Button } from 'primereact/button';
-import { Slider } from 'primereact/slider';
+import { Button } from "primereact/button";
+import { Dropdown } from "primereact/dropdown";
+import { useEffect, useState } from "react";
 
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { getQualifications } from "store/modules/admin";
+import { loadStates } from "store/modules/location";
 import "./FilterPanel.css";
-import { useDispatch, useSelector } from 'react-redux';
-import { loadStates } from 'store/modules/location';
-import { getQualifications } from 'store/modules/admin';
-import { useForm } from 'react-hook-form';
 
 const FilterPanel = () => {
   const dispatch = useDispatch();
 
-  const { register, handleSubmit, setValue, trigger, clearErrors, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    trigger,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
     mode: "onChange",
-    reValidateMode: "all"
+    reValidateMode: "all",
   });
-  const allStates = useSelector(state => state.location.states);
-  const allQualifications = useSelector(state => state.admin.qualifications);
+  const allStates = useSelector((state) => state.location.states);
+  const allQualifications = useSelector((state) => state.admin.qualifications);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
   const [selectedContract, setSelectedContract] = useState(null);
@@ -29,34 +33,34 @@ const FilterPanel = () => {
   const [qualification, setQualification] = useState(null);
 
   const JobCategories = [
-    { name: 'Telecommunication', code: 'TC' },
-    { name: 'Agriculturer', code: 'AR' },
-    { name: 'Medical', code: 'MC' },
-    { name: 'Technology', code: 'TY' },
-    { name: 'Accountant', code: 'AT' }
+    { name: "Telecommunication", code: "TC" },
+    { name: "Agriculturer", code: "AR" },
+    { name: "Medical", code: "MC" },
+    { name: "Technology", code: "TY" },
+    { name: "Accountant", code: "AT" },
   ];
 
   const ContractTypes = [
-    { name: 'Full Time', code: 'FT' },
-    { name: 'Part Time', code: 'PT' },
-    { name: 'Contract', code: 'CT' },
+    { name: "Full Time", code: "FT" },
+    { name: "Part Time", code: "PT" },
+    { name: "Contract", code: "CT" },
   ];
 
   const onCategoryChange = (e) => {
     setSelectedCategory(e.value);
-  }
+  };
 
   const onStateChange = (e) => {
-    setSelectedState(e.value)
-  }
+    setSelectedState(e.value);
+  };
 
   const onContractChange = (e) => {
-    setSelectedContract(e.value)
-  }
+    setSelectedContract(e.value);
+  };
 
   const onQualificationChange = (e) => {
-    setSelectedQua(e.value)
-  }
+    setSelectedQua(e.value);
+  };
 
   useEffect(() => {
     if (allStates) {
@@ -65,37 +69,35 @@ const FilterPanel = () => {
     if (allQualifications) {
       setQualification(allQualifications);
     }
-  }, [allStates, allQualifications])
+  }, [allStates, allQualifications]);
 
   useEffect(() => {
     dispatch(loadStates(1));
     dispatch(getQualifications());
   }, []);
 
-
   const handleClearAllField = () => {
     setValue("jobCategory", setSelectedCategory(null));
     setValue("contractType", setSelectedContract(null));
     setValue("location", setSelectedState(null));
     setValue("experience", setSelectedQua(null));
-  }
+  };
 
   return (
     <>
       <div className="p-card p-md-3 p-col-12 p-p-0 rounded">
         <div className="p-card-title d-flex justify-content-between card-header-filterpanel p-p-3 rounded">
-          <span className="cardTitle-filterpanel ">
-            Filters
-          </span>
-          <span className="card-sidetitle-filterpanel" onClick={() => handleClearAllField()}>
+          <span className="cardTitle-filterpanel ">Filters</span>
+          <span
+            className="card-sidetitle-filterpanel"
+            onClick={() => handleClearAllField()}
+          >
             Clear all filters
           </span>
         </div>
         <div className="p-card-title cardContent-filterpanel">
           <div className="d-flex justify-content-between">
-            <div className="cardSubtitle-filterpanel">
-              Job Industry
-            </div>
+            <div className="cardSubtitle-filterpanel">Job Industry</div>
           </div>
           <Dropdown
             options={JobCategories}
@@ -108,9 +110,7 @@ const FilterPanel = () => {
         </div>
         <div className="p-card-title cardContent-filterpanel">
           <div className="d-flex justify-content-between">
-            <div className="cardSubtitle-filterpanel">
-              Contract Type
-            </div>
+            <div className="cardSubtitle-filterpanel">Contract Type</div>
           </div>
           {/* <InputText className="w-100 formElements-filterPanel"/> */}
           <Dropdown
@@ -124,9 +124,7 @@ const FilterPanel = () => {
         </div>
         <div className="p-card-title p-py-1 p-px-3">
           <div className="d-flex justify-content-between">
-            <div className="cardSubtitle-filterpanel">
-              Location
-            </div>
+            <div className="cardSubtitle-filterpanel">Location</div>
           </div>
           <Dropdown
             options={states}
@@ -174,9 +172,7 @@ const FilterPanel = () => {
         </div> */}
         <div className="p-card-title cardContent-filterpanel">
           <div className="d-flex justify-content-between">
-            <div className="cardSubtitle-filterpanel">
-              Experience Level
-            </div>
+            <div className="cardSubtitle-filterpanel">Experience Level</div>
           </div>
           <Dropdown
             options={qualification}
@@ -192,9 +188,8 @@ const FilterPanel = () => {
           <Button className="card-sideButton" label="Apply" type="button" />
         </div>
       </div>
-
     </>
   );
-}
+};
 
 export default FilterPanel;

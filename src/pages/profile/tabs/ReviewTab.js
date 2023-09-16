@@ -1,5 +1,5 @@
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadProfileInfo } from "store/modules/account";
 
@@ -47,7 +47,7 @@ const ReviewTab = () => {
                       {review?.title}
                     </li>
                     <li className="d-flex flex-column">
-                      <p className="p-1">{ }</p>
+                      <p className="p-1">{}</p>
                       <span>
                         <div
                           className="stars"

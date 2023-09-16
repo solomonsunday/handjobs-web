@@ -1,22 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import moment from "moment";
 import InstantHeader from "pages/instant-job-hire/instant-header";
 import { Button } from "primereact/button";
-import { applyInstantJob, fetchAllInstantJobs } from "store/modules/instantJob";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
 import { confirmDialog } from "primereact/confirmdialog";
-import { Tag } from "primereact/tag";
-import agent from "../../services/agent.service";
-import { showMessage } from "store/modules/notification";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./LandingPage.css";
 
-import "../instant-jobs/Instant-Jobs.css";
 import LandingHeader from "components/LandingHeader/LandingHeader";
-import { getServicesByServiceGroupId } from "store/modules/service";
-import { push } from "connected-react-router";
 import Spinner from "components/spinner/spinner.component";
+import { push } from "connected-react-router";
+import { getServicesByServiceGroupId } from "store/modules/service";
+import "../instant-jobs/Instant-Jobs.css";
 
 const InstantJobs = () => {
   const dispatch = useDispatch();

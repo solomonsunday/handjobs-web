@@ -1,8 +1,8 @@
-import { showMessage } from "./notification";
 import agent from "../../services/agent.service";
 import { MESSAGE_TYPE } from "../constant";
 import { loadProfileInfo } from "./account";
 import { loadAllJobs } from "./job";
+import { showMessage } from "./notification";
 import { loadPosts } from "./timeline";
 
 // initial values

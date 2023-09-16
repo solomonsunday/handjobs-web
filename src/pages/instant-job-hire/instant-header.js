@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
+import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
-import "./InstantJobHire.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllInstantJobs } from "store/modules/instantJob";
+import "./InstantJobHire.css";
 
 const InstantHeader = ({
   title,

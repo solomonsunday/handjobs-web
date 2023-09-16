@@ -1,37 +1,40 @@
-import CorporateJob from 'components/CorporateJob';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { loadJobs } from 'store/modules/job';
-import { TabView, TabPanel } from 'primereact/tabview';
-import { deleteInstantJob, loadInstantJobs, loadJobsApplied } from 'store/modules/instantJob';
+import CorporateJob from "components/CorporateJob";
+import { TabPanel, TabView } from "primereact/tabview";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteInstantJob,
+  loadInstantJobs,
+  loadJobsApplied,
+} from "store/modules/instantJob";
+import { loadJobs } from "store/modules/job";
 
-import './JobTab.css';
-import { confirmDialog } from 'primereact/confirmdialog';
+import { confirmDialog } from "primereact/confirmdialog";
+import "./JobTab.css";
 // import InstantHeader from 'pages/instant-job-hire/instant-header';
 
-import { Link } from 'react-router-dom';
-import moment from 'moment';
-import { Tag } from 'primereact/tag';
+import moment from "moment";
+import { Tag } from "primereact/tag";
+import { Link } from "react-router-dom";
 
 const JobsTab = () => {
-
   const dispatch = useDispatch();
 
-  const instantJobs = useSelector(state => state.instantJob.instantjobs);
-  const appliedJobs = useSelector(state => state.instantJob.appliedJobs)?.data;
-  const allJobs = useSelector(state => state.job.allJobs);
+  const instantJobs = useSelector((state) => state.instantJob.instantjobs);
+  const appliedJobs = useSelector(
+    (state) => state.instantJob.appliedJobs
+  )?.data;
+  const allJobs = useSelector((state) => state.job.allJobs);
 
   const [limit, setLimit] = useState("");
   const [page, setPage] = useState("");
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
 
-
-
   // const [appliedJobs, setAppliedJobs] = useState([]);
 
   useEffect(() => {
-    dispatch(loadJobs())
+    dispatch(loadJobs());
   }, []);
 
   useEffect(() => {
@@ -40,23 +43,23 @@ const JobsTab = () => {
     // if (allJobsAppliedFor) {
     //   setAppliedJobs(allJobsAppliedFor)
     // }
-  }, [])
+  }, []);
 
   const deleteRequest = (id) => {
     return confirmDialog({
-      message: 'Do you want to delete this record?',
-      header: 'Delete Confirmation',
-      icon: 'pi pi-info-circle',
-      acceptClassName: 'p-button-danger',
+      message: "Do you want to delete this record?",
+      header: "Delete Confirmation",
+      icon: "pi pi-info-circle",
+      acceptClassName: "p-button-danger",
       accept: () => {
         dispatch(deleteInstantJob(id));
         dispatch(loadInstantJobs());
       },
       reject: () => {
         return;
-      }
+      },
     });
-  }
+  };
 
   return (
     <>
@@ -65,12 +68,14 @@ const JobsTab = () => {
           <TabPanel header="Jobs Applied">
             <div className="p-col-12 p-md-9">
               <div className="card-size-list">
-                {appliedJobs && appliedJobs.length > 0 && appliedJobs.map((jobApplied, index) =>
-                  <div className='d-flex' key={index}>
-                    <div>
-                      {/* <Link to=""> */}
-                      <small className="p-text-secondary">
-                        {/* <div className="d-flex justify-content-between w-100">
+                {appliedJobs &&
+                  appliedJobs.length > 0 &&
+                  appliedJobs.map((jobApplied, index) => (
+                    <div className="d-flex" key={index}>
+                      <div>
+                        {/* <Link to=""> */}
+                        <small className="p-text-secondary">
+                          {/* <div className="d-flex justify-content-between w-100">
                           <div className='w-50'>
                             <p className="font-weight-bold app-color text-capitalize">Service : {jobApplied.service} </p>
                           </div>
@@ -86,48 +91,190 @@ const JobsTab = () => {
                           <div className="p-col-6"><span className="font-weight-bold app-color">End Date: </span> {moment(jobApplied.endDate).format('MMMM DD, YYYY')}</div>
                         </div> */}
 
-                        <div className='row'>
-                          <div className='row'>
-                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Service : </p></div>  <div className='col-md-7'> <p className='font-weight-bold '>{jobApplied.service}</p> </div>
-                            <div className='col-md-3'> <p>{jobApplied.accepted ? <Tag className='app-sec-color'> Accepted</Tag> : <Tag className='bg-warning'>Waiting to be accepted</Tag>}  </p> </div>
+                          <div className="row">
+                            <div className="row">
+                              <div className="col-md-2">
+                                {" "}
+                                <p className="font-weight-bold app-color text-capitalize">
+                                  Service :{" "}
+                                </p>
+                              </div>{" "}
+                              <div className="col-md-7">
+                                {" "}
+                                <p className="font-weight-bold ">
+                                  {jobApplied.service}
+                                </p>{" "}
+                              </div>
+                              <div className="col-md-3">
+                                {" "}
+                                <p>
+                                  {jobApplied.accepted ? (
+                                    <Tag className="app-sec-color">
+                                      {" "}
+                                      Accepted
+                                    </Tag>
+                                  ) : (
+                                    <Tag className="bg-warning">
+                                      Waiting to be accepted
+                                    </Tag>
+                                  )}{" "}
+                                </p>{" "}
+                              </div>
+                            </div>
+                            <div className="col-md-2">
+                              {" "}
+                              <p className="font-weight-bold app-color text-capitalize">
+                                Location :{" "}
+                              </p>
+                            </div>{" "}
+                            <div className="col-md-10">
+                              {" "}
+                              <p>{jobApplied.location} </p>{" "}
+                            </div>
+                            <div className="col-md-2">
+                              {" "}
+                              <p className="font-weight-bold app-color text-capitalize">
+                                {" "}
+                                Description:{" "}
+                              </p>
+                            </div>{" "}
+                            <div className="col-md-10">
+                              {" "}
+                              <p>{jobApplied.description} </p>{" "}
+                            </div>
+                            <div className="col-md-2">
+                              {" "}
+                              <p className="font-weight-bold app-color text-capitalize">
+                                Start Date :{" "}
+                              </p>
+                            </div>{" "}
+                            <div className="col-md-10">
+                              {" "}
+                              <p>
+                                {moment(jobApplied.startDate).format(
+                                  "MMMM DD, YYYY"
+                                )}{" "}
+                              </p>{" "}
+                            </div>
+                            <div className="col-md-2">
+                              {" "}
+                              <p className="font-weight-bold app-color text-capitalize">
+                                End Date :{" "}
+                              </p>
+                            </div>{" "}
+                            <div className="col-md-10">
+                              {" "}
+                              <p>
+                                {moment(jobApplied.endDate).format(
+                                  "MMMM DD, YYYY"
+                                )}{" "}
+                              </p>{" "}
+                            </div>
                           </div>
-                          <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Location : </p></div>  <div className='col-md-10'> <p>{jobApplied.location} </p> </div>
-                          <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize"> Description: </p></div>  <div className='col-md-10'> <p>{jobApplied.description} </p> </div>
-                          <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Start Date  : </p></div>  <div className='col-md-10'> <p>{moment(jobApplied.startDate).format('MMMM DD, YYYY')} </p> </div>
-                          <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">End Date  : </p></div>  <div className='col-md-10'> <p>{moment(jobApplied.endDate).format('MMMM DD, YYYY')} </p> </div>
-                        </div>
-                      </small>
-                      {/* </Link> */}
-                      <hr />
+                        </small>
+                        {/* </Link> */}
+                        <hr />
+                      </div>
                     </div>
-                  </div>
+                  ))}
+                {appliedJobs?.length === 0 && (
+                  <strong className="mx-auto">
+                    You are yet to apply for a job
+                  </strong>
                 )}
-                {
-                  appliedJobs?.length === 0 && <strong className="mx-auto">You are yet to apply for a job</strong>
-                }
               </div>
             </div>
           </TabPanel>
           <TabPanel header="Instant Hires Created">
             <div className="p-col-12 p-md-9">
               <div className="card-size-list">
-                {instantJobs && instantJobs.length > 0 && instantJobs.map(instantjob =>
-                  <div className='d-flex mb-4' key={instantjob.id}>
-                    <hr />
-                    <div>
-                      <Link to={`/instant-hire-applicants/${instantjob.id}`}>
-                        <small className="p-text-secondary">
-                          <div className='row'>
-                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Service : </p></div>  <div className='col-md-10'> <p> <Tag className='app-sec-color'> {instantjob.service} </Tag></p> </div>
-                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Location : </p></div>  <div className='col-md-10'> <p>{instantjob.location} </p> </div>
-                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Address : </p></div>  <div className='col-md-10'> <p>{instantjob.address} </p> </div>
-                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Job Description: </p></div>  <div className='col-md-10'> <p>{instantjob.description} </p> </div>
-                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">Start Date  : </p></div>  <div className='col-md-10'> <p>{moment(instantjob.startDate).format('MMMM DD, YYYY')} </p> </div>
-                            <div className='col-md-2'> <p className="font-weight-bold app-color text-capitalize">End Date  : </p></div>  <div className='col-md-10'> <p>{moment(instantjob.endDate).format('MMMM DD, YYYY')} </p> </div>
-                          </div>
-                        </small>
-                      </Link>
-                      {/* <Link to={`/instant-hire-applicants/${instantjob.id}`}>
+                {instantJobs &&
+                  instantJobs.length > 0 &&
+                  instantJobs.map((instantjob) => (
+                    <div className="d-flex mb-4" key={instantjob.id}>
+                      <hr />
+                      <div>
+                        <Link to={`/instant-hire-applicants/${instantjob.id}`}>
+                          <small className="p-text-secondary">
+                            <div className="row">
+                              <div className="col-md-2">
+                                {" "}
+                                <p className="font-weight-bold app-color text-capitalize">
+                                  Service :{" "}
+                                </p>
+                              </div>{" "}
+                              <div className="col-md-10">
+                                {" "}
+                                <p>
+                                  {" "}
+                                  <Tag className="app-sec-color">
+                                    {" "}
+                                    {instantjob.service}{" "}
+                                  </Tag>
+                                </p>{" "}
+                              </div>
+                              <div className="col-md-2">
+                                {" "}
+                                <p className="font-weight-bold app-color text-capitalize">
+                                  Location :{" "}
+                                </p>
+                              </div>{" "}
+                              <div className="col-md-10">
+                                {" "}
+                                <p>{instantjob.location} </p>{" "}
+                              </div>
+                              <div className="col-md-2">
+                                {" "}
+                                <p className="font-weight-bold app-color text-capitalize">
+                                  Address :{" "}
+                                </p>
+                              </div>{" "}
+                              <div className="col-md-10">
+                                {" "}
+                                <p>{instantjob.address} </p>{" "}
+                              </div>
+                              <div className="col-md-2">
+                                {" "}
+                                <p className="font-weight-bold app-color text-capitalize">
+                                  Job Description:{" "}
+                                </p>
+                              </div>{" "}
+                              <div className="col-md-10">
+                                {" "}
+                                <p>{instantjob.description} </p>{" "}
+                              </div>
+                              <div className="col-md-2">
+                                {" "}
+                                <p className="font-weight-bold app-color text-capitalize">
+                                  Start Date :{" "}
+                                </p>
+                              </div>{" "}
+                              <div className="col-md-10">
+                                {" "}
+                                <p>
+                                  {moment(instantjob.startDate).format(
+                                    "MMMM DD, YYYY"
+                                  )}{" "}
+                                </p>{" "}
+                              </div>
+                              <div className="col-md-2">
+                                {" "}
+                                <p className="font-weight-bold app-color text-capitalize">
+                                  End Date :{" "}
+                                </p>
+                              </div>{" "}
+                              <div className="col-md-10">
+                                {" "}
+                                <p>
+                                  {moment(instantjob.endDate).format(
+                                    "MMMM DD, YYYY"
+                                  )}{" "}
+                                </p>{" "}
+                              </div>
+                            </div>
+                          </small>
+                        </Link>
+                        {/* <Link to={`/instant-hire-applicants/${instantjob.id}`}>
                         <small className="p-text-secondary">
                           <p className="font-weight-bold app-color text-capitalize">Service :  <Tag className='app-sec-color'> {instantjob.service}</Tag> </p>
                           <p><span className="font-weight-bold app-color text-capitalize">Location : </span> {instantjob.location}</p>
@@ -139,17 +286,26 @@ const JobsTab = () => {
                             <div className="p-col-6"><span className="font-weight-bold app-color">End Date: </span> {moment(instantjob.endDate).format('MMMM DD, YYYY')}</div>
                           </div>
                         </small></Link> */}
+                      </div>
+                      <div className="d-flex">
+                        <Link to={`/instant-hire/edit/${instantjob.id}`}>
+                          {" "}
+                          <span>
+                            <i className="pi pi-pencil"></i>
+                          </span>
+                        </Link>
+                        <i
+                          className="pi pi-trash"
+                          style={{ fontSize: "0.8rem", padding: ".2rem" }}
+                          onClick={() => deleteRequest(instantjob.id)}
+                        ></i>
+                      </div>
+                      <hr fontSize="3" />
                     </div>
-                    <div className="d-flex">
-                      <Link to={`/instant-hire/edit/${instantjob.id}`}> <span><i className="pi pi-pencil" ></i></span></Link>
-                      <i className="pi pi-trash" style={{ fontSize: '0.8rem', padding: '.2rem' }} onClick={() => deleteRequest(instantjob.id)}></i>
-                    </div>
-                    <hr fontSize="3" />
-                  </div>
+                  ))}
+                {instantJobs?.length === 0 && (
+                  <strong className="mx-auto">No Instant Job Created</strong>
                 )}
-                {
-                  instantJobs?.length === 0 && <strong className="mx-auto">No Instant Job Created</strong>
-                }
               </div>
             </div>
           </TabPanel>
@@ -160,6 +316,6 @@ const JobsTab = () => {
       </div>
     </>
   );
-}
+};
 
 export default JobsTab;

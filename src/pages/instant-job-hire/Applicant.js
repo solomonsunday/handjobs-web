@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Rating } from "primereact/rating";
 import { Button } from "primereact/button";
+import { Rating } from "primereact/rating";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   acceptApplicant,
   loadApplicants,
   loadInstantJob,
   rejectApplicant,
 } from "store/modules/instantJob";
-import Spinner from "components/spinner/spinner.component";
 
-import "./InstantJobHire.css";
-import { useSelector, useDispatch } from "react-redux";
-import { Tag } from "primereact/tag";
-import { confirmDialog } from "primereact/confirmdialog";
 import RecentInstantJobs from "pages/instant-jobs/Recent_instant_Jobs";
+import { confirmDialog } from "primereact/confirmdialog";
+import { Tag } from "primereact/tag";
+import { useDispatch, useSelector } from "react-redux";
 import { loadAccountByUser } from "store/modules/account";
 import { actionSetSelectedContact } from "store/modules/chat";
+import "./InstantJobHire.css";
 
 const Applicant = (props) => {
   const dispatch = useDispatch();
@@ -312,7 +311,10 @@ const Applicant = (props) => {
                   {applicantList &&
                     applicantList?.length > 0 &&
                     applicantList.map((applicant) => (
-                      <div className="col-md-3 col-sm-12 highlight-card p-pb-1">
+                      <div
+                        key={applicant?.applicantId}
+                        className="col-md-3 col-sm-12 highlight-card p-pb-1"
+                      >
                         <div
                           key={applicant.applicantId}
                           className="card"
@@ -402,80 +404,83 @@ const Applicant = (props) => {
                               </span>
                             </p>
                           </div>
-                          {!applicant.accepted && !applicant.rejected && (
-                            <div className="p-grid p-pl-5 p-pb-2">
-                              <div className=" applicant-actionIcons p-pr-2">
-                                <Link
-                                  to={`/applicant/${applicant.applicantId}?request-connection=3`}
-                                  onClick={() =>
-                                    getApplicantInfo(applicant.applicantId)
-                                  }
-                                >
-                                  <a
-                                    className="pi pi-user py-1"
-                                    title="View Applicant Profile"
-                                  ></a>
-                                </Link>
-                              </div>
-                              <div className="p-pr-2">
-                                <Button
-                                  label="Accept"
-                                  id="saveButton"
-                                  className="p-button-sm rounded-pill py-1"
-                                  onClick={() =>
-                                    acceptHandler(applicant.applicationId)
-                                  }
-                                />
-                              </div>
-                              <div className="">
-                                <Button
-                                  label="Reject"
-                                  id="reject"
-                                  className="p-button-sm rounded-pill py-1"
-                                  onClick={() =>
-                                    rejectHandler(applicant.applicationId)
-                                  }
-                                />
-                              </div>
+                          <div className="p-grid p-pl-2 p-pb-2">
+                            <div className=" applicant-actionIcons p-pr-2">
+                              <Link
+                                to={`/applicant/${
+                                  applicant.applicantId
+                                }?request-connection=3&isAccepted=${
+                                  applicant.accepted
+                                }&isPendingApplicantAcceptance=${
+                                  !applicant.accepted && !applicant.rejected
+                                }`}
+                                onClick={() =>
+                                  getApplicantInfo(applicant.applicantId)
+                                }
+                              >
+                                <a
+                                  className="pi pi-user py-1"
+                                  title="View Applicant Profile"
+                                ></a>
+                              </Link>
                             </div>
-                          )}
-                          <div className="p-grid p-pb-2">
-                            {applicant.accepted && (
-                              <div className="p-grid p-pl-5 p-pb-2">
+                            {!applicant.accepted && !applicant.rejected && (
+                              <>
                                 <div className="p-pr-2">
-                                  <Tag className="header-color">
-                                    {" "}
-                                    <span>Accepted</span>
-                                  </Tag>
+                                  <Button
+                                    label="Accept"
+                                    id="saveButton"
+                                    className="p-button-sm rounded-pill py-1"
+                                    onClick={() =>
+                                      acceptHandler(applicant.applicationId)
+                                    }
+                                  />
                                 </div>
-                              </div>
+                                <div className="">
+                                  <Button
+                                    label="Reject"
+                                    id="reject"
+                                    className="p-button-sm rounded-pill py-1"
+                                    onClick={() =>
+                                      rejectHandler(applicant.applicationId)
+                                    }
+                                  />
+                                </div>
+                              </>
                             )}
                             {applicant.accepted && (
-                              <div className="p-grid p-pl-5 p-pb-2">
-                                <div className="p-pr-2 p-pt-2 ">
-                                  {/* <Button label="Review" id="reject" className="p-button-sm" /> */}
-                                  <Link
-                                    to={`/review/${instantJobId}/${applicant.applicantId}`}
-                                  >
-                                    <u className="app-color font-weight-bold">
-                                      Leave a Review
-                                    </u>{" "}
-                                  </Link>
+                              <>
+                                <div className="p-grid p-pl-5 p-pb-2">
+                                  <div className="p-pr-2">
+                                    <Tag className="header-color">
+                                      {" "}
+                                      <span>Accepted</span>
+                                    </Tag>
+                                  </div>
                                 </div>
-                              </div>
+                                <div className="p-grid p-pl-5 p-pb-2">
+                                  <div className="p-pr-2 p-pt-2 ">
+                                    {/* <Button label="Review" id="reject" className="p-button-sm" /> */}
+                                    <Link
+                                      to={`/review/${instantJobId}/${applicant.applicantId}`}
+                                    >
+                                      <u className="app-color font-weight-bold">
+                                        Leave a Review
+                                      </u>{" "}
+                                    </Link>
+                                  </div>
+                                </div>
+                              </>
                             )}
-                          </div>
-
-                          {applicant.rejected && (
-                            <div className="p-grid p-pl-5 p-pb-2">
+                            {applicant.rejected && (
                               <div className="p-pr-2">
                                 <Tag>
                                   {" "}
                                   <span>Rejected</span>
                                 </Tag>
                               </div>
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </div>
                       </div>
                     ))}

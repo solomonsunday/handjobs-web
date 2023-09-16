@@ -1,7 +1,6 @@
-import { showMessage } from "./notification";
-import { push } from "connected-react-router";
-import agent from "../../services/agent.service";
 import { MESSAGE_TYPE } from "store/constant";
+import agent from "../../services/agent.service";
+import { showMessage } from "./notification";
 
 // initial values
 const notificationSettings = {

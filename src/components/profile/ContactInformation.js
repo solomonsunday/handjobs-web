@@ -1,35 +1,53 @@
-import React, { useEffect } from "react";
-import SectionHeader from "./SectionHeader";
 import { PROFILE } from "constants/profile";
-import "./UserProfile.css";
-import { Tag } from "primereact/tag";
-import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
+import { Tag } from "primereact/tag";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { getSmsShortCode, verifyPhoneNumber } from "store/modules/account";
+import { loadContacts } from "store/modules/contact";
 import agent from "../../services/agent.service";
+import SectionHeader from "./SectionHeader";
+import "./UserProfile.css";
 
 const ContactInformation = ({
   openCreate,
   openEdit,
   profileInfo,
   isViewApplicant,
+  isApplicantAccepted,
 }) => {
   const isRequestLoading = useSelector((state) => state.account.loading);
+  const [isConnected, setIsConnected] = useState(false);
+  const loggedInUserID = agent?.Auth?.current().id;
+  const contacts = useSelector((state) => state.contact.contacts);
 
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
 
-  const loggedInUserID = agent?.Auth?.current().id;
+  useEffect(() => {
+    dispatch(loadContacts(1, 10, "loadingContacts"));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (loggedInUserID === profileInfo?.id) return;
+    if (contacts) {
+      const isContact = contacts?.ids?.find((a) => a === profileInfo?.id);
+      if (isContact) {
+        setIsConnected(() => true);
+      } else {
+        setIsConnected(() => false);
+      }
+    }
+  }, [contacts]);
 
   const handleVerifyNumber = () => {
     let data = {
@@ -47,62 +65,67 @@ const ContactInformation = ({
 
   return (
     <>
-      <div className="p-card p-mt-2" style={{ borderRadius: "1rem" }}>
-        <SectionHeader
-          icon="phone"
-          sectionTitle="Contact Information"
-          id="contactInfoEdit"
-          showAddButton="true"
-          showEditButton="true"
-          openModalOnCreate={() => openEdit(PROFILE.CONTACT_INFO)}
-          openModalOnEdit={() => openCreate(PROFILE.CONTACT_INFO)}
-          hasData={profileInfo?.profile}
-          isViewApplicant={isViewApplicant}
-        />
-        <div className="p-card-body p-text-secondary">
-          <span>
-            <b>Phone Number:</b>&nbsp;
-            {profileInfo.contactPhoneNumber}&nbsp;
-            {profileInfo?.phoneNumberVerified && (
-              <Tag
-                className="ml-1"
-                severity="success"
-                value="Verified"
-                rounded
-              ></Tag>
-            )}
-            {profileInfo.phoneNumber &&
+      {(loggedInUserID === profileInfo?.id ||
+        isConnected ||
+        (isApplicantAccepted && isApplicantAccepted === "true")) && (
+        <div className="p-card p-mt-2" style={{ borderRadius: "1rem" }}>
+          <SectionHeader
+            icon="phone"
+            sectionTitle="Contact Information"
+            id="contactInfoEdit"
+            showAddButton="true"
+            showEditButton="true"
+            openModalOnCreate={() => openEdit(PROFILE.CONTACT_INFO)}
+            openModalOnEdit={() => openCreate(PROFILE.CONTACT_INFO)}
+            hasData={profileInfo?.profile}
+            isViewApplicant={isViewApplicant}
+          />
+          <div className="p-card-body p-text-secondary">
+            <span>
+              <b>Phone Number:</b>&nbsp;
+              {profileInfo.contactPhoneNumber}&nbsp;
+              {profileInfo?.phoneNumberVerified && (
+                <Tag
+                  className="ml-1"
+                  severity="success"
+                  value="Verified"
+                  rounded
+                ></Tag>
+              )}
+              {profileInfo.phoneNumber &&
               !profileInfo?.phoneNumberVerified &&
               loggedInUserID === profileInfo?.id ? (
-              <span
-                className="text-warning p-ml-2 font-weight-bolder"
-                style={{ cursor: "pointer" }}
-                data-bs-toggle="modal"
-                data-bs-target="#verifyModal"
-                onClick={() => handleVerifyNumber()}
-              >
-                Verify
-              </span>
-            ) : profileInfo.phoneNumber && !profileInfo?.phoneNumberVerified ? (
-              <span className="text-warning p-ml-2 font-weight-bolder">
-                <Tag severity="danger" value="Not verified" rounded></Tag>
-              </span>
-            ) : (
-              ""
-            )}
-          </span>
-          <br />
-          <span>
-            <b>Email: </b>
-            {profileInfo.email}
-          </span>
-          <br />
-          <span>
-            <b>Location: </b>
-            {profileInfo.address}
-          </span>
+                <span
+                  className="text-warning p-ml-2 font-weight-bolder"
+                  style={{ cursor: "pointer" }}
+                  data-bs-toggle="modal"
+                  data-bs-target="#verifyModal"
+                  onClick={() => handleVerifyNumber()}
+                >
+                  Verify
+                </span>
+              ) : profileInfo.phoneNumber &&
+                !profileInfo?.phoneNumberVerified ? (
+                <span className="text-warning p-ml-2 font-weight-bolder">
+                  <Tag severity="danger" value="Not verified" rounded></Tag>
+                </span>
+              ) : (
+                ""
+              )}
+            </span>
+            <br />
+            <span>
+              <b>Email: </b>
+              {profileInfo.email}
+            </span>
+            <br />
+            <span>
+              <b>Location: </b>
+              {profileInfo.address}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* <!--Phone Number Verification Modal --> */}
       <div

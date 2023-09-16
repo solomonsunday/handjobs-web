@@ -1,15 +1,12 @@
-import { push } from "connected-react-router";
-import { showMessage } from "./notification";
 import agent from "../../services/agent.service";
 import { MESSAGE_TYPE } from "../constant";
-import { loadLga, loadStates } from "./location";
+import { loadProfileInfo } from "./account";
 import { closeModal } from "./modal";
-import { deleteProfileExperience, loadProfileInfo, submitting } from "./account";
+import { showMessage } from "./notification";
 
 // initial values
 const experience = {
   experience: {
-    id: "",
     id: "",
     jobTitle: "",
     startDate: null,
@@ -31,7 +28,7 @@ const UPDATE_PROFILE = "app/experience/UPDATE_PROFILE ";
 const LOAD_EXPERIENCE = "app/experience/LOAD_EXPERIENCE";
 const LOADING = "LOADING";
 const SUBMITTING = "SUBMITTING";
-const REQUESTING = "REQUESTING"
+const REQUESTING = "REQUESTING";
 const LOADING_ERROR = "LOADING_ERROR";
 
 // Reducer
@@ -39,11 +36,11 @@ export default function reducer(state = experience, action = {}) {
   switch (action.type) {
     case LOADING:
       return { ...state, loading: true, updatedOrDeleted: false };
-    case SUBMITTING: 
-      return {...state, submitting: true}
-    
-    case REQUESTING: 
-      return { ...state, requesting: true }
+    case SUBMITTING:
+      return { ...state, submitting: true };
+
+    case REQUESTING:
+      return { ...state, requesting: true };
     case LOAD_EXPERIENCE:
       return {
         ...state,
@@ -77,13 +74,13 @@ export function loadError() {
 }
 
 export function isLoading() {
-  return { type: LOADING }
+  return { type: LOADING };
 }
-export function isSubmitting(){
-  return {type: SUBMITTING}
+export function isSubmitting() {
+  return { type: SUBMITTING };
 }
 export function isRequesting() {
-  return { type: REQUESTING }
+  return { type: REQUESTING };
 }
 // Actions
 export function loadExperience(id) {
@@ -121,7 +118,7 @@ export function createExperience(data) {
 
 export function updateExperience(id, data) {
   return (dispatch) => {
-    dispatch(isRequesting())
+    dispatch(isRequesting());
     return agent.JobExperience.edit(id, data).then(
       (response) => {
         dispatch(experienceLoaded(response));
@@ -142,5 +139,3 @@ export function updateExperience(id, data) {
     );
   };
 }
-
-

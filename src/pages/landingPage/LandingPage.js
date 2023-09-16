@@ -1,17 +1,16 @@
+import LandingHeader from "components/LandingHeader/LandingHeader";
+import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import "./LandingPage.css";
 import {
   getServicesByServiceGroupId,
   loadServiceGroups,
   loadServicesById,
 } from "store/modules/service";
-import { Button } from "primereact/button";
-import { BsSortAlphaDown } from "react-icons/bs";
-import LandingHeader from "components/LandingHeader/LandingHeader";
+import "./LandingPage.css";
 
 const LandingPage = () => {
   const dispatch = useDispatch();
@@ -30,7 +29,6 @@ const LandingPage = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
   } = useForm({ mode: "onChange", reValidateMode: "onChange" });
 
   const [selectedCategory, setSelectedCategory] = useState("");

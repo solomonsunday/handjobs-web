@@ -1,16 +1,17 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useRef, useState } from "react";
 
-import { Toast } from "primereact/toast";
-import SectionHeader from "./SectionHeader";
-import ModeFooter from "./ModeFooter";
 import { Carousel } from "primereact/carousel";
+import { Toast } from "primereact/toast";
 import { useSelector } from "react-redux";
-
+import ModeFooter from "./ModeFooter";
+import SectionHeader from "./SectionHeader";
 
 const PortfolioModal = ({ data, closeEditMode }) => {
   const toast = useRef(null);
   const profileInfo = useSelector((state) => state.account.profileInfo);
-  const [portfolioImages, setPortfolioImages] = useState(profileInfo.portfolios);
+  const [portfolioImages, setPortfolioImages] = useState(
+    profileInfo.portfolios
+  );
 
   const responsiveOptions = [
     {
@@ -61,8 +62,7 @@ const PortfolioModal = ({ data, closeEditMode }) => {
             orientation="horizontal"
             verticalViewPortHeight="352px"
             itemTemplate={imageTemplate}
-
-            style={{ maxWidth: "100%", height: "400px", }}
+            style={{ maxWidth: "100%", height: "400px" }}
           />
 
           <ModeFooter id="portfolioEdit" onCancel={closeEditMode} />

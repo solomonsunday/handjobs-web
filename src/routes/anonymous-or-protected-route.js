@@ -1,10 +1,7 @@
-import AppNavBar from 'components/AppNavBar';
-import AnonymousNavBar from 'components/AnonymousNavBar';
-import React from 'react';
-import { Route, Redirect } from 'react-router';
-import AppSideBar from '../components/AppSideBar'
-
-import agent from '../services/agent.service';
+import AnonymousNavBar from "components/AnonymousNavBar";
+import AppNavBar from "components/AppNavBar";
+import { Redirect, Route } from "react-router";
+import agent from "../services/agent.service";
 
 const AnonymousRouteOrProtectedRoute = ({ children, ...rest }) => {
   if (!agent.Auth.isAuth()) {
@@ -13,20 +10,19 @@ const AnonymousRouteOrProtectedRoute = ({ children, ...rest }) => {
         <AnonymousNavBar />
         <Route {...rest}>{children}</Route>
       </>
-    )
+    );
   } else {
     if (agent.Auth.isAdmin()) {
-      return <Redirect to={{ pathname: '/admin' }} />;
-    }
-    else {
+      return <Redirect to={{ pathname: "/admin" }} />;
+    } else {
       return (
         <>
-          <div className='d-flex flex-column'>
+          <div className="d-flex flex-column">
             <AppNavBar />
             <Route {...rest}>{children}</Route>
           </div>
         </>
-      )
+      );
     }
   }
 };

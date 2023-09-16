@@ -1,11 +1,8 @@
-import jwtMiddlewares from './jwt-middleware';
-import redirectMiddlewares from './redirect-middleware';
-import loggerMiddleware from './loggerMiddleware';
-import alertMiddleware from './alertMiddleware';
+import redirectMiddlewares from "./redirect-middleware";
 
 export default [
-    // jwtMiddlewares,
-    redirectMiddlewares,
-    // loggerMiddleware,
-    // alertMiddleware
-]
+  // jwtMiddlewares,
+  redirectMiddlewares,
+  // loggerMiddleware,
+  // alertMiddleware
+];

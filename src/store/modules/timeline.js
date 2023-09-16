@@ -1,9 +1,9 @@
-import { showMessage } from "./notification";
-import agent from "../../services/agent.service";
 import { push } from "connected-react-router";
+import agent from "../../services/agent.service";
 import { MESSAGE_TYPE } from "../constant";
-import { closeModal } from "./modal";
 import { commentsLoaded } from "./comment";
+import { closeModal } from "./modal";
+import { showMessage } from "./notification";
 
 // initial values
 const timeline = {
@@ -97,16 +97,9 @@ export default function reducer(state = timeline, action = {}) {
         },
       };
     case LOAD_COMMENT_IDS_BY_POSTID:
-      const commentDataInPost = action.payload;
       const postID = action.postId;
 
-      //if routing from another page, remove all comments for post else save in idArray
-      let idArray =
-        action.loadingType === postID + "-loadingMoreComments"
-          ? state.commentIds[postID] || []
-          : [];
-
-      const ids = []
+      const ids = [];
       // const ids = new Set([...idArray, ...commentDataInPost?.map(({ id }) => id)]) || [];
       // console.log('new set ids ', ids)
       return {

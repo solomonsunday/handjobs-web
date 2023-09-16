@@ -1,26 +1,21 @@
-import React, { useContext, useState } from "react";
+import { ACCOUNT_TYPE } from "constants/accountType";
+import { SocketContext } from "contexts/VideoContext";
+import { confirmDialog } from "primereact/confirmdialog";
+import { useContext, useState } from "react";
 import {
-  BsFillChatDotsFill,
   BsFillCameraVideoFill,
-  BsFillTrashFill,
+  BsFillChatDotsFill,
   BsFillTelephoneFill,
 } from "react-icons/bs";
-import { ACCOUNT_TYPE } from "constants/accountType";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { actionSetSelectedContact } from "store/modules/chat";
 import { formatter } from "../../helpers/converter";
 import {
-  loadContacts,
-  removeContact,
   blockContact,
+  removeContact,
   unblockContact,
 } from "../../store/modules/contact";
-import { confirmDialog } from "primereact/confirmdialog";
-import { actionSetSelectedContact } from "store/modules/chat";
-import { useDispatch, useSelector } from "react-redux";
-import { SocketContext } from "contexts/VideoContext";
-import { Link } from "react-router-dom";
-import { push } from "connected-react-router";
-import VideoSidebar from "components/video-chat/video-sidebar";
-import VideoCallNotification from "components/video-chat/video-call-notification";
 
 const ContactListItem = ({ contact, setSelectedId, setUserToCallId }) => {
   const {

@@ -1,36 +1,28 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loadProfileInfo } from "store/modules/account";
-import { openModal } from "store/modules/modal";
-import Biography from "components/profile/Biography";
-import Experience from "components/profile/Experience";
-import Education from "components/profile/Education";
-import Skills from "components/profile/Services";
-import Hobbies from "components/profile/Hobbies";
-import ProfessionsOfInterest from "components/profile/ProfessionsOfInterest";
-import LocationOfInterest from "components/profile/LocationOfInterest";
 import ContactInformation from "components/profile/ContactInformation";
+import Education from "components/profile/Education";
+import Experience from "components/profile/Experience";
+import Hobbies from "components/profile/Hobbies";
 import ModalForm from "components/profile/ModalForm";
-import agentService from "services/agent.service";
-import Spinner from "components/spinner/spinner.component";
-import { loadCountry } from "store/modules/location";
+import ProfessionsOfInterest from "components/profile/ProfessionsOfInterest";
 import { ACCOUNT_TYPE } from "constants/accountType";
-import { Skeleton } from "primereact/skeleton";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import agentService from "services/agent.service";
+import { loadProfileInfo } from "store/modules/account";
+import { loadCountry } from "store/modules/location";
+import { openModal } from "store/modules/modal";
 
 import CustomError from "pages/error-page/CustomError";
 import { ErrorBoundary } from "react-error-boundary";
 
-import { fetchCountries } from "store/modules/util";
-import { getQualifications } from "store/modules/admin";
-import ExperienceSkeleton from "components/skeletons/ExperienceSkeleton";
-import EducationSkeleton from "components/skeletons/EducationSkeleton";
+import Services from "components/profile/Services";
 import ContactInfoSkeleton from "components/skeletons/ContactInfoSkeleton";
-import SkillSkeleton from "components/skeletons/SkillSkeleton";
+import EducationSkeleton from "components/skeletons/EducationSkeleton";
+import ExperienceSkeleton from "components/skeletons/ExperienceSkeleton";
 import HobbiesSkeleton from "components/skeletons/HobbiesSkeleton";
 import ProfessionOfInterestSkeleton from "components/skeletons/ProfessionOfInterestSkeleton";
-import LocationOfInterestSkeleton from "components/skeletons/LocationOfInterestSkeleton";
-import BiographySkeleton from "components/skeletons/BiographySkeleton";
-import Services from "components/profile/Services";
+import { getQualifications } from "store/modules/admin";
+import { fetchCountries } from "store/modules/util";
 
 const InfoTab = () => {
   const dispatch = useDispatch();
@@ -73,7 +65,7 @@ const InfoTab = () => {
     dispatch(getQualifications());
   }, []);
 
-  const expandImage = () => { };
+  const expandImage = () => {};
 
   const openCreate = (name) => {
     setMode("create");
@@ -144,7 +136,6 @@ const InfoTab = () => {
                 formatDate={formatDate}
               />
             )}
-
           </div>
           <div className="p-col-12 content-rightPanel p-md-4">
             {/* contact information */}

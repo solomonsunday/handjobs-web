@@ -1,27 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
-import { useDispatch, useSelector } from "react-redux";
-import ModeFooter from "./ModeFooter";
-import { loadCountry, loadLga, loadStates } from "store/modules/location";
-import { updateContactInfo } from "store/modules/account";
-import SectionHeader from "./SectionHeader";
 import { Dropdown } from "primereact/dropdown";
+import { InputText } from "primereact/inputtext";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import PlacesAutocomplete, {
   geocodeByAddress,
-  geocodeByPlaceId,
   getLatLng,
 } from "react-places-autocomplete";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { updateContactInfo } from "store/modules/account";
+import { loadCountry, loadLga, loadStates } from "store/modules/location";
+import ModeFooter from "./ModeFooter";
+import SectionHeader from "./SectionHeader";
 
 const ContactInfoForm = ({ closeEditMode, data }) => {
   const {
     register,
     handleSubmit,
     setValue,
-    trigger,
-    clearErrors,
     formState: { errors },
   } = useForm({
     mode: "onChange",

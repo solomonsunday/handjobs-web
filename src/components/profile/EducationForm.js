@@ -1,28 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import ModeFooter from "./ModeFooter";
-import SectionHeader from "./SectionHeader";
-import { InputTextarea } from "primereact/inputtextarea";
-import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
-import { updateEducation, createEducation } from "store/modules/education";
-
+import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { createEducation, updateEducation } from "store/modules/education";
+import ModeFooter from "./ModeFooter";
+import SectionHeader from "./SectionHeader";
 
 const generateYears = () => {
   var today = new Date();
   var currentYear = today.getFullYear();
-  let arr = []
+  let arr = [];
   for (let year = currentYear; year > 1970; year--) {
-    arr = [...arr, year]
+    arr = [...arr, year];
   }
   return arr;
-}
+};
 
-const years = generateYears()
+const years = generateYears();
 
-const EducationForm = ({ educationObject, componentStatus, closeEditMode, itemToEdit, mode }) => {
+const EducationForm = ({
+  educationObject,
+  componentStatus,
+  closeEditMode,
+  itemToEdit,
+  mode,
+}) => {
   const {
     register,
     handleSubmit,
@@ -50,35 +55,38 @@ const EducationForm = ({ educationObject, componentStatus, closeEditMode, itemTo
   });
 
   let todayDate = new Date();
-  const countryList = useSelector(state => state.util.countries);
-  const qualificationList = useSelector(state => state.admin.qualifications);
-
+  const countryList = useSelector((state) => state.util.countries);
+  const qualificationList = useSelector((state) => state.admin.qualifications);
 
   useEffect(() => {
     if (Object.values(itemToEdit).length >= 1) {
       setEducation({
         ...education,
         institution: itemToEdit.institution,
-        qualification: qualificationList.find(q => q.name == itemToEdit.qualification),
+        qualification: qualificationList.find(
+          (q) => q.name == itemToEdit.qualification
+        ),
         course: itemToEdit.course,
 
-        country: countryList.find(c => c.name == itemToEdit.country),
+        country: countryList.find((c) => c.name == itemToEdit.country),
         city: itemToEdit.city,
         address: itemToEdit.address,
       });
       const newDate = new Date(itemToEdit.yearOfGraduation).toISOString();
       setYearOfGraduation(new Date(itemToEdit.yearOfGraduation));
 
-      setValue('institution', itemToEdit.institution);
-      setValue('qualification', qualificationList.find(q => q.name == itemToEdit.qualification).name);
-      setValue('course', itemToEdit.course);
-      setValue('city', itemToEdit.city);
-      setValue('country', itemToEdit.country);
-      setValue('yearOfGraduation', newDate);
-      setValue('address', itemToEdit.address);
-
+      setValue("institution", itemToEdit.institution);
+      setValue(
+        "qualification",
+        qualificationList.find((q) => q.name == itemToEdit.qualification).name
+      );
+      setValue("course", itemToEdit.course);
+      setValue("city", itemToEdit.city);
+      setValue("country", itemToEdit.country);
+      setValue("yearOfGraduation", newDate);
+      setValue("address", itemToEdit.address);
     }
-  }, [itemToEdit])
+  }, [itemToEdit]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -103,8 +111,7 @@ const EducationForm = ({ educationObject, componentStatus, closeEditMode, itemTo
   };
 
   const educationSubmit = (data) => {
-
-    if (mode === 'create') {
+    if (mode === "create") {
       data.yearOfGraduation = yearOfGraduation.toISOString();
       data.qualification = data.qualification.name;
 
@@ -112,18 +119,31 @@ const EducationForm = ({ educationObject, componentStatus, closeEditMode, itemTo
     } else {
       dispatch(updateEducation(itemToEdit.id, data));
     }
-    console.log('education form', data)
-
+    console.log("education form", data);
   };
 
   const monthNavigatorTemplate = (e) => {
-    return <Dropdown value={e.value} options={e.options} onChange={(event) => e.onChange(event.originalEvent, event.value)} style={{ lineHeight: 1 }} />;
-  }
+    return (
+      <Dropdown
+        value={e.value}
+        options={e.options}
+        onChange={(event) => e.onChange(event.originalEvent, event.value)}
+        style={{ lineHeight: 1 }}
+      />
+    );
+  };
 
   const yearNavigatorTemplate = (e) => {
-    return <Dropdown value={e.value} options={e.options} onChange={(event) => e.onChange(event.originalEvent, event.value)} className="p-ml-2" style={{ lineHeight: 1 }} />;
-  }
-
+    return (
+      <Dropdown
+        value={e.value}
+        options={e.options}
+        onChange={(event) => e.onChange(event.originalEvent, event.value)}
+        className="p-ml-2"
+        style={{ lineHeight: 1 }}
+      />
+    );
+  };
 
   return (
     <>
@@ -196,7 +216,6 @@ const EducationForm = ({ educationObject, componentStatus, closeEditMode, itemTo
                   id="navigatorstemplate"
                   value={yearOfGraduation}
                   onChange={(e) => setYearOfGraduation(e.value)}
-
                   monthNavigatorTemplate={monthNavigatorTemplate}
                   yearNavigatorTemplate={yearNavigatorTemplate}
                   view="month"
@@ -205,7 +224,6 @@ const EducationForm = ({ educationObject, componentStatus, closeEditMode, itemTo
                   yearRange="2010:2030"
                 />
                 {/* <Dropdown optionLabel="" value={yearOfGraduation} options={years} onChange={(e) => setYearOfGraduation(e.value)} placeholder="Select Graduation Year"/> */}
-
               </div>
               <div className="p-field p-col-12 p-md-12">
                 <label className="inputLabel" htmlFor="institution">
@@ -292,12 +310,8 @@ const EducationForm = ({ educationObject, componentStatus, closeEditMode, itemTo
                   maxLength={500}
                 />
               </div>
-
             </div>
-            <ModeFooter
-              id="educationEdit"
-              onCancel={onEditCancel}
-            />
+            <ModeFooter id="educationEdit" onCancel={onEditCancel} />
           </form>
         </div>
       </div>
