@@ -115,6 +115,7 @@ const ChangePassword = React.lazy(() =>
   import("../pages/auth/chanagepassword/ChangePassword")
 );
 const Settings = React.lazy(() => import("../pages/settings/settings"));
+const Policy = React.lazy(() => import("pages/policy"));
 
 const AppRouter = () => {
   const dispatch = useDispatch();
@@ -180,6 +181,8 @@ const AppRouter = () => {
         />
         <AnonymousRoute path="/reset" exact component={NewPassword} />
         <Route path="/offline" exact component={OfflinePage} />
+
+        <AnonymousRoute path="/policy" exact component={Policy} />
 
         <ProtectedRoute path="/pagenotfound" exact component={PageNotFound} />
         <ProtectedRoute

@@ -321,22 +321,21 @@ const RegisterStep = ({ goto, accountType }) => {
                       )}
                     </div>
                     <div>
-                      <p className="term-policy p-mb-3">
+                      <p className="term-policy p-mb-3 text-center">
                         By clicking Sign Up, you agree to our{" "}
-                        <Link to="/">
+                        <Link to="/policy">
                           {" "}
                           <span className="app-color font-weight-bold">
-                            Terms, Data Policy{" "}
+                            Terms , Data Policy{" "}
                           </span>
                         </Link>
                         &nbsp; and{" "}
-                        <Link to="/">
+                        <Link to="/policy">
                           {" "}
                           <span className="app-color font-weight-bold">
                             Cookie Policy.
                           </span>
                         </Link>
-                        .
                       </p>
                     </div>
                     <Button
